@@ -62,13 +62,6 @@ VRコンテンツを開発するための簡単かつ強力な方法として開
 元々はMozilla内で考案され、現在はA-Frameの共同制作者が[Supermedium](https://supermedium.com)内で管理しています。
 [独立したオープンソースプロジェクト][github]として、A-Frameは[最大のVRコミュニティ][community]の1つに成長しました。
 
-
-A-Frame supports most VR headsets such as Vive, Rift, Windows Mixed Reality,
-Daydream, GearVR, Cardboard, Oculus Go, and can even be used for augmented
-reality.  Although A-Frame supports the whole spectrum, A-Frame aims to define
-fully immersive interactive VR experiences that go beyond basic 360&deg;
-content, making full use of positional tracking and controllers.
-
 A-Frameは、Vive、Rift、Windows Mixed Reality、Daydream、GearVR, Cardboard、Oculus Go などほとんどのVRヘッドセットをサポートしており、拡張現実（AR）にも使用できます。
 A-Frameは全領域をサポートしていますが、 A-Frameの目標は位置追跡とコントローラをフルに活用し、基本的な360&deg;コンテンツを超える完全没入型のインタラクティブなVR体験を定義することです。
 
@@ -93,7 +86,7 @@ A-Frameは全領域をサポートしていますが、 A-Frameの目標は位�
   </a>
 </div>
 
-## ここがスゴイよ、A-Frame
+## A-Frameの特徴
 
 :eyeglasses: **シンプルなVR開発**：`<script>`タグと`<a-scene>`タグを用意するだけです。
 A-Frameは、3Dボイラープレート、VRセットアップ、デフォルトの制御を行います。インストールやビルドの必要はありません。
@@ -113,21 +106,11 @@ HTMLは氷山の一角で、開発者はJavaScript、DOM API、three.js、WebVR�
 [A-Painter]: https://github.com/aframevr/a-painter
 [Tilt Brush]: https://www.tiltbrush.com/
 
-:zap: **パフォーマンス**: A-Frame is optimized from the ground up for WebVR. While
-A-Frame uses the DOM, its elements don't touch the browser layout engine. 3D
-object updates are all done in memory with little garbage and overhead. The most
-interactive and large scale WebVR applications have been done in A-Frame
-running smoothly at 90fps.
-
-A-FrameはWebVRのために一から最適化されています。A-FrameはDOMを使用しますが、その要素はブラウザのレイアウトエンジンに触れることはありません。3Dオブジェクトの更新はすべてメモリ内で行われ、ガベージやオーバーヘッドも小さいです。最もインタラクティブで大規模なWebVRアプリケーションは、90fpsでスムーズに動作するA-Frameで行われました。
+:zap: **パフォーマンス**: A-FrameはWebVRのために一から最適化されています。A-FrameはDOMを使用しますが、その要素はブラウザのレイアウトエンジンに触れることはありません。3Dオブジェクトの更新はすべてメモリ内で行われ、ガベージやオーバーヘッドも小さいです。最もインタラクティブで大規模なWebVRアプリケーションは、90fpsでスムーズに動作するA-Frameで行われました。
 
 [inspector]: ./visual-inspector-and-dev-tools.md
 
-:mag: **ビジュアルインスペクター**: A-Frame provides a handy built-in [visual 3D
-inspector][inspector]. Open up *any* A-Frame scene, hit `<ctrl> + <alt> + i`,
-and fly around to peek under the hood!
-
-A-Frameには便利な[ビジュアル3Dインスペクター][inspector]が内蔵されています。A-Frameの*どこでも*シーンを開いて、`<ctrl> + <alt> + i`を押して、ボンネットの中を覗いてみてください。
+:mag: **ビジュアルインスペクター**: A-Frameには便利な[ビジュアル3Dインスペクター][inspector]が内蔵されています。A-Frameの*どこでも*シーンを開いて、`<ctrl> + <alt> + i`を押して、ボンネットの中を覗いてみてください。
 
 ![Inspector](https://cloud.githubusercontent.com/assets/674727/25377018/27be9cce-295b-11e7-9098-3e85ac1fe172.gif)
 
@@ -153,10 +136,7 @@ systems]、[物理演算][physics]、[マルチユーザー][multiuser]、[海][
 [Discord]: https://supermedium.com/discord
 [slack]: https://aframevr.slack.com/join/shared_invite/zt-f6rne3ly-ekVaBU~Xu~fsZHXr56jacQ
 
-If it's your first time here, here's a plan for success for getting into
-A-Frame:
-
-初めての人のための、A-Frame入門を成功させるためのプランを紹介します。
+初めての人のための、A-Frame入門がうまくいくためのプランを紹介します。
 
 
 1. [ニュースレターを購読して](https://aframe.io/subscribe/)、A-Frameの最新情報やコミュニティ・プロジェクトの特集を確認しましょう。
