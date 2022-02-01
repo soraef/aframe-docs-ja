@@ -18,11 +18,10 @@ examples:
 
 [glitch]: http://glitch.com/~aframe
 
-A-Frame can be developed from a plain HTML file without having to install
-anything. A great way to try out A-Frame is to **[remix the starter example on
-Glitch][glitch]**, an online code editor that instantly hosts and deploys for
-free. Alternatively, create an `.html` file and include A-Frame in the
-`<head>`:
+A-Frameは、何のインストールも要らず、プレーンなHTMLファイルのみで開発できます。
+A-Frameを試すのに最適な方法は、**[Glitchにあるスターターサンプルをいじってみること][glitch]** です。
+このオンラインコードエディターは、即座にホスト、無料デプロイしてくれます。または、
+`.html`ファイルを作成し、その`<head>`に以下のようにA-Frameを含めます。
 
 ```html
 <html>
