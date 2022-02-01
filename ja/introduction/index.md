@@ -19,9 +19,10 @@ examples:
 [glitch]: http://glitch.com/~aframe
 
 A-Frameは、何のインストールも要らず、プレーンなHTMLファイルのみで開発できます。
+
 A-Frameを試すのに最適な方法は、**[Glitchにあるスターターサンプルを触ってみること][glitch]** です。
-このサイトはオンラインコードエディターで、無料で即座にホストとデプロイしてくれます。また、
-`<head>`に以下のようにA-Frameを含めて、`.html`ファイルを作成しても実行可能です。
+
+このサイトはオンラインコードエディターで、無料で即座にホストとデプロイしてくれます。もしくは以下のように、`<head>`にA-Frameを含めて `.html` ファイルを作成しても実行可能です。
 
 ```html
 <html>
@@ -43,34 +44,33 @@ A-Frameを試すのに最適な方法は、**[Glitchにあるスターターサ�
 [Installation]: ./installation.md
 [school]: https://aframe.io/school/
 
-The [Installation] page provides more options for getting started with A-Frame.
-To get started learning A-Frame, check out [A-Frame School][school] for visual
-step-by-step lessons to complement the documentation.
+[インストール][Installation]のページでは、A-Frameを使い始めるための様々なオプションをご紹介しています。A-Frame の学習を始めるには、[A-Frame School][school] で、ドキュメントを補完する視覚的なステップバイステップのレッスンをご覧ください。
 
-## What is A-Frame?
+##  A-Frameとは?
 
 [github]: https://github.com/aframevr/
 [community]: https://aframe.io/community/
 
 ![A-Frame](https://cloud.githubusercontent.com/assets/674727/25392020/6f011d10-298c-11e7-845e-c3c5baebd14d.jpg)
 
-:a:-Frame is a web framework for building virtual reality (VR) experiences.
-A-Frame is based on top of HTML, making it simple to get started. But A-Frame
-is not just a 3D scene graph or a markup language; the core is a powerful
-entity-component framework that provides a declarative, extensible, and
-composable structure to [three.js].
+:a:-Frameは、バーチャルリアリティ（VR）体験を構築するためのウェブフレームワークです。
+A-FrameはHTMLの上に構築されているため、簡単に使い始めることができます。
+しかし、A-Frameは単なる3Dシーングラフやマークアップ言語ではありません。
+コアとなるのは、[three.js]に宣言的、拡張的、かつ構成可能な構造を提供する、強力なエンティティコンポーネント・フレームワークです。
 
-Originally conceived within Mozilla and now maintained by the co-creators of
-A-Frame within [Supermedium](https://supermedium.com), A-Frame was developed to
-be an easy yet powerful way to develop VR content. As an [independent open
-source project][github], A-Frame has grown to be one of the [largest VR
-communities][community].
+VRコンテンツを開発するための簡単かつ強力な方法として開発されたものです。
+元々はMozilla内で考案され、現在はA-Frameの共同制作者が[Supermedium](https://supermedium.com)内で管理しています。
+[独立したオープンソースプロジェクト][github]として、A-Frameは[最大のVRコミュニティ][community]の1つに成長しました。
+
 
 A-Frame supports most VR headsets such as Vive, Rift, Windows Mixed Reality,
 Daydream, GearVR, Cardboard, Oculus Go, and can even be used for augmented
 reality.  Although A-Frame supports the whole spectrum, A-Frame aims to define
 fully immersive interactive VR experiences that go beyond basic 360&deg;
 content, making full use of positional tracking and controllers.
+
+A-Frameは、Vive、Rift、Windows Mixed Reality、Daydream、GearVR, Cardboard、Oculus Go などほとんどのVRヘッドセットをサポートしており、拡張現実（AR）にも使用できます。
+A-Frameは全領域をサポートしていますが、 A-Frameの目標は位置追跡とコントローラをフルに活用し、基本的な360&deg;コンテンツを超える完全没入型のインタラクティブなVR体験を定義することです。
 
 <div class="docs-introduction-examples">
   <a href="https://supermedium.com/supercraft">
@@ -93,43 +93,41 @@ content, making full use of positional tracking and controllers.
   </a>
 </div>
 
-## Features
+## ここがスゴイよ、A-Frame
 
-:eyeglasses: **VR Made Simple**: Just drop in a `<script>` tag and `<a-scene>`.
-A-Frame will handle 3D boilerplate, VR setup, and default controls. Nothing to
-install, no build steps.
+:eyeglasses: **シンプルなVR開発**：`<script>`タグと`<a-scene>`タグを用意するだけです。
+A-Frameは、3Dボイラープレート、VRセットアップ、デフォルトの制御を行います。インストールやビルドの必要はありません。
 
-:heart: **Declarative HTML**: HTML is easy to read, understand, and
-copy-and-paste. Being based on top of HTML, A-Frame is accessible to everyone:
-web developers, VR enthusiasts, artists, designers, educators, makers, kids.
+:heart: **HTMLの宣言性**：HTMLは読みやすく、理解しやすく、コピー&ペーストしやすいです。
+HTMLをベースにしているため、A-Frameはウェブ開発者、VR愛好家、アーティスト、デザイナー、教育者、メーカー、子供たちなど、誰でも利用可能です。
 
-:electric_plug: **Entity-Component Architecture**: A-Frame is a powerful
-[three.js] framework, providing a declarative, composable, reusable
-[entity-component structure][ecs]. HTML is just the tip of the iceberg;
-developers have unlimited access to JavaScript, DOM APIs, three.js, WebVR, and
-WebGL.
+:electric_plug: **エンティティ・コンポーネントアーキテクチャ**: A-Frameは、強力な[three.js]フレームワークで、宣言的、合成可能、再利用可能な[エンティティ・コンポーネント構造][ecs]を提供します。
+HTMLは氷山の一角で、開発者はJavaScript、DOM API、three.js、WebVR、WebGLに制約なしにアクセスすることができます。
 
-:globe_with_meridians: **Cross-Platform VR**: Build VR applications for Vive,
-Rift, Windows Mixed Reality, Daydream, GearVR, and Cardboard with support for
-all respective controllers. Don't have a headset or controllers? No problem!
-A-Frame still works on standard desktop and smartphones.
+
+:globe_with_meridians: **クロスプラットフォームVR**: Vive、Rift、Windows Mixed Reality、Daydream、GearVR、Cardboard用のVRアプリケーションを構築し、それぞれのコントローラをサポートします。
+ヘッドセットやコントローラをお持ちではないですか？問題ありません！A-Frameは標準的なデスクトップとスマートフォンでも動作します。
 
 [ecs]: ./entity-component-system.md
 
 [A-Painter]: https://github.com/aframevr/a-painter
 [Tilt Brush]: https://www.tiltbrush.com/
 
-:zap: **Performance**: A-Frame is optimized from the ground up for WebVR. While
+:zap: **パフォーマンス**: A-Frame is optimized from the ground up for WebVR. While
 A-Frame uses the DOM, its elements don't touch the browser layout engine. 3D
 object updates are all done in memory with little garbage and overhead. The most
 interactive and large scale WebVR applications have been done in A-Frame
 running smoothly at 90fps.
 
+A-FrameはWebVRのために一から最適化されています。A-FrameはDOMを使用しますが、その要素はブラウザのレイアウトエンジンに触れることはありません。3Dオブジェクトの更新はすべてメモリ内で行われ、ガベージやオーバーヘッドも小さいです。最もインタラクティブで大規模なWebVRアプリケーションは、90fpsでスムーズに動作するA-Frameで行われました。
+
 [inspector]: ./visual-inspector-and-dev-tools.md
 
-:mag: **Visual Inspector**: A-Frame provides a handy built-in [visual 3D
+:mag: **ビジュアルインスペクター**: A-Frame provides a handy built-in [visual 3D
 inspector][inspector]. Open up *any* A-Frame scene, hit `<ctrl> + <alt> + i`,
 and fly around to peek under the hood!
+
+A-Frameには便利な[ビジュアル3Dインスペクター][inspector]が内蔵されています。A-Frameの*どこでも*シーンを開いて、`<ctrl> + <alt> + i`を押して、ボンネットの中を覗いてみてください。
 
 ![Inspector](https://cloud.githubusercontent.com/assets/674727/25377018/27be9cce-295b-11e7-9098-3e85ac1fe172.gif)
 
@@ -143,19 +141,14 @@ and fly around to peek under the hood!
 [super hands]: https://github.com/wmurphyrd/aframe-super-hands-component
 [teleportation]: https://github.com/fernandojsg/aframe-teleport-controls
 
-:runner: **Components**: Hit the ground running with A-Frame's core components
-such as geometries, materials, lights, animations, models, raycasters, shadows,
-positional audio, text, and controls for most major headsets. Get even further
-from the hundreds of community components including [environment], [state], [particle
-systems], [physics], [multiuser], [oceans], [teleportation], [super hands], and
-[augmented reality].
+:runner: **コンポーネント**: ジオメトリ、マテリアル、ライト、アニメーション、モデル、レイキャスト、シャドウ、ポジションオーディオ、テキスト、主要なヘッドセット用のコントロールなど、A-Frameのコアコンポーネントを使用すれば、すぐにでも十全な開発を行えます。更には[エンバイロメント][environment]、[ステート][state]、[パーティクルシステム][particle
+systems]、[物理演算][physics]、[マルチユーザー][multiuser]、[海][oceans]、[テレポーテーション][teleportation]、[スーパーハンド][super hands]、
+[拡張現実（AR）][augmented reality]などの数百ものコミュニティコンポーネントが用意されています。
 
-:earth_americas: **Proven and Scalable**: A-Frame has been used by companies
-such as Google, Disney, Samsung, Toyota, Ford, Chevrolet, Amnesty
-International, CERN, NPR, Al Jazeera, The Washington Post, NASA. Companies such
-as Google, Microsoft, Oculus, and Samsung have made contributions to A-Frame.
+:earth_americas: **実績とスケーラビリティ**: A-Frameは、Google、Disney、Samsung、トヨタ、フォード、シボレー、アムネスティ・インターナショナル、ヨーロッパ合同原子核研究機構、NPR、Al Jazeera、The Washington Post、NASAなどの企業で使用されています。Google、Microsoft、Oculus、Samsungなどの企業がA-Frameにコントリビュートしています。
 
-## Off You Go!
+
+## さぁ、始めましょう！
 
 [Discord]: https://supermedium.com/discord
 [slack]: https://aframevr.slack.com/join/shared_invite/zt-f6rne3ly-ekVaBU~Xu~fsZHXr56jacQ
@@ -163,20 +156,17 @@ as Google, Microsoft, Oculus, and Samsung have made contributions to A-Frame.
 If it's your first time here, here's a plan for success for getting into
 A-Frame:
 
-1. [Subscribe to the Newsletter](https://aframe.io/subscribe/) for updates and
-tips on A-Frame and to see featured community projects.
+初めての人のための、A-Frame入門を成功させるためのプランを紹介します。
 
-2. Read through the documentation to get a grasp.
-[Glitch](https://glitch.com/~aframe) is used as a recommended coding playground
-and for examples.
 
-3. [Join us on Discord][Discord] and [Slack][slack] and if you have any
-questions, [search and ask on StackOverflow](http://stackoverflow.com/questions/ask/?tags=aframe),
-and someone will try to get to you!
+1. [ニュースレターを購読して](https://aframe.io/subscribe/)、A-Frameの最新情報やコミュニティ・プロジェクトの特集を確認しましょう。
 
-4. When you build something, share your project online and we'll try to feature
-it on the [newsletter](https://aframe.io/subscribe/) and the
-[blog](https://aframe.io/blog/)!
+2. ドキュメントを読んで理解しましょう。
+[Glitch](https://glitch.com/~aframe) は、推奨されるコーディングのプレイグラウンド、および例として使われます。
 
-And it really helps to have a dig into the fundamentals on JavaScript and
-[three.js](https://threejs.org/). Have fun!
+3. [Discord] と [Slack] でコミュニティに参加できます。何か質問があれば [StackOverflow](http://stackoverflow.com/questions/ask/?tags=aframe) で検索して質問すれば、誰かが答えてくれますよ！
+
+4. 何かを作ったら、そのプロジェクトをオンラインで共有して見てください！
+[ニュースレター](https://aframe.io/subscribe/)や[ブログ](https://aframe.io/blog/)で紹介できるかもしれません！
+
+そして、JavaScriptと[three.js](https://threejs.org/)の基礎知識を掘り下げることは、本当に役に立ちます。楽しみましょう！
