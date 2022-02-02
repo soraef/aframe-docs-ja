@@ -6,17 +6,15 @@ parent_section: introduction
 order: 2
 ---
 
-This installation section offers several ways to get started with A-Frame,
-although most methods don't require any actual installation since A-Frame
-is primarily HTML and JavaScript.
+このインストールについてのセクションでは、A-Frameを使い始めるためのいくつかの方法を紹介していますが、A-FrameはHTMLとJavaScriptが主体なので、ほとんどの方法では実際のインストールは必要ありません。
 
 <!--toc-->
 
-## Code Editors in the Browser
+## ブラウザ上のコードエディタ
 
-The fastest way is to start playing from within the browser.
+一番手っ取り早いのは、ブラウザで動かしてみる方法です。
 
-### Remix on Glitch
+### Glitchで動かす
 
 ![Glitch](https://cloud.githubusercontent.com/assets/674727/24480466/54b17d22-1499-11e7-8a18-d4f76b49ad07.jpg)
 
@@ -28,65 +26,69 @@ well as multiple files and directories. Glitch lets us remix (i.e., copy)
 existing projects and make them our own and instantly host and deploy changes
 for everyone to see.
 
-[Hit **Remix** on this A-Frame project][glitch], mess with the HTML in
-`index.html`, and see your site published live on each change! The base A-Frame
-Glitch, for example, is published at `aframe.glitch.me`, but we will provide your
-own custom URL name.
+[Glitch][glitch]は、Webサイトの即時デプロイとホスティングを可能にするオンライン・コード・エディタを提供します。
+このエディタは、フロントエンドとバックエンドの両方のコードと、複数のファイルやディレクトリをサポートしています。
+Glitchは、既存のプロジェクトを改変（コピーした上で）して自分たちのものにし、変更を即座にホストして誰もが見られるように配備することを可能にします。
 
-Below are a few other A-Frame Glitches for starters:
+このA-Frameプロジェクトの[**Remix your own**][glitch]で、`index.html`のHTMLをいじると、変更するたびにあなたのサイトがライブで公開されるのを見ることができます！
+例えば、ベースとなるA-Frame Glitchは `aframe.glitch.me` で公開されていますが、Remixではあなた自身のカスタムURL名を提供します。
 
-- [aframe-aincraft](https://glitch.com/~aframe-aincraft) - Minecraft demo.
-- [aframe-gallery](https://glitch.com/~aframe-gallery) - 360&deg; image gallery.
-- [aframe-registry](https://glitch.com/~aframe-registry) - Showcase of various components.
-- [aframe-vaporwave](https://glitch.com/~aframe-vaporwave) - Retro-futuristic scene.
-- [networked-aframe](https://glitch.com/~networked-aframe) - Multiuser.
+以下は、その他のA-FrameのスターターGlitchです。
 
-### Other Code Editors
+- [aframe-aincraft](https://glitch.com/~aframe-aincraft) - Minecraftのデモ
+- [aframe-gallery](https://glitch.com/~aframe-gallery) - 360&deg; イメージギャラリー
+- [aframe-registry](https://glitch.com/~aframe-registry) - 各種コンポーネントのショーケース
+- [aframe-vaporwave](https://glitch.com/~aframe-vaporwave) - レトロフューチャーなシーン
+- [networked-aframe](https://glitch.com/~networked-aframe) - マルチユーザー
+
+### その他のコードエディタ
 
 Below are a couple of A-Frame starter kits on other browser-based code
 editors. Both support remixing or forking:
 
+以下は、他のブラウザベースのコードエディタ上のA-Frameスターターキットです。どちらもリミックスやフォークをサポートしています。
+
 - [CodePen &mdash; A-Frame](https://codepen.io/mozvr/pen/BjygdO)
 
-## Local Development
+## ローカル開発
 
-### Use a Local Server
+### ローカルサーバーを使用する
 
-For the options below, we should develop projects using a local server so that
-files are properly served. Options of local servers include:
+以下のオプションについては、ローカルサーバーを使用してプロジェクトを開発し、ファイルが適切に提供されるようにする必要があります。ローカルサーバーのオプションは以下の通りです。
 
-- Running `npm i -g five-server@latest && five-server --port=8000` in a terminal
-  in the same directory as your HTML file.
-- Running `python -m SimpleHTTPServer` (or `python -m http.server` for Python 3)
-  in a terminal in the same directory as your HTML file.
+- HTMLファイルと同じディレクトリで、`npm i -g five-server@latest && five-server --port=8000`をターミナルで実行します。
+- HTMLファイルと同じディレクトリで `python -m SimpleHTTPServer` (Python3の場合は `python -m http.server`) をターミナルで実行します。
 
 Once we are running our server, we can open our project in the browser using
 the local URL and port which the server is running on (e.g.,
 `http://localhost:8000`). Try *not* to open the project using the `file://`
 protocol which does not provide a domain; absolute and relative URLs may not
 work.
+サーバーを起動したら、サーバーが動作しているローカルのURLとポートを使って、ブラウザでプロジェクトを開くことができます (例: `http://localhost:8000`)。
+ドメインを指定しない `file://` プロトコルを使ってプロジェクトを開くことは*しない*ようにしてください。
 
-### Download the Boilerplate on GitHub
+### GitHubでボイラープレートをダウンロードする
 
 [ghpages]: https://pages.github.com/
 
-The boilerplate contains:
+ボイラープレートは:
 
-- A simple HTML file that links to the [current version of A-Frame](#builds-prod)
-- An optional local development server
-- An easy deployment workflow for [GitHub Pages][ghpages] to share with the world
+- 現在の[A-Frameのバージョン](#builds-prod)にリンクするシンプルなHTMLファイルです。
+- オプションのローカル開発サーバー
+- [GitHub Pages][ghpages]で共有するための簡単なデプロイワークフロー
 
-We can grab the boilerplate in one of two ways:
+を含みます。
 
-<a class="btn btn-download" href="https://github.com/aframevr/aframe-boilerplate/">Fork on GitHub</a>
-<br>(Note this is marked as 'discontinued', the Aframe version packaged with this is 0.5)
+ボイラープレートを取得するには、以下の2つの方法があります。
 
-<a class="btn btn-download" href="https://github.com/aframevr/aframe-boilerplate/archive/master.zip" download="aframe-boilerplate.zip">Download .ZIP<span></span></a>
+<a class="btn btn-download" href="https://github.com/aframevr/aframe-boilerplate/">GitHubでフォーク</a>
+<br>なお、これは更新停止となっており、これに同梱されているAframeのバージョンは0.5です。）
 
-### Include the JS Build
+<a class="btn btn-download" href="https://github.com/aframevr/aframe-boilerplate/archive/master.zip" download="aframe-boilerplate.zip">.zipファイルをダウンロード<span></span></a>
 
-To include A-Frame in an HTML file, we drop a `<script>` tag pointing to the
-CDN build:
+### JSのビルドをインクルード
+
+HTMLファイルにA-Frameを含めるには、CDNビルドを指す`<script>`タグを追加します。
 
 ```html
 <head>
@@ -94,21 +96,20 @@ CDN build:
 </head>
 ```
 
-If we want to serve it ourselves, we can download the JS build:
+自分でライブラリを用意したい場合は、JSビルドをダウンロードすることができます。
 
-<a id="builds-prod" class="btn btn-download" href="https://aframe.io/releases/1.2.0/aframe.min.js" download>Production Version <span>1.2.0</span></a> <em class="install-note">Minified</em>
-<a id="builds-dev" class="btn btn-download" href="https://aframe.io/releases/1.2.0/aframe.js" download>Development Version <span>1.2.0</span></a> <em class="install-note">Uncompressed with Source Maps</em>
+<a id="builds-prod" class="btn btn-download" href="https://aframe.io/releases/1.2.0/aframe.min.js" download>プロダクトバージョン <span>1.2.0</span></a> <em class="install-note">最小化済み</em>
+<a id="builds-dev" class="btn btn-download" href="https://aframe.io/releases/1.2.0/aframe.js" download>開発バージョン <span>1.2.0</span></a> <em class="install-note">ソースマップ付き非圧縮</em>
 
-### Install from npm
+### npmからインストール
 
-We can also install A-Frame through npm:
+また、A-Frameをnpmでインストールすることもできます。
 
 ```bash
 $ npm install aframe
 ```
 
-Then we can bundle A-Frame into our application. For example, with Browserify
-or Webpack:
+そして、BrowserifyやWebpackなどを使ってA-Frameをアプリケーションにバンドルすることができます。
 
 ```js
 require('aframe');
@@ -116,20 +117,20 @@ require('aframe');
 
 [angle]: https://www.npmjs.com/package/angle
 
-If you use npm, you can use [`angle`][angle], a command line interface for
-A-Frame.  `angle` can initialize a scene template with a single command:
+npmを使用する場合、A-Frameのコマンドラインインターフェースである[`angle`][angle]を使用することができます。 `angle` は、1つのコマンドでシーンテンプレートを初期化することができます。
 
 ```sh
 npm install -g angle && angle initscene
 ```
 
-## Cordova Development
+## Cordovaで開発
 
 A-Frame is compatible with Cordova apps. Currently, network access is required as A-Frame and its dependencies load assets from CDN sources.
+A-FrameはCordovaアプリと互換性があります。現在、CDNソースからアセットを読み込むというA-FrameとCordovaの依存関係のため、ネットワークアクセスが必要です。
 
-[Cordova A-Frame Showcase App (demo)](https://github.com/benallfree/cordova-aframe-showcase)
+[Cordova A-Frame ショーケースアプリ(demo)](https://github.com/benallfree/cordova-aframe-showcase)
 
-### Installation
+### インストール
 
 Install the [cordova-plugin-xhr-local-file](https://github.com/benallfree/cordova-plugin-xhr-local-file) plugin. This is needed because
 Cordova runs from `file://`, and XHR requests to local `file://` assets (JSON fonts, 3D models, etc) will fail without this plugin.
@@ -187,10 +188,10 @@ In your `index.html`, adjust as follows:
 </body>
 ```
 
-### Discussion
+### 議論
 
 
-#### deviceready
+#### デバイスレディー
 The most important difference between a browser environment and a Cordova environment is waiting for the `deviceready` event
 before rendering your scene. 
 
