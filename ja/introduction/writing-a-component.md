@@ -11,21 +11,15 @@ examples: []
 [ecs]: ../introduction/entity-component-system.md
 [emit]: ./javascript-events-dom-apis.md#emitting-an-event-with-emit
 
-Components of A-Frame's [entity-component framework][ecs] are JavaScript
-modules that can be mixed, matched, and composed onto entities to build
-appearance, behavior, and functionality. We can register component in
-JavaScript and use it declaratively from the DOM. Components are configurable,
-reusable, and shareable. Most code in an A-Frame application should live within
-components.
+A-Frameの[entity-component framework][ecs]のコンポーネントは、外観、動作、機能を構築するために混合、組み合わせ、エンティティ上に合成することができるJavaScriptモジュールです。JavaScriptでコンポーネントを登録し、DOMから宣言的に利用することができます。コンポーネントは、設定可能、再利用可能、共有可能です。A-Frameアプリケーションのコードのほとんどは、コンポーネントの中にあるべきものです。
+
 
 [vehicleimage]: https://cloud.githubusercontent.com/assets/674727/21803890/0d44f0c2-d6e1-11e6-8b4f-7fb14c05a492.jpg
 ![vehicleimage]
 <small class="image-caption"><i>Image by Ruben Mueller from vrjump.de</i></small>
 
-This guide will take it pretty slow. We recommend skimming over the [Component
-API documentation][component] before going through this guide as that
-documentation will be more concise. Note that components should be defined
-before `<a-scene>` like:
+このガイドでは、かなりゆっくりと説明します。このガイドを読む前に、[Component API documentation][component] にざっと目を通すことをお勧めします。コンポーネントは `<a-scene>` の前に定義する必要があることに注意してください。
+
 
 ```html
 <html>
@@ -48,10 +42,8 @@ before `<a-scene>` like:
 
 [learning]: #learning-through-components-in-ecosystem
 
-We'll go over examples on writing components. The examples will do mostly
-trivial things, but will demonstrate data flow, API, and usage. To see examples
-of non-trivial components, see the [Learning Through Components in Ecosystem
-section][learning].
+コンポーネントの書き方について、例を挙げて説明します。この例では、ほとんど些細なことを行いますが、データの流れ、API、使い方を説明します。自明ではないコンポーネントの例を見るには、[Learning Through Components in Ecosystemセクション][learning]を参照してください。
+
 
 <!-- toc -->
 
@@ -59,20 +51,15 @@ section][learning].
 
 [init]: ../core/component.md#init
 
-Let's start with the most basic component to get a general idea. This component
-will log a simple message once when the component's entity is attached using
-the [`.init()` handler][init].
+まずは、一般的な考え方を知るために、最も基本的なコンポーネントから見ていきましょう。このコンポーネントは、コンポーネントの実体が[`.init()`ハンドラ][init]を使ってアタッチされると、簡単なメッセージを一度だけログに記録します。
+
 
 ### Registering the Component with `AFRAME.registerComponent`
 
-Components are registered with `AFRAME.registerComponent()`. We pass the name of
-the component, which will be used as the HTML attribute name in the component's
-representation in the DOM. Then we pass the **component definition** which is a
-JavaScript object of methods and properties. Within the definition, we can
-define **lifecycle handler methods**. One of which is [`.init()`][init], which
-is called once when the component is first plugged into its entity.
+コンポーネントは `AFRAME.registerComponent()` で登録します。コンポーネントの名前を渡しますが、これはDOMでコンポーネントを表現する際のHTML属性名として使われます。次に、メソッドとプロパティを持つJavaScriptオブジェクトである**コンポーネント定義**を渡します。定義内では、**ライフサイクルハンドラーメソッド**を定義することができます。そのうちのひとつが [`.init()`][init] で、これはコンポーネントがその実体に最初に差し込まれたときに一度だけ呼び出されます。
 
-In the example below, we just have our `.init()` handler log a simple message.
+
+以下の例では、`.init()`ハンドラに簡単なメッセージを記録させているだけです。
 
 ```js
 AFRAME.registerComponent('hello-world', {
@@ -84,7 +71,7 @@ AFRAME.registerComponent('hello-world', {
 
 ### Using the Component from HTML
 
-Then we can use our `hello-world` component declaratively as an HTML attribute.
+そして、この `hello-world` コンポーネントを HTML の属性として宣言的に使用することができます。
 
 ```html
 <a-scene>
@@ -92,18 +79,13 @@ Then we can use our `hello-world` component declaratively as an HTML attribute.
 </a-scene>
 ```
 
-Now after the entity is attached and initialized, it will initialize our
-`hello-world` component. The wonderful thing about components is that they are
-called only after the entity is ready. **We don't have to worry about waiting
-for the scene or entity to set up**, it'll just work! If we check the console,
-`Hello, World!` will be logged once after the scene has started running and the
-entity has attached.
+さて、エンティティがアタッチされて初期化されると、`hello-world` コンポーネントが初期化されます。コンポーネントの素晴らしいところは、エンティティの準備が整った後に呼び出されることです。**シーンやエンティティがセットアップされるのを待つ心配はありません**。コンソールを確認すると、シーンが実行され始め、エンティティがアタッチされた後に `Hello, World!` が一度だけログに記録されます。
+
 
 ### Using the Component from JS
 
-Another way to set a component, rather than via static HTML, is to set it
-programmatically with `.setAttribute()`. The scene element can take components
-too, let's set our `hello-world` component on the scene programmatically:
+コンポーネントを設定するもう一つの方法は、静的なHTMLを介するのではなく、 `.setAttribute()` でプログラム的に設定することです。scene 要素はコンポーネントを受け取ることができるので、プログラムによって `hello-world` コンポーネントをシーンに設定してみましょう。
+
 
 ```js
 document.querySelector('a-scene').setAttribute('hello-world', '');
@@ -111,23 +93,16 @@ document.querySelector('a-scene').setAttribute('hello-world', '');
 
 ## Example: `log` Component
 
-Similar to the `hello-world` component, let's make a `log` component. It'll
-still only just do `console.log`, but we'll make it able to `console.log` more
-than just `Hello, World!`. Our `log` component will log whatever string its
-passed in. We'll find out how to pass data to components by defining
-configurable properties via the schema.
+`hello-world`コンポーネントと同じように、`log`コンポーネントを作ってみましょう。これはまだ `console.log` を実行するだけですが、`Hello, World!` 以外にも `console.log` を実行できるようにしましょう。この `log` コンポーネントは渡された文字列をログに記録します。スキーマで設定可能なプロパティを定義することで、コンポーネントにデータを渡す方法を見つけることができます。
+
 
 ### Defining Properties with the Schema
 
-The **schema** defines the **properties** of its component. As an analogy, if
-we think of a component as a function, then a component's properties are like
-its function arguments. A property has a name (if the component has more than
-one property), a default value, and a **property type**. Property types define
-how data is parsed if its passed as a string (i.e., from the DOM).
+**スキーマ**は、そのコンポーネントの**プロパティ**を定義します。例えるなら、コンポーネントを関数と考えると、コンポーネントのプロパティはその関数の引数のようなものです。プロパティには、名前（コンポーネントに複数のプロパティがある場合）、デフォルト値、および **プロパティタイプ** があります。プロパティタイプは、データが文字列として渡された場合（つまり、DOMから）、どのようにパースされるかを定義します。
 
-For our `log` component, let's define a `message` property type via the
-`schema`. The `message` property type will have a `string` property type and
-have a default value of `Hello, World!`:
+
+`log` コンポーネントでは、`schema` を使って `message` プロパティタイプを定義しましょう。message` プロパティタイプは `string` プロパティタイプを持ち、デフォルトの値は `Hello, World!` となります。
+
 
 ```js
 AFRAME.registerComponent('log', {
@@ -140,12 +115,7 @@ AFRAME.registerComponent('log', {
 
 ### Using Property Data from a Lifecycle Handler
 
-The `string` property type doesn't do any parsing on the incoming data and will
-pass it to the lifecycle method handlers as is. Now let's `console.log` that
-`message` property type. Like the `hello-world` component, we write a `.init()`
-handler, but this time we won't be logging a hardcoded string. The component's
-property type values are available through `this.data`. So let's log
-`this.data.message`!
+`string` プロパティタイプは、入力されたデータの解析を行わず、そのままライフサイクルのメソッドハンドラに渡します。では、その `message` プロパティタイプを `console.log` してみましょう。hello-world` コンポーネントと同様に、 `.init()` ハンドラを書きます。しかし、今回はハードコードされた文字列をログに記録するわけではありません。このコンポーネントのプロパティタイプの値は `this.data` から取得することができます。そこで、`this.data.message`を記録することにしましょう。
 
 ```js
 AFRAME.registerComponent('log', {
@@ -161,9 +131,8 @@ AFRAME.registerComponent('log', {
 
 [inlinecss]: http://webdesign.about.com/od/beginningcss/qt/tipcssinlinesty.htm
 
-Then from HTML, we can attach the component to an entity. For a multi-property
-component, the syntax is the same as [inline css styles][inlinecss] (property
-name/value pairs separated by `:` and properties separated by `;`):
+そして、HTMLから、コンポーネントをエンティティにアタッチすることができます。マルチプロパティコンポーネントの場合、構文は [inline css styles][inlinecss] と同じです（プロパティ名と値のペアは `:` で区切り、プロパティは `;` で区切ります）。
+
 
 ```html
 <a-scene>
@@ -173,18 +142,14 @@ name/value pairs separated by `:` and properties separated by `;`):
 
 ### Handling Property Updates
 
-So far, we've been using just the `.init()` handler which is called only once
-at the beginning of the component lifecycle with only its initial properties.
-But components often have their properties updated dynamically. We can use the
-`.update()` handler to handle property updates.
+これまでのところ、`.init()`ハンドラだけを使用してきました。このハンドラは、コンポーネントのライフサイクルの最初に一度だけ、その初期プロパティだけを使用して呼び出されます。しかし、コンポーネントはしばしば動的にそのプロパティを更新することがあります。そこで、プロパティの更新を処理するために `.update()` ハンドラを使用することができます。
 
 [methodsimage]: https://cloud.githubusercontent.com/assets/674727/21803913/2966ba7e-d6e1-11e6-9179-8acafc87540c.jpg
 ![methodsimage]
 <small class="image-caption"><i>Lifecycle method handlers. Image by Ruben Mueller from vrjump.de</i></small>
 
-To demonstrate this, we'll have our `log` component only log whenever its
-entity [emits an event][emit]. First, we'll add an `event` property type that
-specifies which event the component should listen on.
+これを実証するために、`log`コンポーネントは、そのエンティティが[イベントをemit][emit]したときだけログを記録するようにします。まず、コンポーネントがリッスンするイベントを指定するために、 `event` プロパティタイプを追加します。
+
 
 ```js
 // ...
@@ -197,15 +162,11 @@ schema: {
 
 [addeventlistener]: ./javascript-events-dom-apis.md#adding-an-event-listener-with-addeventlistener
 
-Then we'll actually move everything from our `.init()` handler to our
-`.update()` handler. The `.update()` handler is also called right after
-`.init()` when the component is attached. Sometimes, we have most of our logic
-in the `.update()` handler so we can initialize *and* handle updates all at
-once without repeating code.
+次に、すべてを `.init()` ハンドラから `.update()` ハンドラに移動させます。この `.update()` ハンドラも、コンポーネントがアタッチされたときに `.init()` の直後に呼び出されます。時には、`.update()` ハンドラにロジックのほとんどを記述して、コードを繰り返すことなく初期化と更新処理を一度に行えるようにすることもあります。
 
-What we want to do is [add an event listener][addeventlistener] that will
-listen to the event before logging a message. If the `event` property type is
-not specified, we'll just log the message:
+
+私たちがしたいことは、メッセージをログに記録する前にイベントを聞く[イベントリスナーを追加][addeventlistener]することです。もし `event` プロパティタイプが指定されていない場合は、単にメッセージをログに記録します。
+
 
 ```js
 AFRAME.registerComponent('log', {
@@ -233,15 +194,11 @@ AFRAME.registerComponent('log', {
 
 [remove an event listener]: ./javascript-events-dom-apis.md#removing-an-event-listener-with-removeeventlistener
 
-Now that we've added our event listener property, let's handle an actual
-property update. When the `event` property type changes (e.g., as a result of
-`.setAttribute()`), we need to remove the previous event listener, and add a
-new one.
+イベントリスナープロパティを追加したので、実際のプロパティの更新を処理してみましょう。イベントプロパティの種類が変更されたとき（例えば、 `.setAttribute()` の結果）、以前のイベントリスナーを削除して、新しいイベントリスナーを追加する必要があります。
 
-But to [remove an event listener], we need a reference to the function. So
-let's first store the function on `this.eventHandlerFn` whenever we attach an
-event listener. When we attach properties to the component via `this`, they'll
-be available throughout all the other lifecycle handlers.
+
+しかし、[イベントリスナーを削除する]ためには、関数への参照が必要です。そこで、まずイベントリスナーをアタッチするたびに `this.eventHandlerFn` に関数を保存するようにしましょう。`this` を介してコンポーネントにプロパティをアタッチすると、他のすべてのライフサイクルハンドラで利用できるようになります。
+
 
 ```js
 AFRAME.registerComponent('log', {
@@ -272,10 +229,8 @@ AFRAME.registerComponent('log', {
 });
 ```
 
-Now that we have the event handler function stored. We can remove the event
-listener whenever the `event` property type changes. We want to only update the
-event listener when the `event` property type changes. We do this by checking
-`this.data` against the `oldData` argument provided by the `.update()` handler:
+これで、イベントハンドラ関数が格納されました。イベントハンドラ関数は保存されているので、`event` プロパティタイプが変更されるたびにイベントリスナーを削除することができます。ここでは、`event` のプロパティタイプが変更されたときだけ、イベントリスナーを更新するようにしたいと思います。これは、`.update()` ハンドラによって提供された `oldData` 引数に対して `this.data` をチェックすることによって行われます。
+
 
 ```js
 AFRAME.registerComponent('log', {
@@ -307,7 +262,7 @@ AFRAME.registerComponent('log', {
 });
 ```
 
-Now let's test our component with an updating event listener. Here's our scene:
+それでは、このコンポーネントを更新イベントリスナーでテストしてみましょう。以下は、このシーンです。
 
 ```html
 <a-scene>
@@ -315,7 +270,7 @@ Now let's test our component with an updating event listener. Here's our scene:
 </a-scene>
 ```
 
-Let's have our entity [emit the event][emit] to test it out:
+試しに、私たちのエンティティにイベントを[emit][emit]させてみましょう。
 
 ```js
 var el = document.querySelector('a-entity');
@@ -323,7 +278,7 @@ el.emit('anEvent');
 // >> "Hello, Metaverse!"
 ```
 
-Now let's update our event to test the `.update()` handler:
+では、イベントを更新して `.update()` ハンドラをテストしてみましょう。
 
 ```js
 var el = document.querySelector('a-entity');
@@ -336,10 +291,10 @@ el.emit('anotherEvent');
 
 [remove]: ./javascript-events-dom-apis.md#removing-a-component-with-removeattribute
 
-Let's handle the case where the [component unplugs from the entity][remove]
-(i.e., `.removeAttribute('log')`). We can implement the `.remove()` handler
-which is called when the component is removed. For the `log` component, we
-remove any event listeners the component attached to the entity:
+[エンティティからコンポーネントを取り外す][remove]というケースを扱ってみましょう。
+(つまり、`.removeAttribute('log')`)です。この場合、`.remove()` ハンドラを実装すればよいでしょう。
+コンポーネントを削除する際に呼び出されます。`log` コンポーネントの場合、以下のようになります。
+は、エンティティに接続されたコンポーネントのイベントリスナーをすべて削除します。
 
 ```js
 AFRAME.registerComponent('log', {
@@ -383,8 +338,8 @@ AFRAME.registerComponent('log', {
 });
 ```
 
-Now let's test out the remove handler. Let's remove the component and check
-that emitting the event no longer does anything:
+では、削除ハンドラをテストしてみましょう。コンポーネントを削除し、イベントを発行しても何も起こらないことを確認しましょう。
+
 
 ```html
 <a-scene>
@@ -403,9 +358,8 @@ el.emit('anEvent');
 
 [multiple]: ../core/component.md#multiple
 
-Let's allow having multiple `log` components attached to the same entity. To do
-so, we enable [multiple instancing with the `.multiple` flag][multiple]. Let's
-set that to `true`:
+同じエンティティに複数の `log` コンポーネントをアタッチできるようにしましょう。そのためには、[`.multiple` フラグで複数のインスタンスを作成する][multiple]ことを有効にします。これを `true` に設定しましょう。
+
 
 ```js
 AFRAME.registerComponent('log', {
@@ -420,9 +374,8 @@ AFRAME.registerComponent('log', {
 });
 ```
 
-The syntax for an attribute name for a multiple-instanced component has the
-form of `<COMPONENTNAME>__<ID>`, a double-underscore with an ID suffix. The ID
-can be whatever we choose. For example, in HTML:
+マルチインスタンスコンポーネントの属性名のシンタックスは `<COMPONENTNAME>__<ID>` という形式で、2つのアンダースコアにIDのサフィックスが付きます。IDは任意に設定することができます。例えば、HTMLでは
+
 
 ```html
 <a-scene>
@@ -439,20 +392,17 @@ el.setAttribute('log__helloworld', {message: 'Hello, World!'});
 el.setAttribute('log__metaverse', {message: 'Hello, Metaverse!'});
 ```
 
-Within the component, if we wanted, we can tell between different instances
-using `this.id` and `this.attrName`. Given `log__helloworld`, `this.id` would
-be `helloworld` and `this.attrName` would be the full `log__helloworld`.
+コンポーネント内では、必要であれば `this.id` と `this.attrName` を使用して異なるインスタンスを区別することができます。例えば、 `log__helloworld` があれば、 `this.id` は `helloworld` で、 `this.attrName` は完全な `log__helloworld` となります。
 
-And there we have our basic `log` component!
+
+これで、基本的な `log` コンポーネントができました。
 
 ## Example: `box` Component
 
 [usingthree]: ./developing-with-threejs.md
 
-For a less trivial example, let's find out how we can add 3D objects and affect
-the scene graph by writing a component that [uses three.js][usingthree]. To get
-the idea, we'll just make a basic `box` component that creates a box mesh with both
-geometry and material.
+あまりつまらない例ですが、[using three.js][usingthree] というコンポーネントを書いて、3Dオブジェクトを追加したり、シーングラフに影響を与えたりする方法を調べてみましょう。アイデアを得るために、ジオメトリとマテリアルの両方を持つボックスメッシュを作成する、基本的な`box`コンポーネントを作成します。
+
 
 [geometry]: ../components/geometry.md
 [material]: ../components/material.md
@@ -461,17 +411,13 @@ geometry and material.
 ![boximage]
 <small class="image-caption"><i>Image by Ruben Mueller from vrjump.de</i></small>
 
-**Note:** this is just a 3D equivalent of writing a `Hello, World!` component.
-A-Frame provides [geometry][geometry] and [material][material] components if we
-actually wanted to make a box in practice.
+**注意:** これは `Hello, World!` コンポーネントを書くのとちょうど3Dで同等です。A-Frameは[geometry][geometry] と [material][material] コンポーネントを提供していますが、実際に箱を作りたいのであれば、このコンポーネントを使用します。
+
 
 ### Schema and API
 
-Let's start with the schema. The schema defines the API of your component.
-We'll make the `width`, `height`, `depth`, and `color` configurable through the
-properties. The `width`, `height`, and `depth` will be number types (i.e.,
-floats) with a default of 1 meter. The `color` type will have a color type
-(i.e., a string) with a default of gray:
+まずはスキーマから。スキーマはコンポーネントのAPIを定義する。ここでは、`width`, `height`, `depth`, `color` をプロパティで設定できるようにします。`width`, `height`, `depth`,は数値型 (つまり、float) で、デフォルトは 1 メートルです。`color` 型はカラータイプ（つまり文字列）で、デフォルトはグレーです。
+
 
 ```js
 AFRAME.registerComponent('box', {
@@ -484,7 +430,7 @@ AFRAME.registerComponent('box', {
 });
 ```
 
-Later, when we use this component via HTML, the syntax will look like:
+後で、このコンポーネントをHTML経由で使用する場合、構文は次のようになります。
 
 ```html
 <a-scene>
@@ -500,12 +446,8 @@ Later, when we use this component via HTML, the syntax will look like:
 [threematerial]: https://threejs.org/docs/index.html#Reference/Materials/MeshStandardMaterial
 [setobject3d]: ./developing-with-threejs.md#setting-an-object3d-on-an-entity
 
-Let's create our three.js box mesh from the `.init()`, and we'll later let the
-`.update()` handler handle all the property updates. To create a box in
-three.js, we'll create a [`THREE.BoxBufferGeometry`][threegeometry],
-[`THREE.MeshStandardMaterial`][threematerial], and finally a
-[`THREE.Mesh`][mesh]. Then we set the mesh on our entity to add the mesh to the
-three.js scene graph [using `.setObject3D(name, object)`][setobject3d]:
+three.js のボックスメッシュは `.init()` から作成し、プロパティの更新はすべて `.update()` ハンドラーに任せます。three.js でボックスを作成するには、[`THREE.BoxBufferGeometry`][threegeometry]、 [`THREE.MeshStandardMaterial`][threematerial] 、最後に [`THREE.Mesh`][mesh] を作成することになります。次に、エンティティにメッシュを設定し、[`.setObject3D(name, object)`を使って][setobject3d]three.jsのシーングラフにメッシュを追加します．
+
 
 ```js
 AFRAME.registerComponent('box', {
@@ -538,11 +480,8 @@ AFRAME.registerComponent('box', {
 });
 ```
 
-Now let's handle updates. If the geometry-related properties (i.e., `width`,
-`height`, `depth`) update, we'll just recreate the geometry. If the
-material-related properties (i.e., `color`) update, we'll just update the
-material in place. To access the mesh to update it, we use
-`.getObject3D('mesh')`.
+では、更新の処理をしましょう。ジオメトリ関連のプロパティ（`width`, `height`, `depth` ）が更新されたら、ジオメトリを再作成するだけです。マテリアル関連のプロパティ（例：`color`）が更新された場合、その場でマテリアルを更新するだけです。メッシュを更新するためにメッシュにアクセスするには `.getObject3D('mesh')` を使用します。
+
 
 ```js
 AFRAME.registerComponent('box', {
@@ -591,9 +530,8 @@ AFRAME.registerComponent('box', {
 
 ### Removing the Box Mesh
 
-Lastly, we'll handle when the component or entity is removed. In this case,
-we'll want to remove the mesh from the scene. We can do so with the `.remove()`
-handler and `.removeObject3D(name)`:
+最後に、コンポーネントやエンティティが削除されたときの処理をします。今回は、シーンからメッシュを削除したいと思います。これは `.remove()` ハンドラと `.removeObject3D(name)` を使って行います。
+
 
 ```js
 AFRAME.registerComponent('box', {
@@ -605,25 +543,18 @@ AFRAME.registerComponent('box', {
 });
 ```
 
-And that wraps up the basic three.js `box` component! In practice, a three.js
-component would do something more useful. Anything that can be accomplished in
-three.js can be wrapped in an A-Frame component to make it declarative. So
-check out the three.js features and ecosystem and see what components you can
-write!
+これで基本的なthree.jsの`box`コンポーネントが完成です! 実際には、three.jsのコンポーネントはもっと便利なことをするはずです。three.jsで実現できることはすべて、A-Frameコンポーネントでラップして、宣言的にすることができます。というわけで、three.jsの機能とエコシステムをチェックして、あなたがどんなコンポーネントを書けるか見てみてください
+
 
 ## Example: `follow` Component
 
-Let's write a `follow` component where we tell one entity to follow another.
-This will demonstrate the use of the `.tick()` handler which adds a
-continuously running behavior that runs on every frame of the render loop to
-the scene. This will also demonstrate relationships between entities.
+あるエンティティに他のエンティティをフォローするように指示する `follow` コンポーネントを書いてみましょう。これは、レンダリングループの各フレームで継続的に動作するビヘイビアをシーンに追加する `.tick()` ハンドラの使用を実証するものです。これはまた、エンティティ間のリレーションシップのデモでもあります。
+
 
 ### Schema and API
 
-First off, we'll need a `target` property that specifies which entity to
-follow. A-Frame has a `selector` property type to do the trick, allowing
-us to pass in a query selector and get back an entity element. We'll also add a
-`speed` property (in m/s) to tell specify how fast the entity should follow.
+まず最初に、どのエンティティを追いかけるかを指定する `target` プロパティが必要です。A-Frameには、`selector`というプロパティタイプがあり、クエリーセレクタを渡すと、エンティティエレメントを返してくれる。さらに、`speed` プロパティ（単位：m/s）を追加して、エンティティがどの程度の速度で追従するかを指定します。
+
 
 ```js
 AFRAME.registerComponent('follow', {
@@ -634,7 +565,7 @@ AFRAME.registerComponent('follow', {
 });
 ```
 
-Later, when we use this component via HTML, the syntax will look like:
+後で、このコンポーネントをHTML経由で使用する場合、構文は次のようになります。
 
 ```html
 <a-scene>
@@ -645,12 +576,8 @@ Later, when we use this component via HTML, the syntax will look like:
 
 ### Creating a Helper Vector
 
-Since the `.tick()` handler will be called on every frame (e.g., 90 times per
-second), we want to make sure its performant. One thing we don't want to do is
-be creating unnecessary objects on each tick such as `THREE.Vector3` objects.
-That would help lead to garbage collection pauses. Since we'll need to do
-some vector operations using a `THREE.Vector3`, we'll create it once in the
-`.init()` handler so we can later reuse it:
+ハンドラ `.tick()` は毎フレーム（例えば、1秒間に90回）呼び出されるので、そのパフォーマンスを確認したいと思います。例えば、`THREE.Vector3`オブジェクトのような不要なオブジェクトをtick毎に作成するようなことはしたくありません。これはガベージコレクションを中断させることにつながります。`THREE.Vector3` を使ってベクトル演算をする必要があるので、`.init()` ハンドラで一度作成し、後で再利用できるようにします。
+
 
 ```js
 AFRAME.registerComponent('follow', {
@@ -667,27 +594,16 @@ AFRAME.registerComponent('follow', {
 
 ### Defining a Behavior With the `.tick()` Handler
 
-Now we'll write the `.tick()` handler so the component continuously moves the
-entity towards its target at the desired speed. A-Frame passes in the global
-scene uptime as `time` and time since the last frame as `timeDelta` into the
-`tick()` handler, in milliseconds. We can use the `timeDelta` to calculate how
-far the entity should travel towards the target this frame, given the speed.
+今度は、`.tick()`ハンドラを書いて、コンポーネントがターゲットに向かって希望する速度でエンティティを連続的に移動させるようにします。A-Frame はグローバルなシーンのアップタイムを `time` として、最後のフレームからの時間を `timeDelta` として `tick()` ハンドラにミリ秒単位で渡します。このフレームでは `timeDelta` を使って、速度が与えられているときにターゲットに向かってどの程度移動すべきかを計算することができます。
 
-To calculate the direction the entity should head in, we subtract the entity's
-position vector from the target entity's direction vector. We have access to
-the entities' three.js objects via `.object3D`, and from there the position
-vector `.position`. We store the direction vector in the `this.directionVec3`
-we previously allocated in the `init()` handler.
 
-Then we factor in the distance to go, the desired speed, and how much time
-has passed since the last frame to find the appropriate vector to add to
-the entity's position. We translate the entity with `.setAttribute` and in
-the next frame, the `.tick()` handler will be run again.
+エンティティの向かうべき方向は、ターゲットの方向ベクトルからエンティティの位置ベクトルを引くことで計算される。オブジェクトは `.object3D` からアクセスでき、そこから位置ベクトル `.position` が得られます。方向ベクトルは `init()` ハンドラで割り当てた `this.directionVec3` に格納します。
 
-The full `.tick()` handler is below. `.tick()` is great because it allows an
-easy way to hook into the render loop without actually having a reference to
-the render loop. We just have to define a method. Follow along below with the
-code comments:
+次に、移動距離と速度、そして最後のフレームからの経過時間を考慮し、エンティティの位置に追加する適切なベクトルを探します。エンティティを `.setAttribute` で移動させ、次のフレームで `.tick()` ハンドラが再び実行されます。
+
+
+完全な `.tick()` ハンドラは以下の通りです。`.tick()` は、レンダリングループを実際に参照することなく、レンダリングループに簡単にフックすることができるので、とても便利です。メソッドを定義するだけです。以下のコードコメントに従ってください。
+
 
 ```js
 AFRAME.registerComponent('follow', {
@@ -734,10 +650,8 @@ AFRAME.registerComponent('follow', {
 
 ## Learning Through Components in Ecosystem
 
-There are a large number of components in the ecosystem, most of them open
-source on GitHub.  One way to learn is to browse the source code of other
-components to see how they're built and what use cases they provide for. Here
-are a few places to look:
+エコシステムには数多くのコンポーネントが存在し、そのほとんどがGitHubでオープンソース化されています。学ぶ方法の一つは、他のコンポーネントのソースコードを閲覧して、それらがどのように構築されているか、どのようなユースケースを提供しているかを確認することです。ここでは、いくつかの場所を紹介します。
+
 
 [corecomponents]: https://github.com/aframevr/aframe/tree/master/src/components
 [paintercomponents]: https://github.com/aframevr/a-painter/tree/master/src/components
@@ -760,19 +674,15 @@ are a few places to look:
 
 [angle]: https://www.npmjs.com/package/angle
 
-Many components in practice will be application-specific or one-off components.
-But if you wrote a component that could be useful to the community and is
-generalized enough to work in other applications, you should publish it!
+実際に使用される多くのコンポーネントは、アプリケーションに特化したものや、一点物のコンポーネントになるでしょう。しかし、もしあなたがコミュニティにとって有用で、他のアプリケーションでも動作するような汎用性のあるコンポーネントを書いたのであれば、それを公開すべきです!
 
-For a component template, we recommend using [`angle`][angle].  `angle` is a
-command-line interface for A-Frame; one of its features is to set up a
-component template for publishing to GitHub and npm and also to be consistent
-with all the other components in the ecosystem. To install the template:
+
+コンポーネントテンプレートには、[`angle`][angle]を使用することをお勧めします。`angle` はA-Frameのコマンドラインインターフェースです。その特徴の一つは、GitHubやnpmに公開するためのコンポーネントテンプレートを設定することと、エコシステム内の他の全てのコンポーネントと一貫性を持たせることです。テンプレートをインストールするには
+
 
 ```sh
 npm install -g angle && angle initcomponent
 ```
 
-`initcomponent` will ask for some information like the component name to get
-the template set up. Write some code, examples, and documentation, and publish
-to GitHub and npm!
+`initcomponent` はテンプレートをセットアップするために、コンポーネント名などのいくつかの情報を尋ねます。コード、サンプル、ドキュメントを書いて、GitHub と npm に公開しましょう!
+
