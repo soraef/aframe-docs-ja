@@ -15,37 +15,25 @@ examples:
 [OBJ]: ../components/obj-model.md
 [recommend using glTF]: ../components/gltf-model.md#why-use-gltf
 
-A-Frame provides components for loading [glTF] and [OBJ]. We [recommend
-using glTF] if possible as glTF gains adoption as the standard for transmitting
-3D models over the Web. Components can be written to handle any file format,
-specifically any format that has a [three.js loader][3loaders]. We can also try
-to [find components in the ecosystem][ecsfind] that have already been written
-to handle other formats (e.g., PLY, FBX, JSON, three.js).
+A-Frameには、「glTF」と「OBJ」を読み込むためのコンポーネントが用意されています。glTFは、Web上での3Dモデル転送の標準として採用が進んでいるため、可能であればglTFを使用することをお勧めします。[Three.jsローダー][3loaders]を持つファイル形式であれば、どのようなファイル形式でもコンポーネントを作成することができます。また、他のフォーマット（例：PLY、FBX、JSON、three.js）を処理するために既に書かれているコンポーネントを[エコシステムで見つける][ecsfind]ようにすることも可能です。
 
-Models come in the format of plain text files containing vertices, faces, UVs,
-textures, materials, and animations. They also come with images for textures,
-usually alongside the model file. three.js loaders parse these files to render
-them within a three.js scene as meshes. A-Frame model components wrap these
-three.js loaders.
+モデルは、頂点、面、UV、テクスチャ、マテリアル、アニメーションを含むプレーンテキストファイルの形式で提供されます。three.jsローダーは、これらのファイルを解析して、three.jsのシーン内でメッシュとしてレンダリングします。A-Frameのモデルコンポーネントは、これらのthree.jsローダーをラップしています。
+
 
 ## Animating Models
 
 [mixer]: https://github.com/donmccurdy/aframe-extras/tree/master/src/loaders#animation
 
-We can use [Don McCurdy's animation-mixer component][mixer] to play a model's
-built-in animations. Animations usually come in the model built via animation
-tools or programs rather than being provided at the A-Frame level. The
-animation-mixer component may be merged into A-Frame's core in the future.
+[Don McCurdy氏のanimation-mixerコンポーネント][mixer]を使って、モデルに内蔵されているアニメーションを再生することができます。アニメーションは通常、A-Frameレベルで提供されるのではなく、アニメーションツールやプログラムを通じて構築されたモデルに搭載されています。animation-mixer コンポーネントは、将来的に A-Frame のコアに統合されるかもしれません。
 
-For starting material on creating animations, see:
+アニメーションの作成に関する最初の資料として、以下を参照してください。
 
-- [Blender Tutorial - Creating and Editing Actions for Re-use in Animations and
-  Games](https://www.youtube.com/watch?v=Gb152Qncn2s)
-- [Workflow: Animation from Blender to three.js by Arturo Paracuellos](http://unboring.net/workflows/animation.html)
+- [Blender Tutorial - Creating and Editing Actions for Re-use in Animations and Games](https://www.youtube.com/watch?v=Gb152Qncn2s)を参照してください。
+- [ワークフロー：アニメーション from Blender to three.js by Arturo Paracuellos](http://unboring.net/workflows/animation.html)
 
 ## Where to Find Models
 
-Places to find 3D models include:
+3Dモデルを探す場所には、以下のようなものがあります。
 
 - [Sketchfab](https://sketchfab.com)
 - [Clara.io](http://clara.io)
@@ -55,11 +43,9 @@ Places to find 3D models include:
 
 ## How to Create Models
 
-Programs to create models include:
+モデルを作成するためのプログラムには
 
-- [Supercraft](https://supermedium.com/supercraft/) - Built **with** A-Frame to
-  model directly within VR with no modeling skill required and load with
-  [`aframe-supercraft-loader`](https://www.npmjs.com/package/aframe-supercraft-loader).
+- [Supercraft](https://supermedium.com/supercraft/) - Built **with** A-Frame to model directly within VR with no modeling skill required and load with [`aframe-supercraft-loader`](https://www.npmjs.com/package/aframe-supercraft-loader).
 - [Blender](https://www.blender.org/)
 - [MagicaVoxel](https://ephtracy.github.io/)
 - [Autodesk Maya](https://www.autodesk.com/products/maya/overview) or [Maya LT](https://www.autodesk.com/products/maya-lt/overview)
@@ -67,21 +53,16 @@ Programs to create models include:
 
 ## Hosting Models
 
-Refer to [Hosting and Publishing &mdash; Hosting
-Models](./hosting-and-publishing.md#hosting-models).
+[Hosting and Publishing &mdash; Hosting Models](./hosting-and-publishing.md#hosting-models)を参照してください。
 
 ## Modifying Materials
 
 [modify]: https://glitch.com/edit/#!/aframe-modify-model-material?path=index.html:1:0
 
-To modify the material of a model, we need to wait for the model to load, and
-then modify the three.js meshes created from the model. What happens is an
-A-Frame model component requests on the network the model, parses the model,
-creates three.js meshes or objects, and loads them in under the `<a-entity>`
-under `.getObject3D('mesh')`. We can reach into that mesh and modify whatever,
-in this case, three.js materials.
+モデルの素材を変更するには、モデルの読み込みを待って、モデルから作成されたthree.jsのメッシュを変更する必要があります。A-Frameのモデルコンポーネントは、ネットワーク上でモデルを要求し、モデルを解析し、three.jsのメッシュやオブジェクトを作成し、`<a-entity>`下の `.getObject3D('mesh')` にロードします。そのメッシュに到達して、何でも、この場合はthree.jsのマテリアルを変更することができます。
 
-See this live example of [modifying material of a loaded model][modify].
+
+[ロードしたモデルのマテリアルを変更する][modify]のライブ例を参照してください。
 
 ```html
 <script>
@@ -114,103 +95,75 @@ See this live example of [modifying material of a loaded model][modify].
 
 [hostingmodels]: ./hosting-and-publishing.md#hosting-models
 
-Before anything else, check your console for errors. Common issues related to
-CORS can be solved by properly [hosting your models][hostingmodels] and the
-console will also tell you if your model needs additional files that are
-missing.
+何よりもまず、コンソールにエラーがないかどうかを確認してください。CORS に関連する一般的な問題は、モデルを適切にホスティングすることで解決できます。また、モデルが不足している追加ファイルを必要としているかどうかも、コンソールが教えてくれます。
 
 ### I Don't See My Model
 
-If there are no errors in the console, try scaling your model down. Often times
-there's a mismatch in the scale when you export, and this will cause the camera
-to be inside the model, which means you won't be able to see it.
+コンソールにエラーが表示されない場合は、モデルを縮小してみてください。エクスポート時にスケールの不一致があることがよくあり、その場合、カメラがモデルの中に入ってしまい、見ることができなくなります。
+
 
 ```html
 <a-entity gltf-model="#tree" scale="0.01 0.01 0.01"></a-entity>
 ```
 
-If this doesn't work, open the Inspector by pressing `ctrl + alt + i` and zoom
-out to verify the model is actually there.
+これがうまくいかない場合は、`ctrl + alt + i`を押してインスペクタを開き、ズームアウトしてモデルが実際にそこにあることを確認します。
 
 ### I Don't See Textures
 
-Sometimes textures just won't work right off the bat. This is usually because
-exporters use absolute paths like `C:\\Path\To\Model\texture.jpg` or
-`/Path/To/Model/texture.jpg` for textures, which won't work on the Web. Instead,
-use relative paths like `texture.jpg` or `images/texture.jpg`, relative to your
-model or `.mtl` file.
+テクスチャがすぐに動作しないことがあります。これは通常、エクスポーターがテクスチャに `C:\Path</ToModel</texture.jpg` や `/Path/To/Model/texture.jpg` といった絶対パスを使用するからで、これはウェブ上では動作しません。代わりに、`texture.jpg` や `images/texture.jpg` のように、モデルまたは `.mtl` ファイルからの相対パスで指定します。
 
-1. Open the model (or .mtl if you're doing OBJ) in a plain text editor
-2. Search for the name of your texture (e.g., `texture.jpg`)
-3. Fix the path to the texture by making it relative instead of absolute
 
-If this didn't work, you should check your MTL file and you might notice it is trying to use TGA or some other sort of textures that aren't plain images. In this case, you need to include additional three.js loaders. However it might be easier to try converting all the TGAs to just use images like PNGs using a converter, and replace all instances of 'tga' with 'png'.
+1. モデル（OBJの場合は.mtl）をプレーンテキストエディタで開きます。
+2. テクスチャの名前を検索します（例：`texture.jpg`）。
+3. テクスチャのパスを絶対ではなく、相対にして修正します。
+
+この方法でうまくいかなかった場合、MTLファイルをチェックすると、TGAやその他のプレーン・イメージではない種類のテクスチャを使おうとしていることに気づくかもしれません。この場合、three.jsのローダーを追加で入れる必要があります。しかし、コンバータを使用して、すべてのTGAをPNGのような画像に変換し、「tga」のインスタンスをすべて「png」に置き換えると、より簡単になるかもしれません。
 
 ### My Model Isn't Animating
 
 [aframe-extras]: https://github.com/donmccurdy/aframe-extras
 
-The [animation-mixer component][mixer], part of [aframe-extras] by Don McCurdy,
-provides controls for playing animations in three.js (.json) and glTF (.gltf)
-models.
+Don McCurdy氏による[aframe-extras]の一部である[animation-mixer component][mixer] は、three.js (.json) と glTF (.gltf) モデルでアニメーションを再生するためのコントロールを提供するものです。
+
 
 ### My Model Looks Distorted
 
-A common issue with models is incorrect orientation of normals. You'll know you
-have an issue with normals if some of the faces on your geometry are
-transparent, or there are "holes" in the mesh.
+モデルでよくある問題は、法線の向きが正しくないことです。法線の問題は、ジオメトリの面の一部が透明になっていたり、メッシュに「穴」が開いていたりする場合に分かります。
 
-1. Import the model into Blender
-2. Turn on backface culling in the shading section of the properties panel
-(`n`) to get a better idea of which faces are incorrect.
-3. Select the object
-4. Go to edit mode (`<tab>`)
-5. Press a to select all faces
-6. Press `<ctrl> + n` to make normals consistent. If it looks like the opposite
-of what you want, flip them via the toolbar (`t`).
+1. Blenderにモデルをインポートします。
+2. プロパティパネルのシェーディングセクションでバックフェイスカリングをオンにし(`n`)、どの面が不正なのかを把握します。
+3. オブジェクトを選択します。
+4. 編集モードへ (`<tab>`)
+5. a キーですべての面を選択
+6. `<ctrl> + n` を押して法線を一致させます。もし逆になっているようであれば
+ツールバー (`t`) を使って反転させます。
 
 ## Model Performance
 
-We may notice that when we import a large file or complex model, the browser
-will slow to a halt or not even load. Complex models that were designed for
-high fidelity renders aren't ideal for real time applications. However,
-there're some things we can do to make them more performant while retaining
-their appearance.
+大きなファイルや複雑なモデルを読み込むと、ブラウザの動作が遅くなったり、読み込みすらできなくなることに気づくことがあります。高忠実度のレンダリング用に設計された複雑なモデルは、リアルタイムのアプリケーションには向いていないのです。しかし、外観を維持しながらパフォーマンスを向上させるために、いくつかできることがあります。
 
 ### Testing for Performance
 
 [stats]: ../components/stats.md
 
-To get an idea of how our scene is performing, enable the [stats component][stats]:
+シーンのパフォーマンスを知るために、[stats component][stats]を有効にしてください。
 
 ```html
 <a-scene stats>
 ```
 
-Move around our scene and test different scenarios while keeping an eye on the
-graph and be sure to test on different hardware. A development PC will most
-likely have an easier time handling the scene than a smartphone. If we're
-noticing that we're not reaching 60 fps, try removing different elements in the
-scene until we find the culprit. If the performance-offending entity is a 3D
-model, we can try to optimize it.
+グラフを見ながらシーンを移動してさまざまなシナリオをテストし、必ず異なるハードウェアでテストしてください。開発用PCは、スマートフォンよりも簡単にシーンを処理できる可能性が高いでしょう。60fpsに達しない場合は、原因が見つかるまで、シーンのさまざまな要素を削除してみてください。パフォーマンスの原因となっているのが3Dモデルであれば、それを最適化することができます。
 
 ### Optimizing Complex Models
 
-One of the biggest factors for scene optimization is model complexity and face
-count. The less geometry, the better.
+シーンの最適化で最も大きな要素のひとつが、モデルの複雑さと面数です。ジオメトリは少なければ少ないほど良いのです。
 
-A quick way to reduce the number of faces on a model is with the decimate
-modifier in Blender. The decimate modifier reduces the amount of geometric
-faces while retaining the model's UV coordinates. Nothing beats proper modeling
-techniques, but the decimate modifier can be a great last resort to make poorly
-optimized files run smoother. The settings for the modifier will be highly
-dependent on the model and how much detail we wish to remove.
+モデルの面数を減らす手っ取り早い方法は、Blenderのdecimateモディファイアを使用することです。decimateモディファイアはモデルのUV座標を保持したまま、ジオメトリの面の量を減らします。適切なモデリング技術に勝るものはありませんが、Decimateモディファイアは最適化されていないファイルをよりスムーズに動作させるための素晴らしい最終手段になりえます。モディファイヤーの設定は、モデルやどの程度ディテールを除去したいかに大きく依存します。
+
 
 ![Blender's Decimate Modifier](https://cloud.githubusercontent.com/assets/674727/25730604/f5402d90-30f2-11e7-9571-96bcdef11a6a.jpg)
 
-Adjust the ratio (highlighted) to reduce the number of faces.
+比率（ハイライト表示）を調整し、面の数を減らす。
 
-We may have to manually fix some of the faces at the end of the process. After
-we're happy with the results, *save a copy*, and export to our desired file
-type. Test it out, and adjust as needed. Note that we may have to apply the
-modifier before it will take effect.
+最後に一部の面を手動で修正する必要があるかもしれません。結果に満足したら、*コピーを保存*し、希望のファイルタイプにエクスポートします。テストして、必要に応じて調整します。なお、モディファイアを適用しないと効果が出ない場合があります。
+
