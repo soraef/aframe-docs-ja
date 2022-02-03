@@ -11,18 +11,11 @@ examples:
     src: https://glitch.com/edit/#!/wide-cream?path=index.html:1:0
 ---
 
-There is no one true way for adding interactions due to variety of platforms,
-devices, input methods that A-Frame can support. On top of that, VR interaction
-is open-ended. Unlike the 2D Web where we only have to worry about mouse and
-touch input, and unlike Cardboard where we only have to worry about one button,
-we can do anything in VR: grab, throw, rub, flip, poke, stretch, press, etc.
-Going further, mixed reality, trackers, and custom controllers provide even
-more creativity in interaction!
+A-Frameが対応するプラットフォーム、デバイス、入力方式は多岐にわたるため、インタラクションを追加する方法はひとつではありません。その上、VRインタラクションはオープンエンドです。マウスやタッチ入力しか気にする必要のない2Dウェブや、1つのボタンしか気にする必要のないCardboardとは異なり、VRでは、つかむ、投げる、こする、ひっくり返す、突く、伸ばす、押すなど、何でも可能なのです。さらに進んで、複合現実感、トラッカー、カスタムコントローラーを使えば、インタラクションにさらに創造性を発揮することができます。
 
-What we can do in this section is go over existing components for common
-interactions. And we can show *how* these input-based and interaction-based
-components are built in order to give us the knowledge to build our own
-interactions. In a sense, learn how to fish rather than being given a fish.
+
+このセクションでできることは、一般的なインタラクションのための既存のコンポーネントを確認することです。そして、これらの入力ベースおよびインタラクションベースのコンポーネントがどのように構築されているかを示すことで、私たち自身のインタラクションを構築するための知識を得ることができるのです。ある意味、魚を与えられるのではなく、魚の釣り方を学ぶのです。
+
 
 <!--toc-->
 
@@ -31,11 +24,8 @@ interactions. In a sense, learn how to fish rather than being given a fish.
 [events]: ./javascript-events-dom-apis.md#events-and-event-listeners
 [addeventlistener]: https://developer.mozilla.org/docs/Web/API/EventTarget/addEventListener
 
-In the 2D Web, input and interactions are handled through [browser
-events][events] (e.g., `click`, `mouseenter`, `mouseleave`, `touchstart`,
-`touchend`). Whenever an input-based event happens, the browser will emit
-an event that we can listen to and handle with
-[`Element.addEventListener`][addeventlistener]:
+2D Web では、入力とインタラクションは [ブラウザイベント][events] (例: `click`, `mouseenter`, `mouseleave`, `touchstart`, `touchend`) によって扱われます。入力ベースのイベントが発生すると、ブラウザはイベントを発行します。このイベントをリスニングし、[`Element.addEventListener`][addeventlistener] で処理することができます。
+
 
 ```js
 // `click` event emitted by browser on mouse click.
@@ -46,10 +36,8 @@ document.querySelector('p').addEventListener('click', function (evt) {
 
 [synthetic]: https://developer.mozilla.org/docs/Web/Guide/Events/Creating_and_triggering_events
 
-Just like the 2D Web, A-Frame relies on events and event listeners for
-interactivity and dynamicity. However because A-Frame is a JavaScript framework
-and everything is done in WebGL, **A-Frame's events are [synthetic custom
-events][synthetic]** that can be emitted by any component describing any event:
+2Dウェブのように、A-Frameは、インタラクティブ性とダイナミズムのために、イベントとイベントリスナーに依存しています。しかし、A-FrameはJavaScriptのフレームワークであり、すべてがWebGLで行われるため、**A-Frameのイベントは[合成カスタムイベント][synthetic]**で、任意のイベントを記述するコンポーネントが発することが可能です。
+
 
 ```js
 // `collide` event emitted by a component such as some collider or physics component.
@@ -60,36 +48,25 @@ document.querySelector('a-entity').addEventListener('collide', function (evt) {
 
 [mousecursor]: https://github.com/mayognaise/aframe-mouse-cursor-component
 
-A common misbelief is that we can add a `click` event listener to an A-Frame
-entity and expect it to work by directly clicking on the entity with our mouse.
-In WebGL, we must provide the input and interaction that provides such `click`
-events. For example, A-Frame's `cursor` component creates a synthetic `click`
-event on gaze using a raycaster. Or as another example, Mayo Tobita's
-[mouse-cursor component][mousecursor] creates a synthetic `click` event when
-clicking directly on the entity using a raycaster.
+よくある誤解は、A-Frame のエンティティに `click` イベントリスナーを追加すれば、マウスで直接エンティティをクリックすることで動作すると期待するものです。WebGL では、このような `click` イベントを提供する入力とインタラクションを提供する必要があります。例えば、A-Frameの `cursor` コンポーネントは、レイキャスターを使って、視線に対する `click` イベントを合成して生成します。また、別の例として、飛田真代さんの [mouse-cursor component][mousecursor] は、レイキャスターを使ってエンティティを直接クリックしたときに、合成の `click` イベントを作成します。
+
 
 ## Gaze-Based Interactions with cursor Component
 
 [Remix this cursor example on Glitch](https://glitch.com/~aframe-school-cursor-handler/).
 
-We'll first go over gaze-based interactions. Gaze-based interactions rely on
-rotating our heads and looking at objects to interact with them. This type of
-interaction is for headsets without a controller. Even with a rotation-only
-controller (Daydream, GearVR, Oculus Go), the interaction is still similar. Since A-Frame
-provides mouse-drag controls by default, gaze-based can sort of be used on
-desktop to preview the interaction by dragging the camera rotation.
+まず、視線を使ったインタラクションについて説明します。視線ベースのインタラクションは、頭を回転させ、オブジェクトを見て、インタラクションを行うことに依存します。このタイプのインタラクションは、コントローラーのないヘッドセット向けです。回転のみのコントローラー（Daydream、GearVR、Oculus Go）であっても、インタラクションは似ています。A-Frameはデフォルトでマウスドラッグのコントロールを提供するので、視線ベースはデスクトップでカメラの回転をドラッグすることでインタラクションをプレビューするために使うことができるようなものです。
+
 
 [configureraycaster]: ../components/cursor.md#configuring-the-cursor-through-the-raycaster-component
 [cursor]: ../components/cursor.md
 
-To add gaze-based interaction, we need to add or implement a component. A-Frame
-comes with a [cursor component][cursor] that provides gaze-based interaction if
-attached to the camera:
+注視型インタラクションを追加するには、コンポーネントを追加または実装する必要があります。A-Frameには[cursorコンポーネント][cursor]が付属しており、カメラに取り付けた場合、視線ベースのインタラクションを提供します。
 
-1. Explicitly define [`<a-camera>`](../components/camera.md) entity.
-   Previously, A-Frame was providing the default camera.
-2. Add [`<a-cursor>`][cursor] entity as a child element underneath the camera entity.
-3. Optionally, [configure the raycaster used by the cursor][configureraycaster].
+
+1. [`<a-camera>`](../components/camera.md) エンティティを明示的に定義するようにしました。以前は、A-Frameがデフォルトのカメラを提供していました。
+2. [`<a-cursor>`][cursor] エンティティを、カメラエンティティの下に子要素として追加します。
+3. 任意で、[カーソルが使用するレイキャスターの設定][configureraycaster]を行います。
 
 ```html
 <a-scene>
@@ -106,35 +83,28 @@ attached to the camera:
 
 [event-set]: https://github.com/supermedium/superframe/tree/master/components/event-set
 
-Now let's handle the events that the cursor component provides. The cursor
-component emits synthetic events like `click`, `mouseenter`, `mouseleave`,
-`mousedown`, `mouseup`, and `fusing`. We named them similarly to the browser's
-native events to be familiar for newcomers, but again note they are synthetic
-events.
+では、カーソルコンポーネントが提供するイベントを処理してみましょう。カーソルコンポーネントは、 `click`、`mouseenter`、`mouseleave`、`mousedown`、`mouseup`、`fusing` といった合成イベントを発生させます。これらのイベントはブラウザのネイティブイベントと同じような名前にして、初めての方にもわかりやすいようにしましたが、やはり合成イベントであることに注意してください。
 
-For basic event handler where we listen to an event and set a property in
-response, we can use the [event-set component][event-set]. The event-set
-component makes basic event handlers declarative. The API for the event-set
-component looks like:
+
+イベントをリスニングし、それに応じてプロパティを設定するような基本的なイベントハンドラには、[event-set component][event-set] を使用することができます。event-set コンポーネントは、基本的なイベントハンドラを宣言的にするものです。event-setコンポーネントのAPIは以下のようなものです。
+
 
 ```html
 <a-entity event-set__${id}="_event: ${eventName}; ${someProperty}: ${toValue}">
 ```
 
-The `__${id}` piece lets us attach multiple event-set components on the same
-entity. We provide `${eventName}` for which event the instance will handle. And
-then we pass property names and values that we want to set when the event
-occurs on or from the entity.
+`__${id}`の部分によって、同じエンティティに複数のイベントセットコンポーネントをアタッチすることができます。インスタンスがどのイベントを処理するかは `${eventName}` で指定します。そして、イベントが発生したときに設定したいプロパティ名と値をエンティティに渡します。
 
-For example, to make an entity visible when it's hovered over or looked at. The
-cursor component provides the `mouseenter` event:
+
+例えば、エンティティにカーソルを置いたり、見たりしたときに、そのエンティティが見えるようにすることができます。カーソルコンポーネントは `mouseenter` イベントを提供します。
+
 
 ```html
 <a-entity event-set__makevisible="_event: mouseenter; visible: true">
 ```
 
-If we want to change the color of a box on hover and restore it when no longer
-hovering:
+ホバー時にボックスの色を変更し、ホバーしなくなったら元に戻したい場合。
+
 
 ```html
 <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
@@ -152,9 +122,8 @@ hovering:
 </body>
 ```
 
-The event-set component can also target other entities using `_target:
-${selector}`. If we want to display a text label when an entity is hovered
-over:
+イベントセットコンポーネントは、`_target: ${selector}` を使用して、他のエンティティをターゲットにすることもできます。あるエンティティにカーソルを合わせたときに、テキストラベルを表示させたい場合。
+
 
 ```html
 <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
@@ -175,9 +144,8 @@ over:
 </body>
 ```
 
-The event-set component also works with components that have multiple
-properties using A-Frame component dot syntax (i.e.,
-`${componentName}.${propertyName}`):
+イベントセットコンポーネントは、A-Frameコンポーネントのドットシンタックス（すなわち、`${componentName}.${propertyName}`）を用いて複数のプロパティを持つコンポーネントに対しても機能します。
+
 
 ```html
 <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
@@ -202,15 +170,11 @@ properties using A-Frame component dot syntax (i.e.,
 
 [writingcomponent]: ./writing-a-component.md
 
-The event set component is good for basic setting operations, but it is
-important to know how to handle events in JavaScript. We might want to do more
-complex operations (e.g., make API calls, store data, affect the application
-state) in response to events. For those cases, we'll need to use JavaScript,
-and for A-Frame, we prescribe that code be placed within [A-Frame
-components][writingcomponent].
+イベントセットコンポーネントは、基本的な設定操作に適していますが、JavaScriptでイベントを処理する方法を知っておくことが重要です。イベントに応じて、より複雑な操作（APIの呼び出し、データの保存、アプリケーションの状態への影響など）を行いたいと思うかもしれません。そのような場合には、JavaScriptを使う必要がありますが、A-Frameでは、そのコードを[A-Frame components][writingcomponent] の中に置くように定めています。
 
-To demonstrate what the event set component does under the hood, let's have a
-box change color on hover and on leaving hover with JavaScript:
+
+イベントセットコンポーネントがどのような働きをするのか、JavaScriptを使って、ホバーしたときとホバーから離れたときにボックスの色を変えるようにしてみましょう。
+
 
 ```html
 <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
@@ -244,95 +208,60 @@ box change color on hover and on leaving hover with JavaScript:
 </body>
 ```
 
-While we do a simple `.setAttribute`, we could technically do anything within
-the component in response to the event since we have full access to JavaScript,
-three.js, and Web APIs.
+ここでは単純な `.setAttribute` を行っていますが、JavaScript、three.js、Web API に完全にアクセスできるため、技術的にはイベントに応答してコンポーネント内で何でも行うことができます。
 
-We'll move onto describing and implementing interactivity for VR controllers,
-but the concepts of events and event listeners will still apply.
+この後、VRコントローラのインタラクティブ機能の説明と実装に移りますが、イベントとイベントリスナーのコンセプトはそのまま適用されます。
+
 
 ## VR Controllers
 
-Controllers are vital for immersing people into a VR application. The potential
-of VR is not met without them, namely controllers that provide six degrees of
-freedom (6DoF). With controllers, people can reach out and around the scene and
-interact with objects with their hands.
+VRアプリケーションに没入してもらうためには、コントローラーが不可欠です。VRのポテンシャルは、それら、すなわち6自由度（6DoF）を提供するコントローラーなしには満たされないのです。コントローラーがあれば、人は手を伸ばしてシーンの周りを回り、手でオブジェクトとインタラクションすることができます。
+
 
 [gamepad]: https://developer.mozilla.org/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
 
-A-Frame provides components for controllers across the spectrum as supported by
-their respective WebVR browsers through the [Gamepad Web API][gamepad]. There
-are components for Vive, Oculus Touch, Daydream, GearVR and Oculus Go controllers.
+A-Frameは、[Gamepad Web API][gamepad]を通じて、それぞれのWebVRブラウザがサポートする、あらゆる分野のコントローラ用のコンポーネントを提供しています。Vive、Oculus Touch、Daydream、GearVR、Oculus Goの各コントローラのためのコンポーネントがあります。
 
-To inspect the Gamepad object for poking around or to get the Gamepad ID, we
-can call `navigator.getGamepads()` in the browser console. This will return a
-`GamepadList` array with all of the connected controllers.
+Gamepadオブジェクトを覗いてみたり、Gamepad IDを取得したりするには、ブラウザコンソールで `navigator.getGamepads()` を呼び出すことができます。これは接続されている全てのコントローラを含む `GamepadList` 配列を返します。
 
-For advanced applications, controllers are built and tailored for the
-application (i.e., custom 3D models, animations, mappings, gestures). For
-example, a medieval knight might have metal gauntlets, or a robot might have a
-robot hand that can shoot lasers or display information on the wrist.
+高度なアプリケーションの場合、コントローラはアプリケーションに合わせて構築されます（カスタム3Dモデル、アニメーション、マッピング、ジェスチャーなど）。例えば、中世の騎士が金属のガントレットを持っていたり、ロボットがレーザーを撃ったり、手首に情報を表示したりするロボットハンドを持っていたりするのです。
 
-The controller components that A-Frame provide primarily act as defaults,
-starter components, or a base from which to derive more custom controller
-components.
+A-Frameが提供するコントローラコンポーネントは、主に、デフォルト、スターターコンポーネント、または、よりカスタムなコントローラコンポーネントを派生させるためのベースとして機能します。
 
 ### tracked-controls Component
 
 [trackedcontrols]: ../components/tracked-controls.md
 [vivecontrols]: ../components/vive-controls.md
 
-The [tracked-controls component][trackedcontrols] is A-Frame's base controller
-component that provides the foundation for all of A-Frame's controller
-components. The tracked-controls component:
+[tracked-controlsコンポーネント][trackedcontrols]は、A-Frameの全てのコントローラコンポーネントの土台となる、A-Frameのベースコントローラコンポーネントです。tracked-controlsコンポーネントは:
 
-- Grabs a Gamepad object from the Gamepad API given an ID or prefix.
-- Applies pose (position and orientation) from the Gamepad API to read controller motion.
-- Looks for changes in the Gamepad object's button values to provide events
-  when buttons are pressed or touched and when axis and touchpads are changed
-  (i.e., `axischanged`, `buttonchanged`, `buttondown`, `buttonup`,
-  `touchstart`, `touchend`).
 
-All of A-Frame's controller components build on top of the tracked-controls
-component by:
+- ID またはプレフィックスを指定して、Gamepad API から Gamepad オブジェクトを取得します。
+- ゲームパッドAPIのポーズ（位置と向き）を適用して、コントローラの動きを読み取る。
+Gamepad オブジェクトのボタンの値の変化を探し、ボタンが押されたりタッチされた時や軸やタッチパッドが変更された時にイベントを提供します (例: `axischanged`, `buttonchanged`, `buttondown`, `buttonup`, `touchstart`, `touchend`)．
 
-- Setting the tracked-controls component on the entity with the appropriate
-  Gamepad ID (e.g., `Oculus Touch (Right)`). For example, the [vive-controls
-  component][vivecontrols] does `el.setAttribute('tracked-controls', {idPrefix:
-  'OpenVR'})`. tracked-controls will then connect to the appropriate Gamepad
-  object to provide pose and events for the entity.
-- Abstracting the events provided by tracked-controls. tracked-controls events are
-  low-level; it'd difficult for us to tell which buttons were pressed based
-  off of those events alone because we'd have to know the button mappings beforehand.
-  Controller components can know the mappings beforehand for their respective
-  controllers and provide more semantic events such as `triggerdown` or `xbuttonup`.
-- Providing a model. tracked-controls alone does not provide any appearance.
-  Controller components can provide a model that shows visual feedback,
-  gestures, and animations when buttons are pressed or touched.
+A-Frameのすべてのコントローラコンポーネントは、tracked-controlsコンポーネントの上に構築されています。
 
-The controller components following are only activated if they detect the
-controller is found and seen as connected in the Gamepad API.
+- 適切なゲームパッド ID (例: `Oculus Touch (Right)`) を持つエンティティに tracked-controls コンポーネントを設定します。例えば、[vive-controls component][vivecontrols] は `el.setAttribute('tracked-controls', {idPrefix: 'OpenVR'})`. tracked-controls はその後、適切な Gamepad オブジェクトに接続し、エンティティに対して姿勢とイベントを提供するようにします。
+- tracked-controlsが提供するイベントの抽象化 tracked-controlsのイベントは低レベルなので、そのイベントだけでどのボタンが押されたかを判断するのは難しく、あらかじめボタンのマッピングを知る必要があります。コントローラコンポーネントは、それぞれのコントローラのマッピングを事前に知ることができ、 `triggerdown` や `xbuttonup` のようなよりセマンティックなイベントを提供することができます。
+- モデルの提供。tracked-controls だけでは、外観を提供しない。コントローラコンポーネントは、ボタンが押されたりタッチされたりしたときに、視覚的なフィードバックやジェスチャー、アニメーションを表示するモデルを提供することができます。
+
+
+以下のコントローラのコンポーネントは、ゲームパッドAPIでコントローラが検出され、接続されていることが確認された場合のみ起動されます。
+
 
 ### Adding 3DoF Controllers (daydream-controls, gearvr-controls, oculus-go-controls)
 
 [dof]: http://www.roadtovr.com/introduction-positional-tracking-degrees-freedom-dof/
 
-Controllers with *3 degrees of freedom* (3DoF) are limited to rotational
-tracking. 3DoF controllers have no positional tracking meaning we can't reach
-out nor move our hand back-and-forth or up-and-down. Having a controller with
-only 3DoF is like having a hand and wrist without an arm. [Read more about
-degrees of freedom for VR][dof].
+3自由度（3DoF）のコントローラは、回転方向のトラッキングに限定されています。つまり、手を伸ばしたり、前後や上下に動かしたりすることができないのです。3自由度しかないコントローラーは、腕のない手と手首のようなものです。[VRの自由度についてもっと読む][dof]。
 
-The 3DoF controller components provide rotational tracking, a default model
-matching the real-life hardware, and events to abstract the button mappings.
-The controllers for Google Daydream, Samsung GearVR and Oculus Go have 3DoF, and both
-support only one controller for one hand.
+3DoFコントローラ・コンポーネントは、回転トラッキング、現実のハードウェアにマッチしたデフォルト・モデル、ボタン・マッピングを抽象化するためのイベントを提供します。Google Daydream、Samsung GearVR、Oculus Goのコントローラは3DoFを搭載しており、いずれも片手用のコントローラ1つだけをサポートしています。
+
 
 [daydreamcomponent]: ../components/daydream-controls.md
 
-To add a controller for Google Daydream, use the [daydream-controls
-component][daydreamcomponent]. Then try it out on Chrome for Android on a
-Daydream smartphone:
+Google Daydream用のコントローラを追加するには、[daydream-controlsコンポーネント][daydreamcomponent]を使用します。そして、Daydreamスマートフォン上のAndroid用Chromeで試してみてください。
 
 ```html
 <a-entity daydream-controls></a-entity>
@@ -340,9 +269,7 @@ Daydream smartphone:
 
 [gearvrcomponent]: ../components/gearvr-controls.md
 
-To add a controller for Samsung GearVR, use the [gearvr-controls
-component][gearvrcomponent]. Then try it out on Oculus Carmel or Samsung
-Internet on a smartphone with GearVR:
+Samsung GearVR用のコントローラを追加するには、[gearvr-controls component][gearvrcomponent]を使用します。その後、GearVRを搭載したスマートフォンでOculus CarmelまたはSamsung Internetで試してみてください。
 
 ```html
 <a-entity gearvr-controls></a-entity>
@@ -350,9 +277,7 @@ Internet on a smartphone with GearVR:
 
 [oculusgocomponent]: ../components/oculus-go-controls.md
 
-To add a controller for Oculus Go, use the [oculus-go-controls
-component][oculusgocomponent]. Then try it out on Oculus Browser or Samsung
-Internet on an Oculus Go standalone headset:
+Oculus Go用のコントローラを追加するには、[oculus-go-controlsコンポーネント][oculusgocomponent]を使用します。その後、Oculus GoスタンドアロンヘッドセットでOculus BrowserまたはSamsung Internetで試してみてください。
 
 ```html
 <a-entity oculus-go-controls></a-entity>
@@ -360,26 +285,14 @@ Internet on an Oculus Go standalone headset:
 
 ### Adding 6DoF Controllers (vive-controls, oculus-touch-controls)
 
-Controllers with *6 degrees of freedom* (6DoF) have both rotational and
-positional tracking. Unlike controllers with 3DoF which are constrained to
-orientation, controllers with 6DoF are able to move freely in 3D space. 6DoF
-allows us to reach forward, behind our backs, move our hands across our body or
-close to our face. Having 6DoF is like reality where we have both hands and
-arms. 6DoF also applies to the headset and additional trackers (e.g., feet,
-props). Having 6DoF is a minimum for providing a truly immersive VR experience.
+6自由度※のコントローラーは、回転と位置の両方のトラッキングが可能です。向きに制約のある3DoFのコントローラーとは異なり、6DoFのコントローラーは、3次元空間を自由に動くことができるのです。6DoFでは、前方や背中に手を伸ばしたり、手を体全体に動かしたり、顔の近くに持っていったりすることが可能です。6DoFを持つことは、両手と両腕がある現実と同じです。6DoFは、ヘッドセットや追加のトラッカー（例：足、小道具）にも適用されます。6DoFを持つことは、真に没入感のあるVR体験を提供するための最低条件なのです。
 
-The 6DoF controller components provide full tracking, a default model matching
-the real-life hardware, and events to abstract the button mappings.  HTC Vive
-and Oculus Rift with Touch provide 6DoF and controllers for both hands. HTC
-Vive also provides trackers for tracking additional objects in the real world
-into VR.
+6DoFコントローラ・コンポーネントは、完全なトラッキング、現実のハードウェアにマッチしたデフォルト・モデル、ボタン・マッピングを抽象化するためのイベントを提供します。HTC ViveとOculus Rift with Touchは、6DoFと両手用のコントローラを提供します。HTC Viveは、現実世界のオブジェクトをVRに追加してトラッキングするためのトラッカーも提供しています。
 
 [rocks]: https://webvr.rocks
 [vivecomponent]: ../components/vive-controls.md
 
-To add controllers for HTC Vive, use the [vive-controls
-component][vivecomponent] for both hands. Then try it out on a [WebVR-enabled
-desktop browser][rocks]:
+HTC Vive用のコントローラを追加するには、両手用の[vive-controlsコンポーネント][vivecomponent]を使用します。その後、[WebVR対応デスクトップブラウザー][rocks]で試してみてください。
 
 ```html
 <a-entity vive-controls="hand: left"></a-entity>
@@ -388,9 +301,8 @@ desktop browser][rocks]:
 
 [riftcomponent]: ../components/oculus-touch-controls.md
 
-To add controllers for Oculus Touch, use the [oculus-touch-controls
-component][riftcomponent] for both hands. Then try it out on a [WebVR-enabled
-desktop browser][rocks]:
+Oculus Touch用のコントローラを追加するには、両手用の[oculus-touch-controlsコンポーネント][riftcomponent]を使用します。その後、[WebVR対応デスクトップブラウザー][rocks]で試してみてください。
+
 
 ```html
 <a-entity oculus-touch-controls="hand: left"></a-entity>
@@ -399,69 +311,47 @@ desktop browser][rocks]:
 
 ## Supporting Multiple Types of Controllers
 
-The Web has the benefit of being able to support multiple platforms. Though
-it's less clear in VR what supporting multiple platforms entails since a 3DoF
-platform versus a 6DoF platform provide different interactions and require
-different user experience treatment. It will be up to the application what
-"responsive" means for VR on the Web. What we can show are several different
-methods, but none that are truly one-size-fits-all.
+Webはマルチプラットフォームに対応できるというメリットがあります。しかし、3DoFプラットフォームと6DoFプラットフォームではインタラクションが異なり、異なるユーザーエクスペリエンス処理が必要なため、VRではマルチプラットフォームのサポートが何を意味するのかが明確ではありません。Web上のVRにとって「レスポンシブ」が何を意味するかは、アプリケーション次第でしょう。私たちが提示できるのは、いくつかの異なる方法ですが、本当に万能なものはありません。
 
 ### hand-controls Component
 
 [handcontrols]: ../components/hand-controls.md
 [lasercontrols]: ../components/laser-controls.md
 
-A-Frame provides an implementation for supporting multiple types of 6DoF
-controllers (Vive, Oculus Touch) via the [hand-controls
-component][handcontrols]. The hand-controls component is primarily for 6DoF
-controllers since it's geared towards room scale interactions such as grabbing
-objects.  The hand-controls component works on top of both Vive and Oculus
-Touch controllers by:
+A-Frameでは、[hand-controlsコンポーネント][handcontrols]を介して、複数の種類の6DoFコントローラ（Vive、Oculus Touch）に対応するための実装を提供しています。hand-controlsコンポーネントは、オブジェクトを掴むなどのルームスケールインタラクション向けなので、主に6DoFコントローラ向けです。hand-controlsコンポーネントは、ViveとOculus Touchの両方のコントローラの上で、以下の方法で動作します。
 
-- Setting both the vive-controls and oculus-touch-controls component
-- Overriding the controller models with a simple hand model
-- Mapping Vive-specific and Oculus Touch-specific events to hand events and
-  gestures (e.g., `gripdown` and `triggerdown` to `thumbup`)
 
-To add the hand-controls component:
+- vive-controlsとoculus-touch-controlsの両方のコンポーネントを設定します。
+- シンプルなハンドモデルによるコントローラモデルのオーバーライド
+- Vive 固有のイベントと Oculus Touch 固有のイベントをハンドイベントとジェスチャーにマッピング（例：`gripdown` と `triggerdown` を `thumbup` にマッピング）
+
+
+hand-controlsコンポーネントを追加する。
 
 ```html
 <a-entity hand-controls="left"></a-entity>
 <a-entity hand-controls="right"></a-entity>
 ```
 
-Unfortunately, there is not yet a 3DoF controller component that abstracts well
-all the types of 3DoF controllers (i.e., Daydream, GearVR). We could create a
-custom controller that works with both controllers. It would be fairly easy to
-cover since 3DoF controllers do not offer much potential for interaction (i.e.,
-only rotational tracking with a touchpad).
+残念ながら、すべての種類の3DoFコントローラ（Daydream、GearVRなど）をうまく抽象化した3DoFコントローラコンポーネントはまだ存在しません。両方のコントローラーで動作するカスタムコントローラーを作ればいいのですが。3DoFコントローラはインタラクションの可能性をあまり提供しないので（つまり、タッチパッドによる回転トラッキングのみ）、かなりカバーしやすいと思います。
 
-However, there is a controller component that covers all 6DoF and 3DoF controllers
-currently supported by A-Frame: [laser-controls][lasercontrols].
+ただし、現在A-Frameが対応している6DoFおよび3DoFのコントローラをすべてカバーするコントローラコンポーネントがあります。[laser-controls][lasercontrols]です。
+
 
 ### Creating Custom Controllers
 
 [handcontrolssource]: https://github.com/aframevr/aframe/blob/master/src/components/hand-controls.js
 
-As mentioned previously, applications are best when controllers are
-custom-tailored to the experience. Most VR applications have their own distinct
-controllers. This means different models, animations, gestures, visual
-feedback, and states.
+前述したように、アプリケーションは、体験に合わせてコントローラをカスタマイズするのが最適です。ほとんどのVRアプリケーションは、それぞれ独自のコントローラを備えています。これは、異なるモデル、アニメーション、ジェスチャー、ビジュアルフィードバック、そしてステートを意味します。
 
-Looking at the [hand-controls source code][handcontrolssource] is a decent way
-to understand how to do a custom controller without having to do everything
-from scratch:
+[hand-controlsソースコード][handcontrolssource]を見ることは、ゼロからすべてを行うことなく、カスタムコントローラを行う方法を理解するための適切な方法です。
 
-- The tracked-controls component will provide pose and events
-- The vive-controls, oculus-touch-controls, daydream-controls, or
-  gearvr-controls components provide button mappings controller-specific events
-- Our custom controller component will build on all of the above, plus
-  overriding the model, animations, visual feedback, states, etc.,
+- tracked-controlsコンポーネントは、ポーズとイベントを提供します。
+- vive-controls、oculus-touch-controls、daydream-controls、またはgearvr-controlsコンポーネントは、ボタンマッピングのコントローラ固有のイベントを提供します。
+- カスタムコントローラコンポーネントは、上記のすべてに加え、モデル、アニメーション、ビジュアルフィードバック、ステートなどをオーバーライドして構築されます。
 
-The first piece is to set which controller components will be supported. The
-controller components will inject the tracked-control components as well. For
-example, to support all controllers, set all of the controller components while
-providing the hand and overriding the model:
+
+最初のピースは、どのコントローラコンポーネントをサポートするかを設定することです。コントローラコンポーネントはトラッキングコントロールコンポーネントもインジェクトします。例えば、全てのコントローラをサポートするには、手を提供し、モデルをオーバーライドしながら、全てのコントローラコンポーネントを設定します。
 
 ```js
 AFRAME.registerComponent('custom-controls', {
@@ -495,18 +385,11 @@ AFRAME.registerComponent('custom-controls', {
 [a-blast]: https://github.com/aframevr/a-blast/blob/master/src/components/shoot-controls.js
 [a-painter]: https://github.com/aframevr/a-painter/blob/master/src/components/paint-controls.js
 
-For advanced examples on real applications, see the [paint-controls component
-for A-Painter][a-painter] or the [shoot-controls component for
-A-Blast][a-blast].
+実際のアプリケーションに関する高度な例は、[A-Painter用paint-controlsコンポーネント][a-painter]や[A-Blast用shoot-controlsコンポーネント][a-blast]をご覧ください。
 
 ## Listening for Button and Axis Events
 
-Controllers have many buttons and emit many events. For each button, every time
-a button is pressed down, released, or for some cases, even touched. And for
-each axis (e.g., trackpad, thumbstick), an event is emitted every time it is
-touched. To handle buttons, look for the event name in the respective
-controller component documentation pages at the event tables, then register
-event handlers how we want:
+コントローラにはたくさんのボタンがあり、たくさんのイベントを発します。それぞれのボタンに対して、ボタンが押されたり、離されたり、場合によってはタッチされたりするたびにです。また、各軸（トラックパッドやサムスティックなど）については、タッチされるたびにイベントが発生します。ボタンを処理するには、それぞれのコントローラコンポーネントのドキュメントページで、イベントテーブルからイベント名を探し、好きなようにイベントハンドラを登録します。
 
 - [daydream-controls events](../components/daydream-controls.md#events)
 - [gearvr-controls events](../components/gearvr-controls.md#events)
@@ -515,8 +398,7 @@ event handlers how we want:
 - [vive-controls events](../components/vive-controls.md#events)
 - [windows-motion-controls events](../components/windows-motion-controls.md#events)
 
-For example, we can listen to the Oculus Touch X button press, and toggle
-visibility of an entity. In component form:
+例えば、Oculus Touch の X ボタンが押されたことを聞き、エンティティの可視性をトグルすることができます。コンポーネント形式では
 
 ```js
 AFRAME.registerComponent('x-button-listener', {
@@ -529,7 +411,7 @@ AFRAME.registerComponent('x-button-listener', {
 });
 ```
 
-Then attach the component:
+その後、コンポーネントを取り付けます。
 
 ```html
 <a-entity oculus-touch-controls x-button-listener></a-entity>
@@ -539,16 +421,9 @@ Then attach the component:
 
 [laser-controls]: ../components/laser-controls.md
 
-Laser interactions refer to placing a visible raycaster (line) shooting out of
-the controller. Interactions occur when entities intersect the line, a
-controller button changes during intersection, and/or when entities no longer
-intersect the line. This interaction is very similar to gaze-based interaction,
-except the raycaster is now affixed to the controller rather than the headset.
+レーザーインタラクションとは、コントローラから可視のレイキャスター（線）を射出することを指します。線と線が交差するとき、交差中にコントローラーのボタンが変化するとき、線と線が交差しなくなったときに、インタラクションが発生します。このインタラクションは、レイキャスターがヘッドセットではなくコントローラに固定されていることを除けば、視線ベースのインタラクションに非常に似ています。
 
-The [laser-controls component][laser-controls] component provides laser
-interactions for controllers.  The usage is almost exactly similar to the
-cursor component, but attach the component to the controller rather than under
-the camera:
+[laser-controls component][laser-controls] コンポーネントは、コントローラ用のレーザーインタラクションを提供します。使い方はカーソルコンポーネントとほぼ同じですが、コンポーネントをカメラの下ではなくコントローラーに貼り付けます。
 
 ```html
 <a-entity laser-controls="hand: right"></a-entity>
@@ -556,9 +431,7 @@ the camera:
 
 [raycasterfar]: ../components/raycaster.html#properties_far
 
-Then default length of the laser is configured by [adjusting the length of the
-raycaster][raycasterfar]. When the laser intersects with an entity, the length
-of the laser will be truncated.
+そして、レーザーのデフォルトの長さは、[レイキャスターの長さを調整する][レイキャスターファー]で設定されます。レーザーがエンティティに交差する場合、レーザーの長さは切り捨てられます。
 
 ```html
 <a-entity hand-controls laser-controls raycaster="far: 2"></a-entity>
@@ -566,24 +439,13 @@ of the laser will be truncated.
 
 [gaze]: #gaze-based-interactions-with-cursor-component
 
-Then handling events and interactions is the exact same as [gaze-based
-interactions with the cursor component][gaze] . Refer to the section above!
+そうすると、イベントやインタラクションの処理は、[カーソルコンポーネントによる注視型インタラクション][gaze]と全く同じです。上記のセクションを参照してください
 
 ## Adding Room Scale Interactions for Controllers
 
-Room scale interactions are harder. These include interactions in 3D space and
-two-handed interactions such as grabbing, throwing, stretching, hitting,
-turning, pulling, or pushing. The number or complexity of room scale
-interactions is not something we can completely cover. This is unlike the 2D
-Web where there is just mouse and touchscreen or 3DoF VR where there is only
-wiggling the controller. But we can show various implementations that can be
-used as is or as a reference.
+ルームスケールのインタラクションはもっと難しい。3次元空間での相互作用や、つかむ、投げる、伸ばす、打つ、回す、引く、押すなどの両手での相互作用が含まれる。ルームスケールインタラクションの数や複雑さは、私たちが完全にカバーできるものではありません。マウスとタッチスクリーンだけの2Dウェブや、コントローラを振るだけの3DoF VRとは異なります。しかし、そのまま、あるいはリファレンスとして使えるような様々な実装を示すことはできます。
 
-Rather than using raycasters to detect for intersections with objects, room
-scale and 3D interactions involve *colliders*. Whereas raycasters are 2D lines,
-colliders are 3D volumes. There are different shapes of colliders (AABB/box,
-sphere, mesh) that wrap around objects, and when those shapes intersect, a
-collision is detected.
+ルームスケールや3Dのインタラクションでは、レイキャスターを使ってオブジェクトとの交わりを検出するのではなく、*コライダー*を使用します。レイキャスターが2Dのラインであるのに対し、コライダーは3Dのボリュームです。コライダーには、オブジェクトを包み込むさまざまな形状（AABB/ボックス、球、メッシュ）があり、それらの形状が交差すると、衝突が検出されます。
 
 ### super-hands Component
 
@@ -591,26 +453,19 @@ collision is detected.
 [superhandsdocs]: https://github.com/wmurphyrd/aframe-super-hands-component#description
 [superhandsex]: https://wmurphyrd.github.io/aframe-super-hands-component/examples/
 
-The [super-hands component by William Murphy][superhands] provides all-in-one
-natural hand controller interaction. The component interprets input from
-tracked controllers and collision detection components into interaction
-gestures and communicates those gestures to target entities for them to
-respond.
+William Murphy氏による[super-handsコンポーネント][superhands]は、オールインワンで自然なハンドコントローラとのインタラクションを提供します。このコンポーネントは、追跡されたコントローラや衝突検出コンポーネントからの入力をインタラクションジェスチャーに解釈し、それらのジェスチャーをターゲットエンティティに伝達し、応答させることができます。
 
-The currently implemented gestures are:
+現在実装されているジェスチャーは以下の通りです。
 
-- Hover: Holding a controller in the collision space of an entity
-- Grab: Pressing a button while hovering an entity, potentially also moving it
-- Stretch: Grabbing an entity with two hands and resizing
-- Drag-drop: Dragging an entity onto another entity
+- Hover: コントローラをエンティティの衝突空間に保持する。
+- Grab: ホバリング中にボタンを押し、移動させる。
+- Stretch: 両手でエンティティをつかみ、サイズを変更する。
+- Drag-drop: エンティティを他のエンティティにドラッグする
 
-For an entity to respond to the super-hands gestures, the entity needs to have
-components attached to translate the gestures into actions. super-hands
-includes components for typical reactions to the implemented gestures:
-hoverable, grabbable, stretchable, and drag-droppable.
+super-handsのジェスチャーに反応するためには、ジェスチャーをアクションに変換するコンポーネントが必要です。super-handsには、hoverable, grabbable, stretchable, drag-droppableという、実装されているジェスチャーに対する典型的な反応をするコンポーネントが含まれています。
 
-The [documentation for super-hands][superhandsdocs] and
-[examples][superhandsex] are excellent for getting started. We defer to those.
+super-hands のドキュメント][superhandsdocs] と
+[例][superhandsex]は、入門に最適です。私たちはそれらに従います。
 
 ### Other Examples
 
@@ -619,9 +474,7 @@ The [documentation for super-hands][superhandsdocs] and
 
 Other examples to look at include:
 
-- [tracked-controls](https://github.com/aframevr/aframe/tree/master/examples/showcase/tracked-controls) -
-  Interaction through sphere-collider and grab components.
-- [ball-throw](https://github.com/bryik/aframe-ball-throw) - Grab and throw
-  using [aframe-extras] and [aframe-physics].
-- [vr-editor](https://github.com/caseyyee/aframe-vreditor-component) - Interaction through
-  a single vr-editor component for cloning, moving, deleting, placing, and scaling.
+- [tracked-controls](https://github.com/aframevr/aframe/tree/master/examples/showcase/tracked-controls) - Interaction through sphere-collider and grab components.
+- [ball-throw](https://github.com/bryik/aframe-ball-throw) - Grab and throw using [aframe-extras] and [aframe-physics].
+- [vr-editor](https://github.com/caseyyee/aframe-vreditor-component) - Interaction through a single vr-editor component for cloning, moving, deleting, placing, and scaling.
+
