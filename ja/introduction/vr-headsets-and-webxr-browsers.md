@@ -10,37 +10,32 @@ order: 3
 
 <!--toc-->
 
-## What is Virtual Reality?
+## VRとは何ですか？
 
-Virtual reality (VR) is a technology that uses head-mounted headsets with
-displays to generate the realistic images, sounds, and other sensations to put
-users into an immersive virtual environment. VR allows us to create unbounded
-worlds that people can walk around and interact with using their hands, to feel
-as if they were transported to another place.
+VR（バーチャルリアリティ）とは、ディスプレイを搭載したヘッドセットを用いて、
+リアルな映像や音などの感覚を生成し、ユーザーに没入感のある仮想環境を体験させる技術です。
+VRでは、人々が歩き回ったり、手を使って操作したりすることで、
+まるで別の場所に移動したかのような、拘束されない世界を作り出すことができます。
 
-### What Are the Differences Between Headsets?
 
-There are several consumer VR headsets with different features on the market.
-Important distinguishing features include whether they:
+### ヘッドセットごとの違いは何ですか？
 
-- Have positional tracking (six degrees of freedom (6DoF)) or
-  Only have rotational tracking (three degrees of freedom (3DoF)).
-- Have controllers or not, and whether those controllers have 6DoF
-  or 3DoF. Generally, the number of degrees of freedom of the controllers
-  matches that of the headset.
+コンシューマー向けVRヘッドセットは、さまざまな機能を持つものが市場に出回っています。
+重要な機能の、特徴的な差異は、以下のものです。
+
+- 位置トラッキング（6自由度 （6DoF））か回転トラッキング（3自由度（3DoF））か。
+- コントローラーがあるかないか、そのコントローラーが6DoFか3DoFか。一般的に、コントローラーの自由度数は、ヘッドセットの自由度数と一致します。
 - Are powered by a PC or by a mobile device or standalone.
+- PCから出力、制御されるものか、モバイル機器から出力、制御されるもの、スタンドアローンであるもの。
 
-Rotational tracking allows people to look around or rotate objects. All
-headsets provide rotational tracking.
+回転トラッキングは、物体の周囲を見回したり、回転させたりすることができます。すべてのヘッドセットは回転トラッキングを提供します。
 
-Positional tracking allows people to move around, get closer to objects, reach
-forward. As the VR industry evolves, the minimum viable experience will trend
-towards having positionally-tracked headsets with positionally-tracked
-controllers. Positional tracking is important to give people presence, to make
-them feel they are in a real environment. With rotational-only tracking, people
-are constrained to looking around and wiggling the controller.
+位置トラッキングによって、動き回ったり、物体に近づいたり、前方に手を伸ばしたりすることができます。
+VR業界が進歩するにつれ、最低限実現可能な体験は、位置トラッキング型ヘッドセットと位置トラッキング型コントローラーを持つという方向に向かうでしょう。
+位置トラッキングは、人々に臨場感を与え、現実の環境にいることを実感させるために重要です。
+回転トラッキングのみでは、周囲を見回したり、コントローラを動かしたりすることに制約されます。
 
-### What Are Some Current Headsets?
+### 現行のヘッドセットは何ですか？
 
 [HTC Vive]: https://www.vive.com/
 [Oculus headsets]: https://www.oculus.com/
@@ -49,72 +44,63 @@ are constrained to looking around and wiggling the controller.
 [Windows Mixed Reality]: https://developer.microsoft.com/en-us/windows/mixed-reality/
 [Vive Focus]: https://enterprise.vive.com/us/vivefocus/
 
-| Headset                 | Platform   | Positional Tracking | Controllers        | Controller Positional Tracking |
+| ヘッドセット                 | プラットフォーム   | 位置トラッキング | コントローラー        | コントローラーの位置トラッキング |
 |-------------------------|------------|---------------------|--------------------|--------------------------------|
 | [HTC Vive]              | PC         | :white_check_mark:  | :white_check_mark: | :white_check_mark:             |
 | [Oculus Rift]           | PC         | :white_check_mark:  | :white_check_mark: | :white_check_mark:             |
 | [Google Daydream]       | Android    | :x:                 | :white_check_mark: | :x:                            |
 | [Samsung GearVR]        | Android    | :x:                 | :white_check_mark: | :x:                            |
 | [Windows Mixed Reality] | PC         | :white_check_mark:  | :white_check_mark: | :white_check_mark:             |
-| [Oculus Go]             | Standalone | :x:                 | :white_check_mark: | :x:                            |
-| [Vive Focus]            | Standalone | :x:                 | :white_check_mark: | :x:                            |
-| [Oculus Quest]            | Standalone | :white_check_mark:  | :white_check_mark: | :white_check_mark:             |
-| [Oculus Quest 2]            | Standalone | :white_check_mark:  | :white_check_mark: | :white_check_mark:             |
+| [Oculus Go]             | スタンドアローン | :x:                 | :white_check_mark: | :x:                            |
+| [Vive Focus]            | スタンドアローン | :x:                 | :white_check_mark: | :x:                            |
+| [Oculus Quest]            | スタンドアローン | :white_check_mark:  | :white_check_mark: | :white_check_mark:             |
+| [Oculus Quest 2]            | スタンドアローン | :white_check_mark:  | :white_check_mark: | :white_check_mark:             |
 
-## What is WebXR?
+## WebXRとは何ですか？
 
-WebXR is a JavaScript API for creating immersive 3D, virtual reality (and augmented reality)
-experiences in your browser. Or simply put, allows VR in the browser over the
-Web.
+WebXRは、ブラウザ上で没入型3D、VR（およびAR）体験を作成するためのJavaScript APIです。
+簡単に言うと、Web上のブラウザでVRを可能にします。
 
-A-Frame uses the WebXR API to gain access to VR headset sensor data (position,
-orientation) to transform the camera and to render content directly to VR
-headsets. Note that WebXR, which provides data, should not be confused nor
-conflated with WebGL, which provides graphics and rendering.
+A-Frameは、WebXR APIを使用してVRヘッドセットのセンサーデータ（位置、向き）にアクセスし、カメラの変換やVRヘッドセットへの直接コンテンツのレンダリングを行います。
+WebXRはデータを提供するもので、グラフィックスやレンダリングを提供するWebGLと混同しないように注意してください。
 
-## What Browsers Support VR?
+## VRをサポートしているブラウザは何ですか？
 
-Including [Supermedium](https://supermedium.com) and
-[Exokit](https://github.com/exokitxr/exokit):
+[Supermedium](https://supermedium.com) と
+[Exokit](https://github.com/exokitxr/exokit)を含みます：
 
 <iframe src="https://caniuse.com/#search=webxr" height="480px" width="100%"></iframe>
 
-## Where Does A-Frame Want to Take WebXR?
+## A-FrameはWebXRをどのようにしたいのですか？
 
-A-Frame aims for highly immersive and interactive VR content with native-like
-performance. For this, A-Frame believes the minimum viable bar will trend
-towards positionally-tracking headsets with positionally-tracked controllers.
-This is the paradigm in which A-Frame wants to innovate as well as discover new
-grounds that are specific to the VR Web (e.g., link traversal,
-decentralization, identity). Contrast this type of content against flat and
-static 360&deg; content and menus.
+A-Frameが目指すのは、ネイティブに近いパフォーマンスで、没入感の高いインタラクティブなVRコンテンツです。
+そのために、A-Frameは、位置追跡型ヘッドセットと位置追跡型コントローラが最低限実現可能な水準になると考えています。
+これは、A-Frameがイノベーションを起こすと同時に、VRウェブに特有の新しい知見（例：リンクトラバーサル、分散化、アイデンティティ）を発見したいパラダイムなのです。
+このようなコンテンツは、フラットで静的な360°コンテンツやメニューとは対照的です。
 
-At the same time, A-Frame wants everyone to be able to get involved with VR
-content creation. A-Frame supports all major headsets with their controllers.
-Fortunately with the large community and contributors, A-Frame is able to both
-look far towards the future as well as satisfy the needs of today's VR
-landscape.
+同時に、A-Frameは、誰もがVRコンテンツ制作に携われるようにしたいと考えています。
+A-Frameは、すべての主要なヘッドセットとそのコントローラをサポートしています。
+幸いなことに、大規模なコミュニティと貢献者のおかげで、A-Frameは将来の展望を描くと同時に、現在のVR環境のニーズを満たすことができるのです。
 
-## Which Platforms Does A-Frame Support?
 
-A-Frame supports almost all platforms through browsers. General platforms that
-A-Frame supports include:
+## A-Frameはどのプラットフォームに対応していますか？
 
-- VR on desktop with a headset
-- VR on mobile with a headset
-- VR on standalone headset
-- Flat on desktop (i.e., mouse and keyboard)
-- Flat mobile (i.e., magic window)
+A-Frameは、ブラウザを通じてほぼ全てのプラットフォームに対応しています。A-Frameが対応している一般的なプラットフォームは以下の通りです。
 
-Some other platforms that have been shown to work with A-Frame include:
+- デスクトップでのVR（ヘッドセット使用）
+- モバイルでのVR（ヘッドセット使用）
+- スタンドアローンヘッドセットでのVR
+- デスクトップでのフラット3D（マウスとキーボードなど）
+- モバイルのフラット3D（magic windowなど）
 
-- Augmented reality (AR) on AR headsets (e.g., Magic Leap, HoloLens)
-- Augmented reality (AR) on mobile (i.e., magic window, ARKit, ARCore)
+その他、A-Frameとの連携が確認されているプラットフォームとしては、以下のようなものがあります。
 
-## Which VR Headsets Does A-Frame Support?
+- ARヘッドセット上の拡張現実（AR）（例：Magic Leap、HoloLens)
+- モバイル上の拡張現実（AR）（例：magic window、ARKit、ARCore)
 
-A-Frame supports most headsets through browsers. Some VR headsets that A-Frame
-supports include:
+## A-FrameはどのVRヘッドセットに対応していますか？
+
+A-Frameは、ブラウザを通してほとんどのヘッドセットに対応しています。A-Frameが対応しているVRヘッドセットには、以下のようなものがあります。
 
 - HTC Vive
 - Oculus Rift
@@ -124,34 +110,29 @@ supports include:
 - Samsung GearVR
 - Vive Focus
 
-For general hardware recommendations (not requirements):
+一般的な推奨ハードウェア（要件ではありません）については、こちらをご覧ください。
 
-- [Oculus Rift Hardware Recommendations](https://www.oculus.com/en-us/oculus-ready-pcs/)
-- [HTC Vive Hardware Recommendations](https://www.vive.com/us/ready/)
-- For smartphones, an iPhone 6 for iOS and at least a Galaxy S6 for Android
+- [Oculus Riftハードウェアの推奨環境](https://www.oculus.com/en-us/oculus-ready-pcs/)
+- [HTC Viveハードウェア推奨環境](https://www.vive.com/us/ready/)
+- スマートフォンの場合、iOSはiPhone 6、AndroidはGalaxy S6以上
 
-## Which Browsers Does A-Frame Support?
+## A-Frameはどのブラウザに対応していますか？
 
-A-Frame supports VR for any browser that implements the [WebXR
-specification][w3c], and flat 3D for most browsers. Large browser vendors are
-slowly moving to the WebXR specification, though it does not have much
-front-facing changes to A-Frame developers, involving mostly renaming of APIs.
+A-Frameは、[WebXR仕様][w3c]を実装しているブラウザであればVRを、ほとんどのブラウザでフラット3Dをサポートしています。
+大手ブラウザベンダーは徐々にWebXR仕様に移行していますが、A-Frameの開発者が直面する変化はあまりなく、APIの名称変更が主な内容となっています。
 
-- [Supermedium](https://www.supermedium.com) (available on Oculus and Steam)
+- [Supermedium](https://www.supermedium.com) (OculusとSteamで入手可能です)
 - Firefox
 - Oculus Browser
 - Samsung Internet
 - Microsoft Edge
-- Chrome (WebXR under origin trials)
-- Exokit (experimental early support)
+- Chrome (オリジン試験版のWebXR)
+- Exokit (実験的なサポート)
 
 [webvrpolyfill]: https://github.com/googlevr/webvr-polyfill
 
-A-Frame supports most modern mobile browsers that don't have WebXR support
-through the [WebVR polyfill][webvrpolyfill]. Note that these browsers do not
-have official WebXR support, and we are using a polyfill; it is important to
-lower the expectations that these browsers will provide a quality experience
-and not have quirks:
+A-Frameは、[WebVR polyfill][webvrpolyfill]を介して、WebXRをサポートしていないほとんどのモダンなモバイルブラウザをサポートしています。
+これらのブラウザは公式のWebXRサポートを持っておらず、ポリフィルを使用していることに注意してください。これらのブラウザが高品質の体験を提供し、互換性があると期待しすぎないことが重要です。
 
 - Safari for iOS
 - Chrome for Android
@@ -159,8 +140,7 @@ and not have quirks:
 - Samsung Internet
 - UC Browser
 
-For flat or plain 3D support, A-Frame supports all modern browsers,
-specifically those that support WebGL including:
+A-Frameは、フラットな3Dをサポートするために、WebGLをサポートしているため、すべてのモダンブラウザをサポートしています。
 
 - Firefox
 - Chrome
