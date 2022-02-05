@@ -15,58 +15,38 @@ order: 14
 
 <!--toc-->
 
-## How is A-Frame's performance?
+## A-Frameの性能はいかがでしょうか？
 
 [a-painter]: https://blog.mozvr.com/a-painter
 [tiltbrush]: https://www.tiltbrush.com/
 
-A-Frame can achieve native-like latency and framerate with proper browsers
-(e.g., Firefox with WebVR). For example, [A-Painter][a-painter] is [Tilt
-Brush][tiltbrush] in the browser that can smoothly run 90 frames per second
-and can be indiscernible from native.
+A-Frameは、適切なブラウザ（WebVR搭載のFirefoxなど）を使えば、ネイティブ並みのレイテンシとフレームレートを実現することができます。例えば、[A-Painter][a-painter]はブラウザで[Tilt Brush][tiltbrush] で、90フレーム/秒をスムーズに実行でき、ネイティブと見分けがつかないほどです。
 
-A-Frame being based on HTML is not an issue. While the browser's 2D layout has
-been a primary performance concern for normal web applications, A-Frame uses
-Custom Elements to act merely as data containers and does not trigger the
-layout engine. 3D operations are done in memory with minimal overhead and
-are rendered with WebGL, which binds to OpenGL or Direct3D.
+A-FrameがHTMLベースであることは問題ではありません。通常のWebアプリケーションでは、ブラウザの2Dレイアウトがパフォーマンスの主要な問題でしたが、A-Frameではカスタムエレメントを単なるデータコンテナとして機能させ、レイアウトエンジンを起動させないようにしています。3D操作は最小限のオーバーヘッドでメモリ内で行われ、OpenGLまたはDirect3DにバインドするWebGLでレンダリングされます。
 
-Some measures that A-Frame takes to minimize overhead include:
+A-Frameがオーバーヘッドを最小化するためにとっている対策には、次のようなものがあります。
 
-- Making `setAttribute` synchronous with a reduced code path. Modifying an
-  entity's position via `setAttribute('position', {x: 1, y: 2, z: 3})` almost
-  directly touches the underlying three.js objects. The overhead involves
-  comparing new data to old data to determine whether a change needs to be triggered
-  and invoking lifecycle handlers.
-- Not serializing data back to the DOM. When changing an entity's properties, the actual
-  HTML as seen in the browser's DOM inspector is not updated to reduce stringification
-  operations. This makes most operations done in memory, a tiny bit similar to
-  Virtual DOM.
-- Keeping everything under a single `requestAnimationFrame` and letting
-  components hook into a single global render loop via the `tick` handler.
-- Caching HTML attributes values.
-- Caching assets, materials, textures, geometries.
-- Providing community components that implement performance techniques used in the
-  3D and game industry (e.g., geometry instancing, level-of-detail, object pooling).
+- setAttribute`を同期化し、コードパスを短縮。setAttribute('position', {x: 1, y: 2, z: 3})` によるエンティティの位置の変更は、ほぼ直接three.jsのオブジェクトに触れます。このオーバーヘッドには、新しいデータと古いデータを比較して、変更をトリガーする必要があるかどうかを判断したり、ライフサイクルハンドラを呼び出したりすることが含まれます。
+- DOMに戻るデータをシリアライズしない。エンティティのプロパティを変更する際、ブラウザのDOMインスペクタで見られるような実際のHTMLは、文字列化操作を減らすために更新されません。このため、ほとんどの操作はメモリ上で行われ、Virtual DOMにほんの少し似ています。
+- すべてを単一の `requestAnimationFrame` で管理し、コンポーネントが `tick` ハンドラを介して単一のグローバルなレンダリングループにフックできるようにします。
+- HTML の属性値をキャッシュする。
+- アセット、マテリアル、テクスチャ、ジオメトリのキャッシュ。
+- 3Dやゲーム業界で使用されているパフォーマンステクニック（例：ジオメトリインスタンシング、Level-of-Detail、オブジェクトプーリング）を実装したコミュニティコンポーネントを提供する。
 
 [bestpractices]: ../introduction/best-practices.md
 
-A-Frame provides reasonable defaults that yield good performance for most
-common use cases. However, performance is ultimately determined by the
-complexity and characteristics of each individual application. To get the best
-use of resources, we will need deeper understanding about 3D graphics.  See
-[best performance practices and guidelines][bestpractices] to get started.
+A-Frameは、ほとんどの一般的なユースケースに対して良好なパフォーマンスをもたらす合理的なデフォルト値を提供します。しかし、性能は最終的に個々のアプリケーションの複雑さと特性によって決定されます。リソースを最大限に活用するためには、3Dグラフィックスについてより深く理解する必要があります。まずは、[ベストパフォーマンスの実践とガイドライン][bestpractices]をご覧ください。
 
-## Why is my experience not entering VR or AR mode?
+## なぜ私の体験はVRやARモードに入らないのでしょうか？
 
 [release]: https://github.com/aframevr/aframe/releases
 [webxr]: https://immersive-web.github.io/webxr/
 
-If you are using A-Frame 1.2.0 or older you probably need to update to the [latest release][release]. Browsers are migrating to the [WebXR standard][webxr] and old versions might no longer work.
+A-Frame 1.2.0またはそれ以前のバージョンをお使いの場合は、おそらく[最新リリース][release]にアップデートする必要があります。ブラウザは[WebXR標準][webxr]に移行しつつあり、古いバージョンはもう動作しないかもしれません。
 
-You also have to serve your content over HTTPS. The WebXR API won't be available over HTTP.
+また、コンテンツは HTTPS で提供する必要があります。WebXR API は HTTP では利用できません。
 
-## Why does my asset (e.g., image, video, model) not load?
+## アセット（画像、動画、モデルなど）が読み込まれないのですが？
 
 [cors]: https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
 [localserver]: ./installation.md#local-development
@@ -74,51 +54,40 @@ You also have to serve your content over HTTPS. The WebXR API won't be available
 [videotestcode]: https://github.com/aframevr/aframe/blob/master/examples/test/video/index.html
 [videoplaycomponent]: https://github.com/aframevr/aframe/blob/master/examples/js/play-on-click.js
 
-First, if you are doing local development, make sure you are [using a local
-server][localserver] so that asset requests work properly.
+まず、ローカルで開発を行っている場合は、アセットリクエストが正しく動作するように、[ローカルサーバを使用している][localserver]ことを確認すること。
 
-If you are loading the asset from a different domain, make sure that the asset
-is served with [cross-origin resource sharing (CORS) headers][cors]. You could
-either find a host to serve the asset with CORS headers, or place the asset on
-the same domain (directory) as your application.
+異なるドメインからアセットを読み込む場合は、アセットに [CORS (cross-origin resource sharing) ヘッダ][cors] を付けて提供していることを確認してください。CORS ヘッダを使用してアセットを提供するホストを見つけるか、アプリケーションと同じドメイン（ディレクトリ）にアセットを配置することができます。
 
-If you are trying to load a video, make sure the browser supports the video
-(i.e., encoding, framerate, size).
+動画を読み込もうとしている場合、ブラウザが動画をサポートしていることを確認してください（エンコーディング、フレームレート、サイズなど）。
 
-Video autoplay policies are getting more and more strict and rules might vary accross browsers. Mandatory user gesture is now commonly enforced. For maximum compatibility, you can offer a button that the user can click to start [video playback][startplayback]. [Simple sample code][videotestcode] can be found in the docs. Pay particular attention to the [play-on-click component][videoplaycomponent]
+ビデオの自動再生はますます厳しくなっており、ブラウザによってルールが異なる可能性があります。現在では、ユーザーによる強制的なジェスチャーが一般的に行われています。最大限の互換性を確保するために、ユーザーがクリックして [ビデオ再生][startplayback] を開始できるボタンを提供することができます。[簡単なサンプルコード][videotestcode]は、docsに記載されています。特に、[play-on-click component][videoplaycomponent] に注意してください。
 
-Read the [*Hosting and Publishing* guide](./hosting-and-publishing.md) for more
-information.
+詳しくは、[*Hosting and Publishing* guide](./hosting-and-publishing.md) を読んでください。
 
-## Why is the HTML not updating when I check the browser inspector?
+## ブラウザのインスペクタで確認しても、HTMLが更新されないのはなぜですか？
 
 [debug]: ../components/debug.md
 [flushtodom]: ../core/entity.md#flushtodom-recursive
 
-If you open up your browser's developer tools, you'll see that the HTML
-attribute values are empty.
+ブラウザの開発者ツールを開くと、HTML属性の値が空になっているのがわかります。
 
 ![HTML](https://cloud.githubusercontent.com/assets/674727/25720562/2b243bda-30c2-11e7-98d5-479157d20046.jpg)
 
-To improve performance, A-Frame does not update the HTML to save on
-stringification operations. This also means mutation observations will not
-fire. Use the [debug component][debug] or [`.flushToDOM` methods][flushtodom]
-if you need to sync to the DOM.
+A-Frameでは、パフォーマンス向上のため、HTMLの更新を行わず、文字列化操作を省力化しています。これは、突然変異の観測が行われないことも意味します。DOMに同期する必要がある場合は、[debugコンポーネント][debug] や [`.flushToDOM` メソッド][flushtodom] を使ってください。
 
-## Why does my video not play?
+## ビデオが再生されないのですが？
 
 [iosvideo]: https://developer.apple.com/library/iad/documentation/UserExperience/Conceptual/iAdJSProgGuide/PlayingVideosinAds/PlayingVideosinAds.html
 
-Mobile and now desktop browsers have limitations playing inline video.
+モバイル、そして現在ではデスクトップのブラウザでは、インラインビデオの再生に制限があります。
 
-Because of an [iOS platform restriction][iosvideo] in order to get inline video
-(with or without autoplay), we must:
+[iOS プラットフォームの制限][iosvideo] のため、インライン動画（自動再生の有無にかかわらず）を取得するためには、次のことを行う必要があります。
 
-- Set the `<meta name="apple-mobile-web-app-capable" content="yes">` meta tag (will be injected if missing).
-- Set the `playsinline` attribute to the video element (is automatically added to all videos).
-- Possibly pin the webpage to the homescreen for older iOS versions.
+- メタ タグに `<meta name="apple-mobile-web-app-capable" content="yes">` を設定します（見つからない場合はインジェクションされます）。
+- video 要素に `playsinline` 属性を設定する（すべての動画に自動的に追加される）。
+- 古いバージョンの iOS では、Web ページをホームスクリーンに固定する可能性があります。
 
-Mobile and desktop browsers have been tightening the video autoplay policies to preserve battery and avoid intrusive advertisements. Most browsers now require a user action (such as a click or tap event) to start video playback:
+モバイル ブラウザとデスクトップ ブラウザは、バッテリーを節約し、邪魔な広告を避けるために、ビデオの自動再生ポリシーを厳しくしています。ほとんどのブラウザでは、ビデオの再生を開始するためにユーザーの操作（クリックまたはタップ イベントなど）が必要になっています。
 
 -[Chrome for Android](https://bugs.chromium.org/p/chromium/issues/detail?id=178297)
 -[Chrome desktop](https://www.chromium.org/audio-video/autoplay)
@@ -128,71 +97,62 @@ Mobile and desktop browsers have been tightening the video autoplay policies to 
 [video-playback-example]: https://aframe.io/aframe/examples/test/video/
 [video-playback-code]: https://github.com/mayognaise/aframe-html-shader/
 
-There's an [A-Frame example that includes the necessary logic][video-playback-example] to request the user clicking or tapping to start video playback. [The source code is also available][video-playback-code]
+[動画再生に必要なロジックを含むA-Frameサンプル][video-playback-example]があり、ユーザーにクリックやタップを要求して動画再生を開始させます。[ソースコードも公開されています][video-playback-code]。
 
-We do not focus too much on video, but below are GitHub issues that may contain helpful information from community:
+動画にはあまり力を入れていませんが、コミュニティからの有益な情報が含まれている可能性のあるGitHub issueを以下に紹介します。
 
-- [*Videos and videospheres don't work on mobile*](https://github.com/aframevr/aframe/issues/316)
-- [*Document iOS video encoding restrictions*](https://github.com/aframevr/aframe/issues/1846)
-- [*Official videosphere demo does not work on mobile*](https://github.com/aframevr/aframe/issues/2152)
+- [*モバイルでビデオやビデオスフィアが機能しない*](https://github.com/aframevr/aframe/issues/316)
+- [*iOSのビデオエンコードの制限を文書化*](https://github.com/aframevr/aframe/issues/1846)
+- [*公式ビデオスフィアデモはモバイルでは動作しない*](https://github.com/aframevr/aframe/issues/2152)
 
-## How do I display `<iframe>`s or render HTML in A-Frame?
+## A-Frameで<<iframe>>を表示したり、HTMLをレンダリングするにはどうしたらよいですか？
 
-There is no way for the browser to display `<iframe>`s within WebGL. While it
-is possible to overlay an `<iframe>` on top of the canvas, the `<iframe>` will
-not display in VR nor can it integrate with the scene.
+WebGL 内でブラウザが `<iframe>` を表示する方法はありません。キャンバスの上に `<iframe>` を重ねることは可能ですが、`<iframe>` は VR で表示されませんし、シーンと統合されることもありません。
 
 [html-shader]: https://github.com/mayognaise/aframe-html-shader/
 
-Though, we can render basic HTML and CSS as a texture without interactivity.
-We can paint to a `<canvas>` and use the canvas as source for a texture. There
-are components in the ecosystem that enable this:
+とはいえ、基本的なHTMLやCSSは、インタラクティブ性を持たせずにテクスチャとしてレンダリングすることが可能です。<<canvas>` にペイントして、そのキャンバスをテクスチャのソースとして使用することができます。エコシステムには、これを可能にするコンポーネントがあります。
 
 - [HTML Shader][html-shader]
 
-## Which 3D model formats work?
+## どの3Dモデル形式が有効ですか？
 
 [gltf]: https://en.wikipedia.org/wiki/GlTF
 [whygltf]: ../components/gltf-model.md#why-use-gltf
 
-The ideal format is the GL Transmission Format [glTF (`.gltf`)][gltf] since
-glTF is feature-rich, compact, and efficient. glTF focuses on providing a
-*transmission format* rather than an editor format and is more interoperable
-with web technologies.  [Read more about glTF and A-Frame's glTF
-component][whygltf].
+GL Transmission Format [glTF (`.gltf`)][gltf] は、機能が豊富で、コンパクトで、効率的だからです。glTFは、エディタ形式よりも、*伝送形式*の提供に焦点を当て、ウェブ技術との相互運用性が高いのです。[glTFとA-FrameのglTFコンポーネントについてもっと読む][whygltf].
 
 [obj]: https://en.wikipedia.org/wiki/Wavefront_.obj_file
 
-[Wavefront (`.obj`)][obj] is also a well-known format but has some limitations
-like the lack of animation and vertex color support.
+[Wavefront (`.obj`)][obj] もよく知られたフォーマットですが、アニメーションや頂点色のサポートがないなど、いくつかの制限があります。
 
-There are also components in the ecosystem for loading other formats:
+エコシステムには、他のフォーマットを読み込むためのコンポーネントもあります。
 
 - [`.PLY` models](https://github.com/donmccurdy/aframe-extras/blob/master/src/loaders/ply-model.js)
 - [three.js `.JSON` Object](https://github.com/donmccurdy/aframe-extras/blob/master/src/loaders/json-model.js)
 - [three.js `.JSON` Scene](https://github.com/donmccurdy/aframe-extras/blob/master/src/loaders/object-model.js)
 
-Below are a couple basic examples for using models:
+以下は、モデルを使用するためのいくつかの基本的な例です。
 
 - [Model Example 1](https://aframe.io/aframe/examples/test/model/)
 - [Model Example 2](https://aframe.io/aframe/examples/primitives/models/)
 
-## Where can I find assets?
+## アセット（資産）はどこにあるのですか？
 
 [awesomestock]: https://github.com/neutraltone/awesome-stock-resources
 
-In general, [awesome-stock-resources][awesomestock] is a great collection of
-free assets.
+一般に、[awesome-stock-resources][awesomestock]は、素晴らしいコレクションです。
+フリーアセット
 
 [textures]: https://www.textures.com/
 
-For images, check out [textures.com][textures].
+画像は、[textures.com][textures]をご覧ください。
 
 [flickr]: https://www.flickr.com/groups/equirectangular/
 
-For 360&deg; images, search for [equirectangular images on Flickr][flickr].
+360°画像は、[equirectangular images on Flickr][flickr] で検索してください。
 
-For 3D models, check out:
+3Dモデルについては、こちらをご覧ください。
 
 - [Google Blocks](https://vr.google.com/objects)
 - [Sketchfab](https://sketchfab.com)
@@ -201,92 +161,67 @@ For 3D models, check out:
 - [Sketchup's 3D Warehouse](https://3dwarehouse.sketchup.com)
 - [TurboSquid](http://www.turbosquid.com/Search/3D-Models/free)
 
-For sounds, check out:
+音については、チェックしてみてください。
 
 - [Freesound.org](http://www.freesound.org/)
 - [Annual GDC Game Audio Bundles by Sonniss](http://www.sonniss.com/gameaudiogdc2016/)
 
-## Can I render Vimeo videos as a texture?
+## Vimeoの動画をテクスチャとしてレンダリングすることはできますか？
 
-Yes. [Vimeo has an A-Frame plugin](https://github.com/vimeo/vimeo-webvr-demo), but rendering is limited to just videos from your personal Vimeo account.
+はい。[VimeoにはA-Frameプラグインがあります](https://github.com/vimeo/vimeo-webvr-demo)が、レンダリングは個人のVimeoアカウントからのビデオだけに限られます。
 
-## Can I render YouTube videos as a texture?
+## YouTubeの動画をテクスチャとしてレンダリングすることはできますか？
 
 [proxy]: https://github.com/cvan/webvr360
 
-No. You could [proxy YouTube videos][proxy] as a texture or download them locally
-to serve, but that is against their terms of service.
+いいえ。テクスチャとして[プロキシ]したり、ローカルにダウンロードして提供することは可能ですが、それは彼らの利用規約に反しています。
 
-## Can I add links to my scene?
+## 自分のシーンにリンクを貼ることはできますか？
 
-Browsers provide the ability to go from WebVR page to WebVR page via the
-`vrdisplayactivate` event described in the WebVR specification. Currently, not
-all browsers implement this. Firefox with WebVR implements this. A link
-component for link traversal was released with A-Frame 0.6.0:
+ブラウザは、WebVR 仕様に記載されている `vrdisplayactivate` イベントを介して、WebVR ページから WebVR ページへ移動する機能を提供します。現在のところ、すべてのブラウザがこれを実装しているわけではありません。WebVR を搭載した Firefox はこれを実装しています。リンクトラバーサルのためのリンクコンポーネントが A-Frame 0.6.0 でリリースされました。
 
 ```html
 <a-entity link="on: click; href: https://aframe-aincraft.glitch.me"></a-entity>
 ```
 
-## Can I prevent the camera from going through obstacles?
+## カメラが障害物を通過するのを防ぐことはできますか？
 
-This depends on what devices you plan to support and how you allow users to
-navigate your scene. For most VR experiences, follow best practices and only
-move the camera proportionately to the user's motion.
+これは、サポートする予定のデバイスと、ユーザーにシーンをどのようにナビゲートさせるかによります。ほとんどのVR体験では、ベストプラクティスに従って、ユーザーの動きに比例してカメラを動かすだけにしてください。
 
 [teleport]: https://github.com/fernandojsg/aframe-teleport-controls
 
-Don't block the camera if the user steps forward in a room-scale VR space. For
-most VR applications it's better to do locomotion with methods such as using
-[teleportation controls][teleport], designing your scene to keep obstacles out
-of the way or not require much movement, or explore more creative ways of
-moving users through the world.
+ルームスケールのVR空間でユーザーが前に出た場合、カメラをブロックしないようにします。ほとんどの VR アプリケーションでは、[テレポート コントロール][teleport] を使用するなどの方法でロコモーションを行うか、障害物が邪魔にならないようにシーンを設計するか、あまり移動を必要としないようにするか、世界を通じてユーザーを移動させるより創造的な方法を検討する方がよいでしょう。
 
 [physics]: https://github.com/donmccurdy/aframe-physics-system
 
-For non-VR desktop experiences with a gamepad or keyboard controls or for VR
-scenes where the camera is inside a vehicle, you can add a [physics
-engine][physics] to prevent movement through obstacles.
+ゲームパッドやキーボード操作による非VRデスクトップ体験や、カメラが乗り物の中にあるVRシーンでは、[物理エンジン][physics]を追加して障害物を通過して移動できないようにすることが可能です。
 
-## What type of units does A-Frame use?
+## A-Frameはどのようなユニットを使用しているのですか？
 
-A-Frame uses meters with a 1:1 ratio since the WebVR API also uses meters. 5
-units in A-Frame is equal to 5 meters in real life. Furthermore, when using
-programs like Blender, configured in imperial or metric mode, measurements will
-also translate 1:1. 10 feet in Blender will equal 10 feet in real life.
+WebVR APIもメーターを使用するため、A-Frameでは1:1の割合でメーターを使用します。A-Frameの5単位は、現実の5メートルに相当します。さらに、Blenderのようなプログラムを使用し、インペリアルまたはメトリックモードで設定した場合、測定値も1:1に変換されます。Blenderの10フィートは、現実の10フィートに相当します。
 
-## How is A-Frame different from VRML?
+## A-FrameはVRMLとどう違うのですか？
 
 [extensible]: https://extensiblewebmanifesto.org/
 
-A-Frame is a JavaScript framework. Unlike VRML, A-Frame is not a 3D file
-format, markup language, nor a standard. A-Frame embraces the [Extensible Web
-Manifesto][extensible]. Only look at standardization as winning ideas emerge.
+A-Frameは、JavaScriptのフレームワークです。VRMLとは異なり、A-Frameは3Dファイルフォーマットでも、マークアップ言語でも、標準規格でもない。A-Frameは[Extensible Web Manifesto][拡張可能]を受け入れています。標準化については、勝てるアイデアが出てきたときだけ検討する。
 
-Technically, A-Frame is an [entity-component-system][ecs] game engine on top of
-three.js. As it is a JavaScript framework, coding is to be expected for more
-complex applications. Unlike 3D file formats, A-Frame provides power and
-interactivity via full access to JavaScript, three.js, and Web APIs.
+技術的には、A-Frameはthree.jsの上に乗っている[entity-component-system][ecs]というゲームエンジンです。JavaScriptのフレームワークであるため、より複雑なアプリケーションではコーディングが必要になることが予想されます。3Dファイルフォーマットとは異なり、A-FrameはJavaScript、three.js、Web APIにフルアクセスすることでパワーとインタラクティブ性を提供します。
 
-## Does A-Frame support `X` feature?
+## A-Frameは「X」機能に対応していますか？
 
 [aframecomponents]: https://github.com/aframevr/aframe/tree/master/src/components
 [writingcomponent]: ./writing-a-component.md
 
-A-Frame ships with a number of components and primitives. Being based on top of
-an [entity-component-system architecture][ecs], if a feature doesn't exist, you
-can [write or find a component][writingcomponent] to enable it. Or if one of
-the standard components doesn't fit your use cases, you can [copy and modify
-it][aframecomponents].
+A-Frameには、多くのコンポーネントやプリミティブが同梱されています。[エンティティ-コンポーネント-システムアーキテクチャ][ecs]の上に構築されているため、ある機能が存在しない場合、それを有効にするためのコンポーネントを[書く、見つける][writingcomponent]ことが可能です。また、標準コンポーネントの1つがユースケースに合わない場合は、それを[コピーして変更][aframecomponents]することができます。
 
 [finding]: ./entity-component-system.md#where-to-find-components
 
-Read [*Where to Find Components*][finding] for more information.
+詳しくは、[*Where to Find Components*][finding]をお読みください。
 
-## Does A-Frame support `X` library or framework?
+## A-Frameは、「X」というライブラリやフレームワークに対応していますか？
 
-A-Frame is built on top of the DOM so most libraries and frameworks work
-including:
+A-FrameはDOMの上に構築されているため、ほとんどのライブラリやフレームワークを含めて動作します。
 
 - [Vue.js](https://github.com/frederic-schwarz/aframe-vuejs-3dio)
 - [Preact](https://github.com/aframevr/aframe-react#using-with-preact)
@@ -297,47 +232,45 @@ including:
 - Ember.js
 - Meteor
 
-## Which headsets, browsers, devices, and platforms does A-Frame support?
+## A-Frameはどのようなヘッドセット、ブラウザー、デバイス、プラットフォームに対応していますか？
 
 [deviceplatform]: ./vr-headsets-and-webvr-browsers.md
 
-Most of them. Read *[VR Headsets and WebVR Browsers][deviceplatform]* for more
-information.
+そのほとんどが 詳しくは、*[VRヘッドセットとWebVRブラウザ][デバイスプラットフォーム]*をお読みください。
 
-## How can I improve performance?
+## パフォーマンスを向上させるには？
 
 [bestpractices-perf]: ./best-practices.md#performance
 
-Read *[Best Practices &mdash; Performance][bestpractices-perf]* for more information.
+詳しくは、*[ベストプラクティス &mdash; パフォーマンス][bestpractices-perf]*をお読みください。
 
-## How can I get in touch with the A-Frame team?
+## A-Frameのチームと連絡を取るにはどうすればよいですか？
 
-We try to be responsive and helpful! We love questions, feedback, bug reports,
-and pull requests:
+私たちは、迅速な対応と親切な対応を心がけています 質問、フィードバック、バグレポート、プルリクエストをお待ちしています。
 
-- Got a question? Ask us using the [A-Frame StackOverflow tag][stackoverflow].
-- Want to chat? Hang out with us on the community [A-Frame Slack channel][slack].
-- Want to share? Tweet at us at [@aframevr][twitter].
-- Find an issue? File issues on the [A-Frame GitHub repo][github].
+- [質問をお持ちですか？A-Frame StackOverflow タグ][stackoverflow]を使って私たちに質問してください。
+- チャットしたいですか？コミュニティの[A-Frame Slackチャンネル][slack]で、私たちと一緒に過ごしましょう。
+- [共有したいですか？twitter][@aframevr]で私たちにツイートしてください。
+- [問題を見つけた？A-Frame GitHub リポジトリ][github]に課題を投稿してください。
 
-## Where is the roadmap?
+## ロードマップはどこにあるのか？
 
 [roadmap]: https://github.com/aframevr/aframe/blob/master/ROADMAP.md
 
-The [roadmap is on GitHub][roadmap]!
+[ロードマップはGitHubにあります][roadmap]!
 
-## Do I call it "A-Frame" or "aframe" or "aframevr" or "aFrame"?
+## 「A-Frame」と呼ぶか、「aframe」と呼ぶか、「aframevr」と呼ぶか、「aFrame」と呼ぶか？
 
 A-Frame!
 
-## Why do my textures render black?
+## テクスチャが黒くレンダリングされるのはなぜですか？
 
 [precision]: ../components/renderer.md#precision
 
-Phones with Adreno 300 series GPUs are notoriously problematic. Set [renderer precision][precision] to `medium` as a workaround. Real fix has to happen at the driver / device level.
+Adreno 300シリーズGPUを搭載した携帯電話では、問題が発生する可能性があります。回避策として、[renderer precision][precision] を `medium` に設定してください。本当の修正は、ドライバ/デバイスレベルで行われる必要があります。
 
-## Why is the gyroscope / magic window mode not working?
+## ジャイロセンサー/マジックウィンドウモードが使えないのはなぜですか？
 
-[New browser policies](https://www.w3.org/TR/orientation-event/#dom-deviceorientationevent-requestpermission) require sites to prompt the user for permission before getting access to DeviceMotionEvents. [Starting with iOS 13](https://webkit.org/blog/9674/new-webkit-features-in-safari-13/) DeviceMotionEvents are only available for pages served over `https`. Other browsers will also apply same policies and restrictions. A-Frame now [incorporates customizable UI](https://aframe.io/docs/1.0.0/components/device-orientation-permission-ui.html#sidebar) to request the necessary permissions to the user. Make sure to update to [A-Frame latest version](https://github.com/aframevr/aframe/releases)
+[新しいブラウザポリシー](https://www.w3.org/TR/orientation-event/#dom-deviceorientationevent-requestpermission)では、サイトがDeviceMotionEventにアクセスする前に、ユーザーに許可を求めるよう求めています。[iOS 13 から](https://webkit.org/blog/9674/new-webkit-features-in-safari-13/) DeviceMotionEvent は `https` で提供されるページに対してのみ利用可能です。他のブラウザも同じポリシーと制限を適用します。A-Frame は、ユーザーに必要なパーミッションを要求するために、カスタマイズ可能な UI を組み込みました](https://aframe.io/docs/1.0.0/components/device-orientation-permission-ui.html#sidebar). A-Frameの最新版](https://github.com/aframevr/aframe/releases)に必ずアップデートしてください。
 
 

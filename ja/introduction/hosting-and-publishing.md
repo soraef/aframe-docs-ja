@@ -6,102 +6,66 @@ parent_section: introduction
 order: 12
 ---
 
-This section will show several ways to deploy, host, and publish an A-Frame
-site and its assets onto the Web for the world to see.
+このセクションでは、A-FrameサイトとそのアセットをWeb上に展開、ホスト、公開する方法をいくつか紹介します。
 
 <!--toc-->
 
 ## Publishing a Site
 
-There are many free services to deploy and host a site. We'll go over some of
-the more easy or popular options, but there are certainly other options such
-as AWS, Heroku, or self-hosting. An important note is that these sites should
-be served with SSL/HTTPS due to a common security restriction of the browser's
-WebVR API. All the options below serve with SSL/HTTPS.
+サイトをデプロイし、ホストするための無料のサービスはたくさんあります。ここでは、より簡単で人気のあるオプションをいくつか紹介しますが、AWS、Heroku、またはセルフホスティングなどの他のオプションがあることは確かです。重要な注意点は、ブラウザの WebVR API の一般的なセキュリティ制限のため、これらのサイトは SSL/HTTPS で提供する必要があることです。以下のオプションはすべて SSL/HTTPS で提供されます。
+
 
 ### Glitch
 
 ![Glitch](https://cloud.githubusercontent.com/assets/674727/25643449/b5ee2542-2f54-11e7-9d45-22f3aa0b208f.jpg)
 
-*"Glitch is the friendly community where you'll build the app of your dreams
-With working example apps to remix, a code editor to modify them, instant
-hosting and deployment - anybody can build a web app on Glitch, for free."*
+*Glitchは、あなたが夢のアプリを作ることができるフレンドリーなコミュニティです。リミックスするためのサンプルアプリ、それらを修正するためのコードエディタ、即時ホスティングとデプロイメントがあり、誰でも無料でGlitchでウェブアプリを作ることができます。*
 
-[Glitch](https://glitch.com) is the easiest and fastest way to create and
-publish a site from within the browser. Glitch lets us add code and files,
-upload assets, edit with other people, define our own URL name, and instantly
-deploy changes on every change. We don't even need to make an account nor
-login:
 
-1. Try going to the [A-Frame Starter Glitch](https://glitch.com/~aframe/).
-2. Hit **Remix your own** to copy the project.
-3. Click the *Project info and options* icon on the top-left to rename our
-application (e.g., `https://yoursitename.glitch.me`).
-4. Edit the HTML, add files, modify the project.
-5. Click **Show** to view the application (e.g., the starter glitch is hosted at `https://aframe.glitch.me`).
-6. Every change to the project will update the application instantly. This can
-be toggled off by signing in, clicking your user avatar, and toggling **Refresh
-App on Changes**.
+[Glitch](https://glitch.com)は、ブラウザからサイトを作成し公開する最も簡単かつ最速の方法です。Glitchでは、コードやファイルの追加、アセットのアップロード、他のユーザーとの共同編集、独自のURL名の定義、そして変更するたびに即座にデプロイすることができます。アカウント作成もログインも必要ありません。
+
+
+1. [A-Frame Starter Glitch](https://glitch.com/~aframe/)にアクセスしてみてください。
+2. **Remix your own** を押して、プロジェクトをコピーします。
+3. 左上の*Project info and options*アイコンをクリックし、アプリケーションの名前を変更します（例：`https://yoursitename.glitch.me`）。
+4. HTMLを編集し、ファイルを追加し、プロジェクトを変更します。
+5. **Show**をクリックして、アプリケーションを表示します(例: スターターグリッチは`https://aframe.glitch.me`にホストされています)。
+6. プロジェクトを変更するたびに、アプリケーションは即座に更新されます。これは、サインインして自分のアバターをクリックし、**Refresh App on Changes**をトグルすることでオフにすることができます。
+
 
 ### Neocities
 
 ![Neocities](https://cloud.githubusercontent.com/assets/674727/25643397/6db47790-2f54-11e7-9eb3-ac18a1513e9f.jpg)
 
-*"Create your own free website.  Unlimited creativity, zero ads.  Neocities is
-a social network of 129,100 web sites that are bringing back the lost
-individual creativity of the web. We offer free web hosting and tools that
-allow you to create your own web site. Join us!"*
+*「自分だけの無料ホームページを作ろう 無限の創造性、広告ゼロ。ネオシティーズは、失われた個人の創造性を取り戻すために、129,100のウェブサイトからなるソーシャルネットワークです。私たちは、無料のウェブホスティングと、あなた自身のウェブサイトを作成することができるツールを提供しています。参加してください！」*。
 
-[Neocities](https://neocities.org) is also another free and easy way to create
-and publish a site from within the browser. While it doesn't have some of the
-features of Glitch, Neocities is friendly and lets us upload assets into the
-project directory versus a CDN.  This makes Neocities at least better at
-hosting models. With Neocities, we can create and edit files. They'll then be
-hosted and published for us (e.g., `ngokevin.neocities.org`):
+[Neocities](https://neocities.org)もまた、ブラウザ内からサイトを作成し公開するための、無料で簡単な方法です。Glitchのような機能はありませんが、Neocitiesはフレンドリーで、CDNではなくプロジェクトディレクトリにアセットをアップロードすることができます。このため、少なくともモデルのホスティングについては、Neocitiesの方が優れています。Neocitiesでは、ファイルを作成し、編集することができます。そして、それらは私たちのためにホストされ、公開されます（例：`ngokevin.neocities.org`）。
+
 
 ![Neocities Editor](https://cloud.githubusercontent.com/assets/674727/25643399/704cffe0-2f54-11e7-8d32-868b51407f81.jpg)
 
 ## Hosting Assets
 
-We'll also go over hosting assets such as audio, textures, models, and video.
+また、オーディオ、テクスチャ、モデル、ビデオなどのアセットのホスティングについても説明します。
 
-If the A-Frame site is being published alongside its assets in the same
-directory (i.e., the same domain), then we don't need to worry much about
-hosting assets. The A-Frame site can use relative URLs to reference the asset,
-and since they're on the same domain, there is no issue with fetching that
-asset. For example, if we have all your resources in the same root directory
-and we publish everything via Neocities, GitHub Pages, or Surge, there will be
-no issues.
+A-Frameサイトが同じディレクトリ（つまり、同じドメイン）にアセットと一緒に公開されている場合、アセットのホスティングについてそれほど心配する必要はありません。A-Frameサイトは、相対URLを使ってアセットを参照することができ、同じドメイン上にあるので、そのアセットを取得することに問題はありません。例えば、すべてのリソースを同じルートディレクトリに置き、Neocities、GitHub Pages、またはSurge経由ですべてを公開しても、問題は発生しないでしょう。
+
 
 ## Content Delivery Network (CDN)
 
-If we're hosting assets externally, like on a CDN, then we need to take in
-considerations .The primary requirement for assets is that they be served with
-[cross-origin resource sharing
-(CORS)](https://developer.mozilla.org/docs/Web/HTTP/Access_control_CORS)
-enabled. This allows the A-Frame site to fetch the asset to display in the
-scene. Plus, if we're using `<a-assets>`, we should usually set
-`crossorigin="anonymous"` on assets such as `<img>`, `<audio>`, and `<video>`.
+CDNなど外部でアセットをホスティングする場合は、考慮する必要があります。アセットに対する第一の要件は、[Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/docs/Web/HTTP/Access_control_CORS) を有効にして提供されることです。これにより、A-Frameサイトがシーンに表示するアセットを取得することができます。  さらに、`<a-assets>` を使用している場合、通常、`<img>`、`<audio>`、`<video>` などのアセットには `crossorigin="anonymous"` を設定する必要があります。
 
-There are several simple options to host assets via a CDN:
+CDN経由でアセットをホスティングするための簡単なオプションがいくつかあります。
 
-- [Glitch Asset Uploader](https://glitch.com/) - The Glitch code editor has a
-  panel to upload assets and get CDN URLs in return.
-- [imgur](https://imgur.com/) - For images, we could use imgur, a popular image
-  hosting service.
+- [Glitch Asset Uploader](https://glitch.com/) - Glitchのコードエディタには、アセットをアップロードしてCDNのURLを取得するためのパネルがあります。
+- [imgur](https://imgur.com/) - 画像については、人気のある画像ホスティングサービスであるimgurを使用することができます。
+
 
 ### Hosting Models
 
-Hosting models is not as simple. Models usually come as groups of files in a
-folder, where the model file relatively references other files such as images.
-Thus, models have to be uploaded as a single folder in the same directory. Many
-of the free asset hosting services support only uploading one file a time. One
-solution would be to rename all of the image paths to the CDN paths after the
-images are individually uploaded, but that is tedious. There are a couple known
-solutions for easily hosting models via CDN:
+モデルのホスティングは、それほど単純ではありません。モデルは通常、フォルダ内のファイルグループとして提供され、モデルファイルは画像などの他のファイルを相対的に参照します。したがって、モデルは同じディレクトリにある一つのフォルダとしてアップロードされなければなりません。多くの無料アセットホスティングサービスは、一度に1つのファイルしかアップロードできないようになっています。一つの解決策は、画像を個別にアップロードした後、すべての画像のパス名をCDNのパス名に変更することですが、これは面倒な作業です。CDN経由でモデルを簡単にホスティングするための、いくつかの既知のソリューションがあります。
 
-If publishing a site via Neocities, we can upload any number of files and
-directories into the site directory:
+Neocities経由でサイトを公開する場合、サイトディレクトリにファイルやディレクトリをいくつでもアップロードすることができます。
 
 ![Neocities](https://cloud.githubusercontent.com/assets/674727/25639880/713c8266-2f42-11e7-9f2a-8e552bda80fa.jpg)
 
@@ -109,51 +73,39 @@ directories into the site directory:
 
 [jsdelivr]: https://www.jsdelivr.com/?docs=gh
 
-Or we can upload assets to a GitHub repository, and use GitHub to serve the
-model files.
+あるいは、GitHubのリポジトリにアセットをアップロードし、GitHubを利用してモデルファイルを提供することも可能です。
 
-1. Go to one of our GitHub repositories.
-2. Click **Upload files**.
-3. Upload our assets and wait for the upload to finish.
-4. Type a quick message at the bottom and hit **Commit changes**.
-5. Wait for processing.
-6. Once finished, click on the primary asset file.
-7. Click on **Raw**.
-8. Then we have our asset URL hosted on GitHub. Then the asset can be
-hosted and referenced via [JSDelivr CDN][jsdelivr].
+1. GitHub リポジトリにアクセスします。
+2. **Upload files** をクリックします。
+3. アセットをアップロードして、アップロードが完了するのを待ちます。
+4. 最下部に簡単なメッセージを入力し、**Commit changes**をクリックします。
+5. 処理が完了するのを待ちます。
+6. 完了したら、主アセットファイルをクリックします。
+7. **Raw**をクリックします。
+8. GitHubにホストされたアセットのURLができました。あとは、[JSDelivr CDN][jsdelivr] 経由でアセットのホスティングと参照が可能です。
 
-Below is a video of the workflow:
+以下は、ワークフローの動画です。
 
 <div style="position:relative;height:0;padding-bottom:56.25%"><iframe src="https://www.youtube.com/embed/_D_C_oSKp9Y?ecver=2" width="640" height="360" frameborder="0" style="position:absolute;width:100%;height:100%;left:0" allowfullscreen></iframe></div>
 
-Though ee can also host the model the same as we serve all of our other assets,
-and let the server and CDN handle it. If we want a special place to host them,
-S3 is another option.
+しかし、eeは他のすべてのアセットを提供するのと同じようにモデルをホストし、サーバーとCDNにそれを処理させることもできます。もし、特別な場所にホスティングしたいのであれば、S3も選択肢の一つです。
 
 ## Sharing Our Project
 
-Once we've published our awesome project, we'll want to share it so other
-people dive inside!
+私たちの素晴らしいプロジェクトを公開したら、それを共有して、他の人たちが中に飛び込めるようにしたいですね。
 
 ### Creating Media
 
 [gifpardy]: https://github.com/ngokevin/gifpardy
 [obs]: https://obsproject.com/
 
-A-Frame and VR are very visual; we'll want to create videos and GIFs of our
-project.
+A-FrameやVRは非常に視覚的なものなので、プロジェクトの動画やGIFを作成したいと思います。
 
-First, we want to record the screen. On OS X, record the screen using built-in
-QuickTime Player's Screen Recording or [OBS Studio][obs]. On Windows, we can
-use [OBS Studio][obs]. OBS Studio also supports streaming and compositing a
-webcam image on top of the screen, which is useful to show the person using the
-headset in reality (even with mixed reality).
+まず、画面を録画したいと思います。OS Xの場合、内蔵のQuickTime Playerの画面録画か、[OBS Studio][obs]を使って画面を録画します。Windowsでは、[OBS Studio][obs]を利用します。OBS Studioは、Webカメラの画像を画面の上にストリーミングして合成することもサポートしており、ヘッドセットを使用している人を現実に見せるのに便利です（複合現実感でも）。
 
-Then, we can possibly want to trim the video. On OS X, we can use QuickTime
-Player's trim tool (`<cmd> + t`).
+次に、ビデオをトリミングしたいと思うことがあります。OS Xでは、QuickTime Playerのトリムツール（`<cmd> + t`）を使うことができます。
 
-To convert to a GIF with one command, use [gifpardy][gifpardy]. `gifpardy` uses ffmpeg
-and gifsicle under the hood:
+一つのコマンドでGIFに変換するには、[gifpardy][gifpardy]を使ってください。gifpardy`はffmpegとgifsicleを裏で使っています．
 
 ```
 gifpardy in.mp4
@@ -163,9 +115,7 @@ gifpardy -r 320x240 --delay 8 in.mp4
 
 [brewery]: https://itunes.apple.com/us/app/gif-brewery-by-gfycat-capture-make-video-gifs/id1081413713?mt=12
 
-Alternatively, we can use [GIF Brewery][brewery] which has UI to trim, resize,
-crop, and preview a GIF before exporting. Or capture straight to GIF using
-[LICECap](https://licecap.en.softonic.com/).
+また、GIFをトリミング、リサイズ、クロップし、エクスポート前にプレビューするためのUIを持つ[GIF Brewery][brewery]を使用することも可能です。または、[LICECap](https://licecap.en.softonic.com/)を使って直接GIFにキャプチャーすることもできます。
 
 ### Sharing Media
 
@@ -173,13 +123,9 @@ crop, and preview a GIF before exporting. Or capture straight to GIF using
 [reddit-webvr]: https://www.reddit.com/r/webvr
 [slack-webvr]: https://webvr-slack.herokuapp.com/
 
-If you create something with A-Frame, please share it with us! If you share
-your project, we'll feature it on [*A Week of
-A-Frame*](https://aframe.io/blog/) for the community to see. Great channels
-include:
+A-Frameで何かを作ったら、ぜひシェアしてください。プロジェクトをシェアしていただくと、[*A-Frameの一週間*](https://aframe.io/blog/)で紹介し、コミュニティの皆様に見ていただくことができます。素晴らしいチャンネルは以下の通りです。
 
-- [Twitter](https://twitter.com) - Mention `@aframevr` or include the `#webvr`
-  hashtag.
+- [Twitter](https://twitter.com) - Mention `@aframevr` or include the `#webvr` hashtag.
 - [`#projects` channel on Slack](http://aframevr.slackarchive.io/projects/)
 - [WebVR Slack channel][slack-webvr].
 - [/r/WebVR subreddit][reddit-webvr].
@@ -187,10 +133,7 @@ include:
 
 ## Embedding
 
-If we want to embed an A-Frame scene into the layout of 2D web page, we can use
-the [embedded component](../components/embedded.md) to remove fullscreen styles
-and allow us to style the canvas with CSS.
+A-Frameのシーンを2DのWebページのレイアウトに埋め込みたい場合、[embedded component](../components/embedded.md) を使うと、フルスクリーンスタイルを削除して、CSSでキャンバスにスタイルを設定できるようになります。
 
-Note we can only embed one scene at a time into a page. If we need multiple
-scenes, we can use
-[`<iframe>`s](https://developer.mozilla.org/docs/Web/HTML/Element/iframe).
+なお、1つのページには一度に1つのシーンのみ埋め込むことができます。もし複数のシーンが必要な場合は、[`<iframe>`s](https://developer.mozilla.org/docs/Web/HTML/Element/iframe)を使用します。
+
