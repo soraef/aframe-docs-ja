@@ -12,49 +12,37 @@ examples: []
 [dom]: https://developer.mozilla.org/docs/Web/API/Document_Object_Model
 [html]: https://developer.mozilla.org/docs/Learn/HTML/Introduction_to_HTML/Getting_started
 
-This section will go over the concepts of A-Frame's primitive elements and
-their relation to the entity-component framework. If you're looking for a guide
-on using HTML and primitives, [check out the *Building a Basic Scene*
-guide](../guides/building-a-basic-scene.md).
+このセクションでは、A-Frameのプリミティブ要素の概念と、プリミティブ要素のエンティティコンポーネントフレームワークとの関係について説明します。HTMLとプリミティブの使い方については、[*Building a Basic Scene*ガイド](../guides/building-a-basic-scene.md)をご覧ください。
 
 <!--toc-->
 
 ## HTML
 
-A-Frame is based on top of [HTML][html] and [the DOM][dom] using a polyfill for
-Custom Elements. HTML is the building block of the Web, providing one of the
-most accessible computing languages around. There are no installations or build
-steps required, creating with HTML involves just text in an HTML file and
-opening the HTML file in a browser. Since most of the Web was built on top of
-HTML, most existing tools and libraries work with A-Frame including React,
-Vue.js, Angular, d3.js, and jQuery.
+A-Frameは、[HTML][html] と [DOM][dom] の上に、カスタム要素用のポリフィルを使用して構築されたものです。
+HTMLはWebの構成要素であり、最もアクセスしやすいコンピューティング言語の一つです。
+インストールやビルドの必要がなく、HTMLで作成するには、HTMLファイルにテキストを記述し、ブラウザでそのHTMLファイルを開くだけです。
+WebのほとんどはHTMLの上に構築されているので、React, Vue.js, Angular, d3.js, jQueryなど、既存のツールやライブラリのほとんどがA-Frameに対応しています。
 
 ![HTML Scene](https://user-images.githubusercontent.com/674727/52090525-79b04d80-2566-11e9-993f-7a8b19ca25b1.png)
 
-If you don't have too much experience with HTML, no problem! It's fairly easy
-to pick up and perhaps even easier to grasp than 2D HTML. Once you pick up the
-general structure or syntax of HTML (opening tag, attributes, closing tag),
-then you're good to go! [Read an introduction to HTML on MDN][html].
+HTMLの経験があまりない方でも、問題ありません！
+2DのHTMLページより簡単に理解できるかもしれません。
+HTMLの一般的な構造や構文（開始タグ、属性、終了タグ）さえ覚えてしまえば、もう大丈夫です。[MDNでHTMLの入門を読む][html]。
 
 ![HTML](https://user-images.githubusercontent.com/6694476/27047689-94689672-4fc6-11e7-9cf5-828a508c6522.jpg)
 
 ## Primitives
 
-While the HTML layer looks basic, HTML and the DOM are only the outermost
-abstraction layer of A-Frame. Underneath, A-Frame is an entity-component
-framework for three.js that is exposed declaratively.
+HTML層はA-Frameの基礎のようなものに見えますが、HTMLとDOMはA一番外側の抽象化された層に過ぎません。
+その下にあるA-Frameは、宣言的に公開されるthree.jsのためのエンティティコンポーネントフレームワークなのです。
 
-A-Frame provides a handful of elements such as `<a-box>` or `<a-sky>` called
-*primitives* that wrap the entity-component pattern to make it appealing for
-beginners. At the bottom of the documentation navigation sidebar, we can see
-every primitive that A-Frame provides out of the box. Developers can create
-their own primitives as well.
+A-Frameは、`<a-box>` や `<a-sky>` といった、初心者にもわかりやすいようにエンティティコンポーネントのパターンをラップする *プリミティブ* と呼ばれる要素を提供しています。このドキュメントのナビゲーションサイドバーの下部には、A-Frameが提供するすべてのプリミティブが表示されています。また、開発者が独自のプリミティブを作成することも可能です。
+
 
 ## Example
 
-Below is the *Hello, WebVR* example that uses a few basic primitives. A-Frame
-provides primitives to create meshes, render 360&deg; content, customize the
-environment, place the camera, etc.
+以下は、いくつかの基本的なプリミティブを使用した *Hello, WebVR* の例です。A-Frameは、メッシュの作成、360度コンテンツのレンダリング、環境のカスタマイズ、カメラの配置などのためのプリミティブを提供しています。
+
 
 ```html
 <html>
@@ -75,32 +63,30 @@ environment, place the camera, etc.
 
 ### Under the Hood
 
-Primitives act as a convenience layer (i.e., syntactic sugar) primarily for
-newcomers. Keep in mind for now that primitives are `<a-entity>`s under the
-hood that:
+プリミティブは、主に初心者のための便利なレイヤー（=シンタックスシュガー）として機能します。プリミティブの中身は、 `<a-entity>` のであり、次のようなものだと覚えておいてください。
 
-- Have a semantic name (e.g., `<a-box>`)
-- Have a preset bundle of components with default values
-- Map or proxy HTML attributes to [component][component] data
+- セマンティックな名前（例：`<a-box>`）を持つ。
+- デフォルト値を持つコンポーネントのプリセットバンドルを持っている
+- HTMLの属性を[component][component]データにマッピングまたはプロキシする。
 
 [assemblage]: http://vasir.net/blog/game-development/how-to-build-entity-component-system-in-javascript
 [prefab]: http://docs.unity3d.com/Manual/Prefabs.html
 
-Primitives are similar to [prefabs in Unity][prefab]. Some literature on the
-entity-component-system pattern refer to them as [assemblages][assemblage].
-They abstract the core entity-component API to:
+プリミティブは[Unityのプレハブ][prefab]に似ています。
+entity-component-system パターンに関する文献では、[assemblages][assemblage]と呼ばれもします。
+これらは、コアのエンティティコンポーネントAPIを抽象化し、次のような機能を持っています。
 
-- Pre-compose useful components together with prescribed defaults
-- Act as a shorthand for complex-but-common types of entities (e.g., `<a-sky>`)
-- Provide a familiar interface for beginners since A-Frame takes HTML in a new direction
+- 便利なコンポーネントをデフォルトとしてあらかじめ構成する
+- 複雑だが一般的なタイプのエンティティの略記法として機能する (例: `<a-sky>`)
+- A-FrameはHTMLを新しい方向へ導くものなので、初心者に馴染みやすいインターフェースを提供する
 
-Under the hood, this `<a-box>` primitive:
+この `<a-box>` の中身は、
 
 ```html
 <a-box color="red" width="3"></a-box>
 ```
 
-represents this entity-component form:
+以下のエンティティ・コンポーネントを表します。
 
 ```html
 <a-entity geometry="primitive: box; width: 3" material="color: red"></a-entity>
@@ -111,7 +97,10 @@ primitive maps the HTML `width` attribute to the underlying `geometry.width`
 property as well as the HTML `color` attribute to the underlying
 `material.color` property.
 
-## Attaching Components to Primitives
+`<a-box>` は `geometry.primitive` プロパティを `box` にデフォルトで設定します。
+そして、プリミティブは HTML の `width` 属性を下層の `geometry.width` プロパティにマッピングし、同様に HTML の `color` 属性を下層の `material.color` プロパティにマッピングします。
+
+## プリミティブへのコンポーネントのアタッチ
 
 [animations]: ../core/animations.md
 [mixins]: ../core/mixins.md
@@ -120,14 +109,19 @@ Primitives are just `<a-entity>`s under the hood. This means primitives have
 the same API as entities such as positioning, rotating, scaling, and attaching
 components.
 
-### Example
+プリミティブは、中身は単なる`<a-entity>`です。
+つまり、プリミティブは、位置決め、回転、拡大縮小、コンポーネントのアタッチメントなど、エンティティと同じAPIを持っています。
+
+### 例
 
 Let's attach community physics components to primitives. We include the source
 for [Don McCurdy's
 `aframe-physics-system`](https://github.com/n5ro/aframe-physics-system) and attach
 the physics components via HTML attributes:
 
-> :warning: **If you are using A-Frame 1.2.0 or later**: [`aframe-physics-system`](https://github.com/donmccurdy/aframe-physics-system) and you're having issues make sure you're no longer using the now deprecated THREE.Geometry. More info on [this GitHub issue](https://github.com/n5ro/aframe-physics-system/issues/187).
+プリミティブにコミュニティで作られた物理コンポーネントをアタッチして見ましょう。[Don McCurdy の `aframe-physics-system`](https://github.com/n5ro/aframe-physics-system) のソースを追加し、物理コンポーネントをHTML属性でアタッチします。
+
+> :警告 **A-Frame 1.2.0 以降を使用している場合**。[`aframe-physics-system`](https://github.com/donmccurdy/aframe-physics-system) を使用していて、問題が発生した場合は、現在では非推奨となっている THREE.Geometry を使用していないことを確認してください。詳細は[このGitHubのissue](https://github.com/n5ro/aframe-physics-system/issues/187)を参照してください。
 
 ```html
 <html>
@@ -145,36 +139,38 @@ the physics components via HTML attributes:
 </html>
 ```
 
-## Registering a Primitive
+## プリミティブを登録する
 
-We can register our own primitives (i.e., register an element) using
-`AFRAME.registerPrimitive(name, definition)`. `name` is a string and must contain a dash (i.e. `'a-foo'`). `definition` is a JavaScript
-object defining these properties:
+独自のプリミティブを登録する（要素を登録する）には `AFRAME.registerPrimitive(name, definition)` を用います。
+`name` は文字列で、ダッシュを含む必要があります (例: `'a-foo'`). `definition` は、表のプロパティを定義する JavaScript オブジェクトです。
 
-| Property          | Description                                                                                                                                                                                                                                                                               | Example                          |
+
+| プロパティ          | 説明                                                                                                                                                                                                                                                                               | 例                          |
 |-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|
-| defaultComponents | Object specifying default components of the primitive. The keys are the components' names and the values are the components' default data.                                                                                                                                                | `{geometry: {primitive: 'box'}}`
-| mappings          | Object specifying mapping between HTML attribute name and component property names. Whenever the HTML attribute name is updated, the primitive will update the corresponding component property. The component property is defined using a dot syntax `${componentName}.${propertyName}`. | `{depth: 'geometry.depth', height: 'geometry.height', width: 'geometry.width'}`
+| defaultComponents | プリミティブのデフォルトコンポーネントを指定するオブジェクトです。キーはコンポーネントの名前、値はコンポーネントのデフォルトデータです。                                                                                                                                                | `{geometry: {primitive: 'box'}}`
+| mappings          | HTMLの属性名とコンポーネントのプロパティ名の対応を指定するオブジェクトです。HTMLの属性名が更新されるたびに、プリミティブは対応するコンポーネントのプロパティを更新します。コンポーネントプロパティはドットシンタックス `${componentName}.${propertyName}` で定義されます。 | `{depth: 'geometry.depth', height: 'geometry.height', width: 'geometry.width'}`
 
-### Example
+### 例
 
-For example, below is A-Frame's registration for the `<a-box>` primitive:
+例えば、以下はA-Frameの `<a-box>` プリミティブの登録です。
 
 ```js
 var extendDeep = AFRAME.utils.extendDeep;
 
-// The mesh mixin provides common material properties for creating mesh-based primitives.
+// メッシュミックスインは、メッシュベースのプリミティブを作成するための共通のマテリアルプロパティを提供します。
 // This makes the material component a default component and maps all the base material properties.
+// これにより、マテリアルコンポーネントはデフォルトコンポーネントとなり、すべてのベースマテリアルプロパティがマッピングされます。
 var meshMixin = AFRAME.primitives.getMeshMixin();
 
 AFRAME.registerPrimitive('a-box', extendDeep({}, meshMixin, {
   // Preset default components. These components and component properties will be attached to the entity out-of-the-box.
+  // デフォルトのコンポーネントをプリセットしています。これらのコンポーネントとコンポーネントプロパティは、すぐにエンティティにアタッチされます。
   defaultComponents: {
     geometry: {primitive: 'box'}
   },
 
-  // Defined mappings from HTML attributes to component properties (using dots as delimiters).
-  // If we set `depth="5"` in HTML, then the primitive will automatically set `geometry="depth: 5"`.
+  // HTMLの属性からコンポーネントのプロパティへのマッピングの定義（ドットを区切り文字として使用）。
+  // HTMLで `depth="5"` と設定すると、プリミティブでは自動的に `geometry="depth: 5"` が設定されます。
   mappings: {
     depth: 'geometry.depth',
     height: 'geometry.height',
@@ -185,20 +181,20 @@ AFRAME.registerPrimitive('a-box', extendDeep({}, meshMixin, {
 
 [aframe-extras]: https://github.com/donmccurdy/aframe-extras
 
-For example, Don McCurdy's [`aframe-extras`][aframe-extras] package includes an
-`<a-ocean>` primitive that wraps his `ocean` component. Here is the definition
-for `<a-ocean>`.
+例えば、Don McCurdy 氏の [`aframe-extras`][aframe-extras] パッケージには `<a-ocean>` プリミティブが含まれており、彼の `ocean` コンポーネントをラップしています。
+以下は、 `<a-ocean>` の定義です。
+
 
 ```js
 AFRAME.registerPrimitive('a-ocean', {
-  // Attaches the `ocean` component by default.
-  // Defaults the ocean to be parallel to the ground.
+  // デフォルトで `ocean` コンポーネントをアタッチします。
+  // 海が地面と平行になるようにデフォルトで設定されています。
   defaultComponents: {
     ocean: {},
     rotation: {x: -90, y: 0, z: 0}
   },
 
-  // Maps HTML attributes to the `ocean` component's properties.
+  // HTMLの属性を `ocean` コンポーネントのプロパティにマップします。
   mappings: {
     width: 'ocean.width',
     depth: 'ocean.depth',
@@ -209,8 +205,7 @@ AFRAME.registerPrimitive('a-ocean', {
 });
 ```
 
-With the `<a-ocean>` primitive registered, we'd be able to create oceans using
-a line of traditional HTML:
+`<a-ocean>` というプリミティブを登録すれば、従来のHTMLの一行で海を作ることができるようになります。
 
 ```html
 <a-ocean color="aqua" depth="100" width="100"></a-ocean>
