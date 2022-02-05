@@ -12,10 +12,7 @@ order: 13
 [mixins]: ../core/mixins.md
 [template]: https://github.com/supermedium/superframe/tree/master/components/template/
 
-The core structure of A-Frame is [entity-component (ECS)][ecs]. Place and
-structure application code within purely A-Frame components for reusability,
-modularity, composability, decoupling, encapsulation, declarativeness, and
-testability.
+A-Frameのコア構造は、[entity-component (ECS)][ecs]です。再利用性、モジュール性、コンポーザビリティ、デカップリング、カプセル化、宣言性、テスト容易性のために、純粋なA-Frameコンポーネント内にアプリケーションコードを配置し、構造化する。
 
 **Do not do this**:
 
@@ -31,9 +28,7 @@ testability.
 </script>
 ```
 
-Place your code within A-Frame components so they are executed at the correct
-time, to encapsulate reusable code, and to make use of the framework which is the
-purpose of using A-Frame.
+A-Frameのコンポーネント内にコードを配置することで、正しいタイミングで実行され、再利用可能なコードをカプセル化し、A-Frameを使用する目的であるフレームワークを利用することができます。
 
 **Do this**:
 
@@ -71,106 +66,52 @@ purpose of using A-Frame.
 [geometrymerger]: https://www.npmjs.com/package/aframe-geometry-merger-component
 
 
-Performance is critical in VR. A high framerate must be maintained in order for
-people to feel comfortable. Here are some ways to help improve performance of
-an A-Frame scene:
-
-- Use [recommended hardware specifications][hardware].
-- Use the **[stats component][stats]** to keep an eye on various metrics (FPS,
-  vertex and face count, geometry and material count, draw calls, number of
-  entities). We want to maximize FPS and minimize everything else.
-- Limit draw calls as much as possible. Each geometry, object, model without
-  optimization is generally a draw call. Rule of thumb, try to keep under 300
-  maximum. [Merge][geometrymerger] together all static meshes if possible. You
-  can use [geometry-merger][geometrymerger] and then make use a three.js
-  material with vertex colors enabled. three.js geometries keep data such as
-  color, uvs per vertex that can be used to maintain and manipulate geometries
-  post-merge.
-- Make use of the **[asset management system][asm]** to browser cache and
-  preload assets.
-- If using models, look to bake your lights into textures rather than relying
-  on real-time lighting and shadows.
-- Generally, the fewer number of entities and lights in the scene, the better.
-- Make sure your textures' resolutions are sized to powers of two (e.g.,
-  256x256, 512x1024) in order to avoid the renderer having to resize the
-  texture during runtime.
-- Limit the number of faces and vertices on models.
-- Some further techniques include geometry instancing, [geometry
-  merging][geometrymerger], level of detail (LOD).
-- When using raycasters or colliders, select which entities are to be raycasted
-  against rather than raycasting against every object in the scene.
-- When adding continuously running behaviors, use A-Frame component `tick`
-  handlers to hook into the global render loop. Use utilities such as
-  `AFRAME.utils.throttleTick` to limit the number of times the `tick` handler
-  is run if appropriate.
-- Use the **[background component][background]** instead of `a-sky` to define a
-  solid color as the scene background. This prevents the creation of
-  unnecessary geometry.
-- Update `position`, `rotation`, `scale`, and `visible` using at the three.js
-  level (`el.object3D.position`, `el.object3D.rotation`, `el.object3D.scale`,
-  `el.object3D.visible`) to avoid overhead on `.setAttribute`.
-- If you need to create, remove and re-create many entities of the same type,
-  use the **[pool component][pool]** to pre-generate and reuse entities. This
-  avoids the cost of creating entities on the fly and reduces garbage collection.
-- When using the animation component, [animate values directly][animation] 
-  which will skip `.setAttribute` and animate JS values directly. 
-  For example, instead of `material.opacity`, 
-  animate `components.material.material.opacity`.
+- [ハードウェアの推奨スペック][hardware]を使用する。
+- **[statsコンポーネント][stats]**を使用して、様々なメトリクス（FPS、頂点と面数、ジオメトリとマテリアル数、描画コール、エンティティ数）に目を配りましょう。FPSを最大化し、それ以外のものを最小化したい。
+- 描画コールをできる限り制限する。最適化されていないジオメトリ、オブジェクト、モデルは通常、それぞれドローコールが発生します。経験則では、最大300以下に抑えるようにします。可能であれば、すべての静的メッシュを [Merge][geometrymerger] にまとめてください。three.js のジオメトリは、頂点ごとに色や uv などのデータを保持し、マージ後のジオメトリの保守や操作に使用することができます。
+- **[アセットマネジメントシステム][asm]**を利用して、ブラウザキャッシュやアセットのプリロードを行ってください。
+- モデルを使用する場合、リアルタイムのライティングとシャドウに依存するよりも、テクスチャにライトをベイクすることを検討してください。
+- 一般的に、シーン内のエンティティやライトの数は少ないほどよいです。
+- ランタイム中にレンダラーがテクスチャのサイズを変更する必要がないように、テクスチャの解像度が2の累乗（例：256x256、512x1024）であることを確認すること。
+- モデルの面および頂点の数を制限する。
+- さらに、ジオメトリインスタンシング、[ジオメトリマージ][geometrymerger]、レベルオブディテール（LOD）などのテクニックもあります。
+- レイキャスターやコライダーを使用する場合、シーン内のすべてのオブジェクトに対してレイキャスティングを行うのではなく、どのエンティティに対してレイキャスティングを行うかを選択する。
+- 継続的に動作するビヘイビアを追加する場合は、A-Frame コンポーネントの `tick` ハンドラーを使用して、グローバル レンダー ループにフックします。必要に応じて、`AFRAME.utils.throttleTick`などのユーティリティを使用して、`tick`ハンドラの実行回数を制限してください。
+- シーンの背景としてソリッドカラーを定義するには、`a-sky`の代わりに **[background component][background]** を使用します。これにより、不要なジオメトリが作成されるのを防ぐことができます。
+- `setAttribute` のオーバーヘッドを避けるために、three.js レベルで `position`、`rotation`、`scale`、`visible` を更新する (`el.object3D.position`, `el.object3D.rotation`, `el.object3D.scale`, `el.object3D.visible`) ようにしました。
+- 同じタイプのエンティティを多数作成、削除、再作成する必要がある場合は、**[pool component][pool]** を使用してエンティティを事前に生成し、再利用することができます。これにより、エンティティをその場で作成するコストを回避し、ガベージコレクションを削減することができます。
+- アニメーションコンポーネントを使用する場合、[animate values directly][animation] を使用すると `.setAttribute` をスキップして JS 値を直接アニメーションさせることができます。例えば、`material.opacity`の代わりに `components.material.material.opacity` をアニメートさせます。
 
 ### GPU Texture Preloading
 
-Until non-blocking texture uploads to the GPU are available, try to draw all
-materials and textures up front. When materials and textures are drawn for the
-first time, the browser will hang and block while uploading to the GPU. We can
-manually preload textures by calling:
+GPU へのテクスチャのノンブロッキングアップロードが可能になるまで は、すべてのマテリアルとテクスチャを前もって描画するようにしてくださ い。マテリアルとテクスチャが初めて描画されると、ブラウザは GPU へのアップロード中にハングアップしてブロックします。呼び出すことで、手動でテクスチャをプリロードすることができます。
 
 ```js
 document.querySelector('a-scene').renderer.setTexture2D(ourTexture, 0);
 ```
 
-We will try to come with a convenient API in A-Frame to do this automatically.
+A-Frameでは、これを自動的に行う便利なAPIを用意するよう努力する予定です。
 
 [360]: https://aframe-360-gallery.glitch.me
 
-For example, this is apparent in the [360&deg; image gallery][360]. If we look at
-the browser performance tools, there will be frame drops when switching to a
-new image for the first time, but smooth transitions when switching back to
-images for the second time.
+例えば、[360&deg;画像ギャラリー][360]ではそれが顕著に表れています。ブラウザのパフォーマンスツールを見ると、1回目に新しい画像に切り替えたときはコマ落ちしますが、2回目に画像に戻したときはスムーズな遷移が見られます。
 
-Reuse materials and textures as much as possible, aiming for a small number
-of unique materials. Texture atlases provide one efficient way to reuse
-materials while giving the impression of more variety. Simpler three.js
-materials such as `MeshLambertMaterial` or `MeshBasicMaterial` perform better
-and are often sufficient for low-poly scenes.
+マテリアルとテクスチャはできるだけ再利用し、少数のユニークなマテリアルを目指します。テクスチャアトラスは、素材を再利用しつつ、より多様な印象を与えることができる効率的な方法のひとつです。`MeshLambertMaterial` や `MeshBasicMaterial` などの単純な three.js マテリアルの方が性能が良く、ローポリのシーンでは十分な場合が多いです。
 
-In particular, pre-baked lighting on an unlit (Basic) material can
-significantly improve performance. A-Frame's default PBR-based (Standard)
-material is more physically realistic, but also more expensive and often
-unnecessary in simple scenes.
+特に、アンライティング（ベーシック）マテリアルにプリベイクされたライティングは、パフォーマンスを大幅に向上させることができます。A-FrameのデフォルトのPBRベース（Standard）マテリアルは、より物理的にリアルですが、より高価で、シンプルなシーンでは不要な場合が多いです。
 
 ### Minimizing Garbage Collection in JavaScript
 
 [firefox-alloc]: https://developer.mozilla.org/en-US/docs/Tools/Performance/Allocations
 [chrome-alloc]: https://developers.google.com/web/tools/chrome-devtools/memory-problems/#spot_frequent_garbage_collections
 
-Avoid creating garbage and instantiating new JavaScript objects, arrays,
-strings, and functions as much as possible. In the 2D web, it is not as big of
-a deal to create a lot of JavaScript objects since there is a lot of idle time
-for the garbage collector to run. For VR, garbage collection may cause dropped
-frames as it pauses to clean up memory. To avoid this, we try to minimize
-allocation of memory and hold onto objects to prevent them from getting garbage
-collected.
+JavaScriptのオブジェクト、配列、文字列、関数などのゴミを作ったり、新しいインスタンスを作成することはできるだけ避けましょう。2Dウェブでは、ガベージコレクタが実行されるアイドル時間が多いため、JavaScriptオブジェクトを大量に作成してもそれほど大きな問題にはなりません。VRの場合、ガベージコレクションはメモリを掃除するために一時停止するので、フレーム落ちの原因になることがあります。これを避けるため、メモリの割り当てを最小限にし、オブジェクトを保持してガベージコレクションされないように工夫しています。
 
-Learn more about detecting allocations and garbage collection in
-[Firefox][firefox-alloc] and [Chrome][chrome-alloc] performance tools.
+[Firefox][firefox-alloc] と [Chrome][chrome-alloc] のパフォーマンスツールで、割り当てとガベージコレクションを検出する方法について詳しく説明します。
 
-Try to avoid patterns such as `Object.keys(obj).forEach(function () { });`,
-which create new arrays, functions, and callbacks versus using `for (key in
-obj)`. Or for array iteration, avoid `.forEach` and use a simple `for` loop
-instead. Avoid unnecessary copying of objects, using methods like
-`utils.extend(target, source)` instead of `utils.clone` or `.slice`.
+`Object.keys(obj).forEach(function () { });` のようなパターンは避けるようにしてください。これは、`for (key in obj)` を使う場合と比較して、新しい配列や関数、コールバックを作成することになります。また、配列の反復処理では、 `.forEach` を避け、代わりに単純な `for` ループを使用します。オブジェクトの不要なコピーを避けるために、 `utils.clone` や `.slice` の代わりに `utils.extend(target, source)` のようなメソッドを使用します。
 
-If emitting an event, try to reuse the same object for event details:
+イベントを発生させる場合、イベントの詳細については同じオブジェクトを再利用するようにしましょう。
 
 ```js
 AFRAME.registerComponent('foo', {
@@ -186,24 +127,18 @@ AFRAME.registerComponent('foo', {
 });
 ```
 
-All of the suggestions above are _especially_ important in `tick()` handlers,
-where they will be running on every frame.
+上記のすべての提案は、すべてのフレームで実行される `tick()` ハンドラでは特に重要です。
 
-More articles on reducing garbage collector activity:
+ガベージコレクタの活動を減らすための他の記事。
 
-- [Best Practices for Reducing Garbage Collector Activity in JS](https://stackoverflow.com/questions/18364175/best-practices-for-reducing-garbage-collector-activity-in-javascript)
-- [How to Write Low Garbage Real-Time JavaScript](https://www.construct.net/en/blogs/construct-official-blog-1/how-to-write-low-garbage-real-time-javascript-761)
+- [JSにおけるガベージコレクタの活動を減らすためのベストプラクティス](https://stackoverflow.com/questions/18364175/best-practices-for-reducing-garbage-collector-activity-in-javascript)
+- [低ガベージなリアルタイムJavaScriptの書き方](https://www.construct.net/en/blogs/construct-official-blog-1/how-to-write-low-garbage-real-time-javascript-761)
 
 ### `tick` Handlers
 
-[throttle]: ../core/utils.html#aframe-utils-throttletick-function-t-dt-minimuminterval-optionalcontext
+[スロットル]: ../core/utils.html#aframe-utils-throttletick-function-t-dt-minimuminterval-optionalcontext
 
-In component tick handlers, be frugal on creating new objects. Try to reuse
-objects. A pattern to create private reusable auxiliary variables is with a
-closure. Below we create a helper vector and quaternion and reuse them between
-frames, rather than creating new ones on each frame. Be careful that these
-variables do not hold state because they will be shared between all instances
-of the component. Doing this will reduce memory usage and garbage collection:
+コンポーネントティクハンドラでは、新しいオブジェクトの作成は質素にすること。オブジェクトの再利用を心がけましょう。プライベートで再利用可能な補助変数を作成するパターンとして、クロージャを使用する方法があります。以下では、ヘルパーのベクトルとクォータニオンを作成し、各フレームで新しいものを作成するのではなく、フレーム間でそれらを再利用しています。これらの変数は、コンポーネントのすべてのインスタンスで共有されるため、状態を保持しないように注意してください。こうすることで、メモリ使用量とガベージコレクションを減らすことができます。
 
 ```js
 AFRAME.registerComponent('foo', {
@@ -223,11 +158,7 @@ AFRAME.registerComponent('foo', {
 });
 ```
 
-Also if we continuously modify a component in the tick, make sure we pass the
-same object for updating properties. A-Frame will keep track of the latest
-passed object and disable type checking on subsequent calls for an extra speed
-boost. Here is an example of a recommended tick function that modifies the
-rotation on every tick:
+また、ティック内のコンポーネントを継続的に変更する場合、プロパティを更新するために同じオブジェクトを渡すことを確認してください。A-Frameは、渡された最新のオブジェクトを記録し、それ以降の呼び出しで型チェックを無効にすることで、さらなるスピードアップを図ります。以下は、tick毎に回転を変更する推奨tick関数の例です。
 
 ```js
 AFRAME.registerComponent('foo', {
@@ -243,29 +174,19 @@ AFRAME.registerComponent('foo', {
 });
 ```
 
-Again be careful what you do in tick functions, treat them as critical
-performance code because they will be run 90 times per second. [Consider
-using `utils.throttleTick`][throttle] to run your code at less frequent intervals.
+tick関数は1秒間に90回実行されるため、クリティカルなパフォーマンスコードとして扱われます。[より少ない間隔でコードを実行するために `utils.throttleTick`][throttle] を使用することを検討してください。
 
 ## VR Design
 
 [oculus]: https://developer.oculus.com/design/latest/concepts/book-bp/
 
-Designing for VR is different than designing for flat experiences. As a new
-medium, there are new sets of best practices to follow, especially to maintain
-user comfort and presence. This has been thoroughly written about so we defer
-to these guides. Note that VR interaction design is fairly new, and nothing is
-absolute:
+VRのためのデザインは、フラットな体験のためのデザインとは異なります。新しいメディアとして、特にユーザーの快適さと存在感を維持するために、従うべき新しいベストプラクティスのセットが存在するのです。この点については、すでに詳しく説明されていますので、これらのガイドに従うことにします。なお、VRインタラクションデザインはかなり新しいものであり、絶対的なものは何もありません。
 
 - [Oculus Best Practices (for VR)][oculus]
 
-Some things to note:
+いくつか注意点があります。
 
-- The common golden rule is to never unexpectedly take control of the camera
-  away from users.
-- Units (such as for position) should be considered meters. This is because the
-  WebVR API returns pose in meters which is fed into most camera controls. By
-  considering units as meters, we achieve expected scale.
+- 一般的な黄金律は、カメラの制御をユーザーから不意に奪わないことです。
+- 単位（位置など）はメートルとすること。これは、WebVR APIがメートル単位でポーズを返すためで、ほとんどのカメラコントロールに入力されます。単位をメートルとすることで、期待通りのスケールを実現します。
 
-Make use of hands and controllers. For best experience, target your application
-to a specific form factor versus watering it down for all platforms at once.
+手やコントローラーを活用する 最高の体験を得るためには、アプリケーションを特定のフォームファクターに向けるのではなく、一度にすべてのプラットフォーム向けに水増しする必要があります。
