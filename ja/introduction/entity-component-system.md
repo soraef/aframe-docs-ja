@@ -12,37 +12,33 @@ examples:
 
 [ecs]: https://wikipedia.org/wiki/Entity_component_system
 
-A-Frame is a three.js framework with an [entity-component-system][ecs] (ECS)
-architecture. ECS architecture is a common and desirable pattern in 3D and game
-development that follows the **composition over inheritance and hierarchy**
-principle.
+A-Frameは、[entity-component-system][ecs](ECS)アーキテクチャを採用したthree.jsのフレームワークです。
+ECSアーキテクチャは、3Dやゲーム開発において一般的で望ましいパターンであり、**継承と階層より合成**という原則に従っています。
 
-The benefits of ECS include:
+ECSのメリットは以下の通りです。
 
-1. Greater flexibility when defining objects by mixing and matching reusable parts.
-2. Eliminates the problems of long inheritance chains with complex interwoven functionality.
-3. Promotes clean design via decoupling, encapsulation, modularization, reusability.
-4. Most scalable way to build a VR application in terms of complexity.
-5. Proven architecture for 3D and VR development.
-6. Allows for extending new features (possibly sharing them as community components).
+1. 再利用可能なパーツを組み合わせてオブジェクトを定義する際の柔軟性が高い。
+2. 機能が複雑に絡み合った長い継承の連鎖の問題が解消される。
+3. デカップリング、カプセル化、モジュール化、再利用性によるクリーンな設計を促進する。
+4. 複雑さの観点から、VRアプリケーションを構築する上で最もスケーラブルな方法です。
+5. 3DやVRの開発で実績のあるアーキテクチャ。
+6. 新機能の拡張が可能（コミュニティコンポーネントとして共有できる可能性がある）。
 
-On the 2D Web, we lay out elements that have fixed behavior in a hierarchy. 3D
-and VR is different; there are infinite types of possible objects that have
-unbounded behavior. ECS provides a manageable pattern to construct types of
-objects.
+2DのWebでは、決まった動作をする要素を階層的に並べます。
+3DやVRはそれとは異なり、無限の振る舞いを持つオブジェクトが無数に存在する可能性があります。
+ECSは、オブジェクトのタイプを構築するための管理しやすいパターンを提供します。
 
-Below are great introductory materials to ECS architecture. We recommend
-skimming through them to get a better grasp of the benefits. ECS is well-suited
-for VR development, and A-Frame is based entirely around this paradigm:
+ECSアーキテクチャの入門に最適な資料をご紹介します。ざっと目を通して、その良さを理解することをお勧めします。ECSはVRの開発に適しており、A-Frameはこのパラダイムに完全に基づいています。
 
-- [*Entity-component-system* on Wikipedia](https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system)
-- [*What is an Entity System?* by Adam Martin](http://t-machine.org/index.php/2007/11/11/entity-systems-are-the-future-of-mmog-development-part-2/)
-- [*Decoupling Patterns &mdash; Component* on Game Programming Patterns](http://gameprogrammingpatterns.com/component.html)
 - [*Evolve Your Hierarchy* by Mick West](http://cowboyprogramming.com/2007/01/05/evolve-your-heirachy/)
 
-A well-known game engine implementing ECS is Unity. Although there are pain
-points in cross-entity communication, we'll see how A-Frame, the DOM, and
-declarative HTML really make ECS shine.
+- [Wikipediaの*Entity-component-system*](https://ja.wikipedia.org/wiki/エンティティ・コンポーネント・システム)
+- [Adam Martinによる *「What is an Entity System?」*](http://t-machine.org/index.php/2007/11/11/entity-systems-are-the-future-of-mmog-development-part-2/)
+- [*Decoupling Patterns &mdash; Component* on Game Programming Patterns](http://gameprogrammingpatterns.com/component.html)
+- [Mick Westによる *「Evolve Your Hierarchy」*](http://cowboyprogramming.com/2007/01/05/evolve-your-heirachy/)
+
+ECSを実装したゲームエンジンとしては、Unityが有名です。
+けれどエンティティ間のコミュニケーションに難点があるため、A-FrameやDOM、宣言型HTMLがECSをいかに輝かせるか、その一端を見ることができます。
 
 <!--toc-->
 
@@ -54,80 +50,59 @@ declarative HTML really make ECS shine.
 
 ![ECS Minecraft](https://cloud.githubusercontent.com/assets/674727/20289898/71f7fea0-aa91-11e6-8307-d8dc68dff285.png)
 
-A basic definition of ECS involves:
+ECSの基本的な定義は以下の通りです。
 
-- **[Entities][entity]** are container objects into which components can be
-  attached. Entities are the base of all objects in the scene. Without
-  components, entities neither do nor render anything, similar to empty `<div>`s.
-- **[Components][component]** are reusable modules or data containers that can
-  be attached to entities to provide appearance, behavior, and/or
-  functionality. Components are like plug-and-play for objects. All logic is
-  implemented through components, and we define different types of objects by
-  mixing, matching, and configuring components. Like alchemy!
-- **[Systems][system]** provide global scope, management, and services for
-  classes of components. Systems are often optional, but we can use them to
-  separate logic and data; systems handle the logic, components act as data
-  containers.
+- **[エンティティ][entity]** は、コンポーネントをアタッチできるコンテナオブジェクトです。エンティティは、シーン内のすべてのオブジェクトのベースです。コンポーネントがないと、エンティティは空の `<div>`と同様に、何もせず、何もレンダリングしません。
+- **[コンポーネント][component]** は、再利用可能なモジュールまたはデータコンテナで、外観、動作、および/または機能を提供するためにエンティティにアタッチすることができます。コンポーネントは、オブジェクトのプラグアンドプレイのようなものです。すべてのロジックはコンポーネントによって実装され、コンポーネントを組み合わせ、構成することによって、さまざまなタイプのオブジェクトを定義することができます。錬金術みたいですね！
 
-### Examples
+- **[システム][system]** は、コンポーネントのクラスに対して、グローバルなスコープ、管理、サービスを提供します。システムは多くの場合オプションですが、ロジックとデータを分離するために使用できます。システムはロジックを処理し、コンポーネントはデータのコンテナとして機能します。
 
-Some abstract examples of different types of entities built from composing
-together different components:
 
-- `Box = Position + Geometry + Material`
-- `Light Bulb = Position + Light + Geometry + Material + Shadow`
-- `Sign = Position + Geometry + Material + Text`
-- `VR Controller = Position + Rotation + Input + Model + Grab + Gestures`
-- `Ball = Position + Velocity + Physics + Geometry + Material`
-- `Player = Position + Camera + Input + Avatar + Identity`
+### 例
 
-As another abstract example, imagine we want to build a car entity by
-assembling components:
+Some abstract examples of different types of entities built from composing together different components:
 
-- We can attach a `material` component that has properties such as "color" or
-  "shininess" that affects the appearance of the car.
-- We can attach an `engine` component that has properties such as "horsepower" or
-  "weight" that affects the functionality of the car.
-- We can attach a `tire` component that has properties such as "number of
-  tires" or "steering angle" that affects the behavior of the car.
+異なるコンポーネントを組み合わせて作られた、さまざまなタイプのエンティティの抽象的な例をいくつか紹介します。
 
-So we can create different types of cars by varying the properties of the
-`material`, `engine`, and `tire` component. The `material`, `engine`, and
-`tire` components don't have to know about each other and can even be used in
-isolation for other cases. We could mix and match them to create even
-different types of vehicles:
+- `ボックス = ポジション + ジオメトリ + マテリアル`
+- `電球 = ポジション + 光源 + ジオメトリ + マテリアル + 影`
+- `看板 = ポジション + ジオメトリ + マテリアル + テキスト`
+- `VRコントローラー = ポジション + 回転 + インプット + モデル + 掴む + ジェスチャー`
+- `ボール = ポジション + 速度 + 物理演算 + ジオメトリ + マテリアル`
+- `プレイヤー = ポジション + カメラ + インプット + アバター + アイデンティティ`
 
-- To create a *boat* entity: remove the `tire` component.
-- To create a *motorcycle* entity: change `tire` component's number of tires to 2,
-  configure the `engine` component to be smaller.
-- To create an *airplane* entity: attach `wing` and `jet` components.
+別の抽象的な例として、コンポーネントを組み立てて自動車の実体を作る場合を考えてみましょう。
 
-Contrast this to traditional inheritance where if we want to extend an object,
-we would have to create a large class that tries to handle everything or an
-inheritance chain.
+- 「色」や「輝き」など、車の外観に影響を与えるプロパティを持つ`マテリアル`コンポーネントをアタッチできます。
+- 「馬力」や「重量」など、車の機能に影響を与えるプロパティを持つ`エンジン`コンポーネントをアタッチできます。
+- 「タイヤの数」や「ステアリングの角度」など、車の挙動に影響を与えるプロパティを持つ`タイヤ`コンポーネントをアタッチできます。
 
-## ECS in A-Frame
+つまり、`マテリアル`、`エンジン`、`タイヤ`コンポーネントのプロパティを変えることで、様々なタイプの自動車を作ることができるのです。
+`マテリアル`、`エンジン`、`タイヤ`の各コンポーネントはお互いを知る必要はなく、単独で他のケースに使用することも可能です。
+これらを組み合わせて、さらに異なるタイプの乗り物を作ることができます。
 
-A-Frame has APIs that represents each piece of ECS:
+- *ボート*のエンティティの作成: `タイヤ`コンポーネントを削除します。
+- *モーターサイクル*のエンティティの作成: `タイヤ`コンポーネントのタイヤの数を2つに変更し、`エンジン`コンポーネントをより小さく構成します。
+- *飛行機*のエンティティの作成: `ウィング`コンポーネントと`ジェット`コンポーネントを追加します。
 
-- **Entities** are represented by the `<a-entity>` element and prototype.
-- **Components** are represented by HTML attributes on `<a-entity>`'s. Underneath,
-  components are objects containing a schema, lifecycle handlers, and methods.
-  Components are registered via the `AFRAME.registerComponent (name, definition)`
-  API.
-- **Systems** are represented by `<a-scene>`'s HTML attributes. System are
-  similar to components in definition. Systems are registered via the
-  `AFRAME.registerSystem (name, definition)` API.
+従来の継承では、あるオブジェクトを拡張しようとすると、すべてを扱おうとする大きなクラスを作る、または継承の連鎖を作らなければならなかったのとは対照的です。
 
-### Syntax
+## A-FrameのECS
+
+A-Frameは、ECSの各パーツを表すAPIを持っています。
+
+- **エンティティ** は `<a-entity>` 要素とprototypeで表現されます。
+- **コンポーネント**は、`<a-entity>`のHTML属性で表現されます。その下に、スキーマ、ライフサイクルハンドラ、メソッドを含むオブジェクトがあります。コンポーネントは `AFRAME.registerComponent (name, definition)` API を用いて登録されます。
+- **システム**は `<a-scene>` の HTML 属性で表現されます。システムはコンポーネントと似た定義を持っています。システムは `AFRAME.registerSystem (name, definition)` API を用いて登録されます。
+
+### 文法
 
 [style]: https://developer.mozilla.org/docs/Web/API/HTMLElement/style
 
-We create `<a-entity>` and attach components as HTML attributes. Most
-components have multiple properties that are represented by a syntax similar to
-[`HTMLElement.style` CSS][style]. This syntax takes the form with a colon
-(`:`) separating property names from property values, and a semicolon (`;`)
-separating different property declarations:
+`<a-entity>` を作成し、HTMLの属性としてコンポーネントをアタッチします。
+ほとんどのコンポーネントは複数のプロパティを持ち、それらは [`HTMLElement.style` CSS][style]のような構文で表現されます。
+この構文は、コロン (`:`) でプロパティ名とプロパティ値を区切り、セミコロン (`;`) で異なるプロパティの宣言を区切る形式をとります。
+
 
 `<a-entity ${componentName}="${propertyName1}: ${propertyValue1}; ${propertyName2}: ${propertyValue2}">`
 
@@ -136,8 +111,7 @@ separating different property declarations:
 [light]: ../components/light.md
 [position]: ../components/position.md
 
-For example, we have `<a-entity>` and attach the [geometry], [material],
-[light], and [position] components with various properties and property values:
+例えば、以下では`<a-entity>`を用意し、[geometry], [material], [light], [position]コンポーネントを様々なプロパティとプロパティ値でアタッチしています。
 
 ```html
 <a-entity geometry="primitive: sphere; radius: 1.5"
@@ -146,42 +120,38 @@ For example, we have `<a-entity>` and attach the [geometry], [material],
           position="0 0 -5"></a-entity>
 ```
 
-### Composition
+### 合成
 
-From there, we could attach more components to add additional appearance,
-behavior, or functionality (e.g., physics). Or we could update the component
-values to configure the entity (either declaratively or through
-`.setAttribute`).
+そこから、さらにコンポーネントを追加して、外観、動作、機能（物理演算など）を追加することができます。
+また、コンポーネントの値を更新してエンティティを構成することもできます（宣言的に、または `.setAttribute` を使って）。
+
 
 [composegif]: https://cloud.githubusercontent.com/assets/674727/25463804/896c04c2-2aad-11e7-8015-2fc84118a01c.gif
 
 ![Composing an Entity][composegif]
 
-A common type of entity to compose from multiple components are the player's
-hands in VR. The player's hands can have many components: appearance, gestures,
-behaviors, interactivity with other objects.
+複数のコンポーネントから構成されるエンティティとしてよく知られているのが、VRにおけるプレイヤーの手です。
+プレイヤーの手は、外観、ジェスチャー、振る舞い、他のオブジェクトとのインタラクティビティなど、多くの構成要素を持つことがあります。
 
-We plug in components into a hand entity to provide it behavior as if we were
-attaching superpowers or augmentations for VR! Each of the components below
-have no knowledge of each other, but can be combined to define a complex
-entity:
+VRの超能力やオーグメントを装着するように、手のエンティティにコンポーネントをプラグインして振る舞いを提供します。
+以下の各コンポーネントは、お互いに何の関係もありませんが、組み合わせることで複雑な実体を定義することができます。
 
 ```html
 <a-entity
-  tracked-controls  <!-- Hook into the Gamepad API for pose. -->
-  vive-controls  <!-- Vive button mappings. -->
-  oculus-touch-controls  <!-- Oculus button mappings. -->
-  hand-controls  <!-- Appearance (model), gestures, and events. -->
-  laser-controls <!-- Laser to interact with menus and UI. -->
-  sphere-collider  <!-- Listen when hand is in contact with an object. -->
-  grab  <!-- Provide ability to grab objects. -->
-  throw <!-- Provide ability to throw objects. -->
-  event-set="_event: grabstart; visible: false"  <!-- Hide hand when grabbing object. -->
-  event-set="_event: grabend; visible: true"  <!-- Show hand when no longer grabbing object. -->
+  tracked-controls  <!-- ポーズ用のゲームパッドAPIにフック -->
+  vive-controls  <!-- Viveのボタンマッピング -->
+  oculus-touch-controls  <!-- Oculusのボタンマッピング -->
+  hand-controls  <!-- 外観（モデル）、ジェスチャー、イベント -->
+  laser-controls <!-- メニューやUIを操作するためのレーザー -->
+  sphere-collider  <!-- 手を物に接触しているかリッスンする -->
+  grab  <!-- 物をつかむ能力を提供 -->
+  throw <!-- 物を投げる機能を提供 -->
+  event-set="_event: grabstart; visible: false"  <!-- 物をつかむときに手を隠す -->
+  event-set="_event: grabend; visible: true"  <!-- オブジェクトを掴まなくなったときに手を表示する -->
 >
 ```
 
-### Declarative DOM-Based ECS
+### 宣言型DOMベースのECS
 
 A-Frame takes ECS to another level by making it declarative and based on the
 DOM. Traditionally, ECS-based engines would create entities, attach components,
@@ -189,31 +159,23 @@ update components, remove components all through code. But A-Frame has HTML and
 the DOM which makes ECS ergonomic and resolves many of its weaknesses. Below
 are abilities that the DOM provides for ECS:
 
-1. **Referencing Other Entities with Query Selectors**: The DOM provides a powerful
-query selector system which lets us query the scene graph and select an entity
-or entities that match a condition. We can get references to entities by IDs,
-classes, or data attributes. Because A-Frame is based on HTML, we can use query
-selectors out of the box. `document.querySelector('#player')`.
-2. **Decoupled Cross-Entity Communication with Events**: The DOM provides the
-ability to listen to and emit events. This provides a publish-subscribe
-communication system between entities. Components don't have to know about each
-other, they can just emit an event (which could bubble up), and other
-components can listen to those events without calling each other.
-`ball.emit('collided')`.
-3. **APIs for Lifecycle Management with DOM APIs**: The DOM provides APIs to
-update HTML elements and the tree including `.setAttribute`,
-`.removeAttribute`, `.createElement`, and `.removeChild`. These can be used as
-is just like in normal web development.
-4. **Entity-Filtering with Attribute Selectors**: The DOM provides attribute
-selectors which allows us to query for an entity or entities that have or don't
-have certain HTML attributes. This means we can ask for entities that have or
-don't have a certain set of components.
-`document.querySelector('[enemy]:not([alive])')`.
-5. **Declarativeness**: Lastly, the DOM provides HTML. A-Frame bridges between
-ECS and HTML making an already clean pattern declarative, readable, and
-copy-and-pasteable.
+A-Frameは、ECSを宣言型にし、DOMをベースにすることで、新たな次元に到達させました。
+従来、ECSベースのエンジンは、エンティティの作成、コンポーネントのアタッチ、コンポーネントの更新、コンポーネントの削除をすべてコードで行っていました。
+しかし、A-Frameでは、HTMLとDOMを利用することで、ECSを人間工学に基づいたものにし、その弱点の多くを解決しています。
+以下は、DOMがECSに提供する能力です。
 
-### Extensibility
+1. **クエリセレクターによる他のエンティティへの参照**: DOMには強力なクエリセレクターシステムがあり、シーングラフにクエリを行って、条件にマッチするエンティティを選択することができます。ID、クラス、データ属性によってエンティティへの参照を取得することができます。A-FrameはHTMLをベースにしているので、クエリーセレクタをそのまま使うことができます。`document.querySelector('#player')`
+
+2. **疎結合な、イベント駆動のエンティティ間やりとり**: DOMはイベントを監視し、発出する機能を提供します。これは、エンティティ間のPub/Subコミュニケーションシステムを提供します。コンポーネントは互いのことを知る必要はなく、ただイベントを発することができ（バブルアップする可能性もある）、他のコンポーネントは互いを呼び出すことなくそれらのイベントを監視することができるのです。`ball.emit('collided')`
+3. **DOM APIによるライフサイクル管理のためのAPI**: DOM は HTML の要素やツリーを更新するための API を提供しており、 `.setAttribute`、`.removeAttribute`、`.createElement`、`.removeChild` などがこれにあたります。これらは通常の Web 開発と同様に、そのまま使用することができます。
+
+4. **属性セレクタを用いたエンティティフィルタリング**: DOM には属性セレクタがあり、特定の HTML 属性を持つエンティティや持たないエンティティをクエリすることができます。つまり、特定のコンポーネントを持つエンティティ、持たないエンティティを問い合わせることができるのです。
+`document.querySelector('[enemy]:not([alive])')`
+
+5. **宣言性**: 最後に、DOMはHTMLを提供します。A-Frameは、ECSとHTMLの橋渡しをし、すでにきれいなパターンを宣言的に、読みやすく、そしてコピー＆ペーストが可能です。
+
+
+### 拡張性
 
 A-Frame components can do anything. Developers are given permissionless
 innovation to create components to extend any feature. Components have full
