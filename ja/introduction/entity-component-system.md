@@ -177,16 +177,15 @@ A-Frameは、ECSを宣言型にし、DOMをベースにすることで、新た�
 
 ### 拡張性
 
-A-Frame components can do anything. Developers are given permissionless
-innovation to create components to extend any feature. Components have full
-access to JavaScript, three.js, and Web APIs (e.g., WebRTC, Speech
-Recognition).
+A-Frameのコンポーネントは何でもできます。
+開発者は、あらゆる機能を拡張するコンポーネントを作成するための制約のないイノベーションを与えられます。
+コンポーネントは、JavaScript、three.js、Web API（例：WebRTC、音声認識）にフルアクセスできます。
+
 
 [writecomponent]: ./writing-a-component.md
 
-We will later go over in detail how to [write an A-Frame
-component][writecomponent]. As a preview, the structure of a basic component
-may look like:
+[A-Frameコンポーネントの書き方][writecomponent]は、後ほど詳しく説明します。
+プレビューとして、基本的なコンポーネントの構造は、次のようになります。
 
 ```js
 AFRAME.registerComponent('foo', {
@@ -196,46 +195,43 @@ AFRAME.registerComponent('foo', {
   },
 
   init: function () {
-    // Do something when component first attached.
+    // コンポーネントが最初にアタッチされたときの処理
   },
 
   update: function () {
-    // Do something when component's data is updated.
+    // コンポーネントのデータが更新されたときの処理
   },
 
   remove: function () {
-    // Do something the component or its entity is detached.
+    // コンポーネントまたはそのエンティティが切り離されたときの処理
   },
 
   tick: function (time, timeDelta) {
-    // Do something on every scene tick or frame.
+    // シーンのティックやフレームごとの処理
   }
 });
 ```
 
-Declarative ECS grants us the ability to write a JavaScript module and abstract
-it through HTML. Once the component is registered, we can declaratively plug
-this module of code into an entity via an HTML attribute.  This code-to-HTML
-abstraction makes ECS powerful and easy to reason. `foo` is the name of the
-component we just registered, and the data contains `bar` and `baz` properties:
+宣言型ECSは、JavaScriptのモジュールを書き、それをHTMLで抽象化する機能を提供します。
+コンポーネントが登録されると、このコードモジュールをHTML属性を通じて宣言的にエンティティにプラグインすることができます。
+この「コードからHTMLへの抽象化」により、ECSは強力かつ簡単に推論可能になります。
+`foo` は先ほど登録したコンポーネントの名前であり、データには `bar` と `baz` というプロパティが含まれます。
 
 ```html
 <a-entity foo="bar: 5; baz: bazValue"></a-entity>
 ```
 
-### Component-Based Development
+### コンポーネントベースの開発
 
-**For building VR applications, we recommend placing all application code
-within components (and systems).** An ideal A-Frame codebase consists purely of
-modular, encapsulated, and decoupled components. These components can be unit
-tested in isolation or alongside other components.
+**VRアプリケーションを構築する場合、すべてのアプリケーションコードをコンポーネント（およびシステム）内に配置することを推奨します。**
+理想的なA-Frameのコードベースは、モジュール化され、カプセル化され、切り離されたコンポーネント（とシステム）のみで構成されています。
+これらのコンポーネントは、単独で、あるいは他のコンポーネントと一緒にユニットテストすることができます。
 
-When an application is created solely with components, all parts of its
-codebase become reusable! Components can be shared for other developers to use
-or we can reuse them in our other projects. Or the components can be forked and
-modified to adapt to other use cases.
+アプリケーションをコンポーネントだけで作成すると、そのコードベースのすべての部分が再利用可能になります！
+コンポーネントは、他の開発者が使えるように共有することもできますし、私たちの他のプロジェクトで再利用することもできます。
+また、コンポーネントをフォークして、他のユースケースに適応するように修正することも可能です。
 
-A simple ECS codebase might be structured like:
+単純なECSのコードベースは、以下のような構造です。
 
 ```
 index.html
@@ -248,7 +244,7 @@ components/
   throwable.js
 ```
 
-### Higher-Order Components
+### 高階コンポーネント
 
 [cursor]: ../components/cursor.md
 [hand-controls]: ../components/hand-controls.md
@@ -257,24 +253,21 @@ components/
 [tracked-controls]: ../components/tracked-controls.md
 [vive-controls]: ../components/vive-controls.md
 
-Components can set other components on the entity, making them a higher-order
-or higher-level component in abstraction.
+Components can set other components on the entity, making them a higher-order or higher-level component in abstraction.
 
-For example, the [cursor component][cursor] sets and builds on top of the
-[raycaster component][raycaster]. Or the [hand-controls
-component][hand-controls] sets and builds on top of the [vive-controls
-component][vive-controls] and [oculus-touch-controls
-component][oculus-touch-controls] which in turn build on top of the
-[tracked-controls component][tracked-controls].
+コンポーネントは、エンティティに他のコンポーネントを設定することができ、抽象化された高階または上位のコンポーネントを作ります。
 
-## Community Component Ecosystem
+例えば、[cursorコンポーネント][cursor]は[raycaster コンポーネント][raycaster]の上に設定・構築されます。
+また、[hand-controls コンポーネント][hand-controls] は [vive-controls
+コンポーネント][vive-controls] と [oculus-touch-controls
+コンポーネント][oculus-touch-controls] の上に設定・構築され、そしてそれらは [tracked-controls コンポーネント][tracked-controls] の上に設定・構築されます。
 
-Components can be shared into the A-Frame ecosystem for the community to use.
-The wonderful thing about A-Frame's ECS is extensibility. An experienced
-developer can develop a physics system or graphics shader components, and an
-novice developer can take those components and use them in their scene from
-HTML just by dropping in a `<script>` tag. We can use powerful published
-components without having to touch JavaScript.
+## コミュニティ・コンポーネント・エコシステム
+
+コンポーネントは、A-Frameのエコシステムに共有され、コミュニティで使用することができます。
+A-FrameのECSの素晴らしいところは、拡張性です。
+経験豊富な開発者が物理システムやグラフィックシェーダーコンポーネントを開発し、初心者の開発者は、`<script>`タグを設置するだけで、HTMLからそれらのコンポーネントを取り出し、シーンで使用することができるのです。
+JavaScriptに触れることなく、強力な公開コンポーネントを利用することができるのです。
 
 ### Where to Find Components
 
@@ -286,97 +279,92 @@ channels to share!
 
 [search]: https://www.npmjs.com/search?q=aframe-component
 
-Most A-Frame components are published on npm as well as GitHub. We can use
-[npm's search to search for `aframe-components`][search]. npm lets us sort by
-quality, popularity, and maintenance. This is a great place to look for a more
-complete list of components.
+A-Frameのコンポーネントの多くは、GitHubだけでなく、npmでも公開されています。
+npmで[ `aframe-components` と検索する][search]ことができます。
+npmでは品質、人気、メンテナンス性でソートすることができます。
+これは、より完全なコンポーネントのリストを探すのに最適な場所です。
 
-#### GitHub Projects
+
+#### GitHubプロジェクト
 
 [github]: https://github.com
 
-Many A-Frame applications are developed purely from components, and many of
-those A-Frame applications are open source on [GitHub]. Their codebases will
-contain components that we can use directly, refer to, or copy from. Projects
-to look at include:
+A-Frameのアプリケーションは、純粋にコンポーネントのみで開発されているものが多く、それらのA-Frameアプリケーションの多くは、[GitHub]でオープンソース化されています。
+それらのコードベースには、私たちが直接使用したり、参照したり、コピーしたりすることができるコンポーネントが含まれていることでしょう。注目すべきプロジェクトは以下の通りです。
 
 - [BeatSaver Viewer](https://github.com/supermedium/beatsaver-viewer/)
 - [Super Says](https://github.com/supermedium/supersays/)
 - [A-Painter](https://github.com/aframevr/a-painter/)
 - [A-Blast](https://github.com/aframevr/a-blast/)
 
-#### A-Frame Blog
+#### A-Frameブログ
 
 [blog]: https://aframe.io/blog/
 [homepage]: https://aframe.io/
 
-The A-Frame Blog archives include details of components as they were released or updated, and can be a good place to find links to components.
+A-Frameブログのアーカイブには、公開・更新されたコンポーネントの詳細が掲載されており、コンポーネントへのリンクを探すのに適しています。
 
 #### A-Frame Wiki
 
-The [A-Frame Wiki](https://aframe.wiki/) is a useful community-driven initiative that collects information and tips about available A-Frame components. Everyone is encouraged to participate. It's very easy to add and edit information.
+[A-Frame Wiki](https://aframe.wiki/)は、利用可能なA-Frameコンポーネントに関する情報やTipsを収集する、コミュニティ主導の便利な取り組みです。
+誰でも参加することができます。
+情報の追加や編集はとても簡単です。
 
-### Using a Community Component
+### コミュニティ・コンポーネントを使う
 
 [particlesystem]: https://www.npmjs.com/package/aframe-particle-system-component
 
-Once we find a component that we want to use, we can include the component as a
-`<script>` tag and use it from HTML.
+使いたいコンポーネントが見つかったら、そのコンポーネントを `<script>` タグとしてインクルードし、HTMLから使用することができます。
 
 [unpkg.com]: http://unpkg.com/
 
-For example, let's use IdeaSpaceVR's [particle system component][particlesystem]:
+例えば、IdeaSpaceVRの[パーティクルシステムコンポーネント][particlesystem]を使ってみましょう。
 
-#### Using unpkg
+#### unpkgを使う
 
-First, we have to grab a CDN link to the component JS file. The documentation
-of the component will usually have a CDN link or usage information. But a way
-to get the most up-to-date CDN link is to use [unpkg.com].
+まず、コンポーネントのJSファイルへのCDNリンクを取得する必要があります。
+コンポーネントのドキュメントには、通常、CDNリンクや使用法が記載されています。
+しかし、最新のCDNリンクを取得する方法として、[unpkg.com]を使用する方法があります。
 
-unpkg is a CDN that automatically hosts everything that is published to npm.
-unpkg can resolve semantic versioning and provide us the version of the
-component we want. A URL takes the form of:
+unpkgは、npmに公開されたすべてのものを自動的にホストするCDNです。
+unpkgは、セマンティックバージョン管理を解決して、私たちが望むコンポーネントのバージョンを提供します。
+URLは以下のような形式をとります。
 
 ```
 https://unpkg.com/<npm package name>@<version>/<path to file>
 ```
 
-If we want the latest version, we can exclude the `version`:
+最新版が欲しい場合は、`version`を消します。
 
 ```
 https://unpkg.com/<npm package name>/<path to file>
 ```
 
-Rather than typing in the path to the built component JS file, we can exclude
-`path to file` to be able to browse the directories of the component package.
-The JS file will usually be in a folder called `dist/` or `build/` and end with
-`.min.js`.
+ビルドされたコンポーネントのJSファイルへのパスを入力する代わりに、`path to file`を消すことで、コンポーネントパッケージのディレクトリをブラウズできるようになります。
+JSファイルは通常、 `dist/` または `build/` というフォルダにあり、末尾が `.min.js` になっているはずです。
 
-For the particle system component, we head to:
+
+パーティクルシステムコンポーネントは、次のリンクになります。
 
 ```
 https://unpkg.com/aframe-particle-system-component/
 ```
 
-Note the ending slash (`/`). Find the file we need, right click, and hit *Copy
-Link to Address* to copy the CDN link into our clipboard.
+最後のスラッシュ（`/`）に注意してください。必要なファイルを見つけて右クリックし、*Copy Link to Address* を押して CDN リンクをクリップボードにコピーします。
 
 ![unpkg](https://cloud.githubusercontent.com/assets/674727/25502028/cbfd7b3a-2b49-11e7-914d-a8280aa47ace.jpg)
 
-#### Including the Component JS File
+#### コンポーネントJSファイルを読み込む
 
-Then head to our HTML. Under the `<head>`, *after* the A-Frame JS `<script>`
-tag, and *before* `<a-scene>`, we will include our JS file with a `<script>`
-tag.
+そして、HTMLに向かいます。`<head>` の下、A-Frame JS の `<script>` タグの *後*、そして `<a-scene>` の *前* に、JS ファイルを `<script>` タグで読み込んでください。
 
-For the particle system component, the CDN link we found earlier (at time of
-writing) was:
+パーティクルシステムコンポーネントの、先ほど（執筆時）見つけたCDNリンクは次です。
 
 ```
 https://unpkg.com/aframe-particle-system-component@1.0.9/dist/aframe-particle-system-component.min.js
 ```
 
-Now we can include it into our HTML:
+これをHTMLに読み込みましょう。
 
 ```html
 <html>
@@ -391,13 +379,11 @@ Now we can include it into our HTML:
 </html>
 ```
 
-#### Using the Component
+#### コンポーネントを使う
 
-Follow the documentation of the component on how to use it in implementation.
-But generally, the usage involves attaching the component to an entity and
-configuring it. For the particle system component:
-
-Now we can include it into our HTML:
+どのように実装して使うのかは、コンポーネントのドキュメントに従ってください。
+ですが一般的には、コンポーネントをエンティティにアタッチして設定する使い方が多いです。
+パーティクルシステムコンポーネントの場合は次のようになります。
 
 ```html
 <html>
@@ -413,15 +399,16 @@ Now we can include it into our HTML:
 </html>
 ```
 
-### Example
+### 例
 
 [glitch]: http://glitch.com/~aframe-registry
 
 ![Registry Example](https://cloud.githubusercontent.com/assets/674727/25502318/0f76ceec-2b4b-11e7-9829-cb3784b20dc1.gif)
 
-Below is a complete example of using various community components from the
-Registry and using the unpkg CDN. We can [remix or check out this example on
-Glitch][glitch].
+Below is a complete example of using various community components from the Registry and using the unpkg CDN. We can [remix or check out this example on Glitch][glitch].
+
+以下は、レジストリにあるさまざまなコミュニティコンポーネントを使用し、unpkg CDNを使用した完全な例です。
+私たちは、この例を[リミックスしたり、Glitchでチェックアウトする][glitch]ことができます。
 
 ```html
 <html>
