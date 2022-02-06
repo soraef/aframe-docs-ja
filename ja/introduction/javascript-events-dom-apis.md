@@ -21,32 +21,29 @@ examples:
 [DOM]: https://developer.mozilla.org/docs/Web/API/Document_Object_Model/Introduction
 [object3d]: https://threejs.org/docs/#api/core/Object3D
 
-Since A-Frame is just HTML, we can control the scene and its entities using
-JavaScript and [DOM] APIs as we mostly would in ordinary web development.
+A-Frameは単なるHTMLなので、通常のWeb開発と同様にJavaScriptと[DOM]APIを使ってシーンとその実体を制御することができます。
 
 [vrjump]: http://vrjump.de
 
 [jsimage]: https://cloud.githubusercontent.com/assets/674727/20290105/e1573210-aa92-11e6-8f1a-8a31fb6dad52.jpg
 ![With JavaScript][jsimage]
-<small class="image-caption"><i>Image by Ruben Mueller from [The VR Jump][vrjump].</i></small>
+<small class="image-caption"><i>Ruben Mueller によるイメージ図、[The VR Jump][vrjump] から</i></small>
 
 [entity]: ../core/entity.md
-Every element in the scene, even elements such as `<a-box>` or `<a-sky>`, are entities (represented as `<a-entity>`). A-Frame modifies the HTML element prototype to add some extra behavior for certain DOM APIs to tailor them to
-A-Frame. See the [Entity API documentation][entity] for reference on most of
-the APIs discussed below.
+
+シーン内のすべての要素は、`<a-box>` や `<a-sky>` などの要素であっても、エンティティ（`<a-entity>` として表現されます）です。
+A-FrameはHTML要素のプロトタイプを修正し、特定のDOM APIに対して、A-Frameに合わせた特別な動作を追加しています。
+以下に説明するほとんどのAPIに関するリファレンスは、[Entity API documentation][entity]を参照してください。
 
 <!--toc-->
 
-## Where to Place JavaScript Code for A-Frame
+## A-FrameのJavaScriptコードを配置する場所
 
 [A-Frame components]: ../core/component.md
 
-**Important:** Before we go over the different ways to use JavaScript and DOM
-APIs, we prescribe encapsulating your JavaScript code within [A-Frame
-components].  Components modularize code, make logic and behavior visible from
-HTML, and ensure that code is executed at the correct time (e.g., after the
-scene and entities have attached and initialized). As the most basic example,
-to register a `console.log` component *before* `<a-scene>`:
+**重要:** JavaScriptとDOM APIのさまざまな使い方を説明する前に、JavaScriptのコードを[A-Frameコンポーネント]でカプセル化を推奨することを記しておきます。
+コンポーネントは、コードをモジュール化し、ロジックや動作をHTMLから見えるようにし、コードが正しいタイミングで実行されるようにします（例えば、シーンやエンティティがアタッチされ初期化された後など）。
+最も基本的な例として、`<a-scene>` の*前*に `console.log` コンポーネントを登録する場合です。
 
 ```js
 AFRAME.registerComponent('log', {
@@ -59,7 +56,7 @@ AFRAME.registerComponent('log', {
 });
 ```
 
-And *after* the registration, use the component from HTML:
+そして、登録の*後*、HTMLからコンポーネントを使用します。
 
 ```html
 <a-scene log="Hello, Scene!">
@@ -67,29 +64,24 @@ And *after* the registration, use the component from HTML:
 </a-scene>
 ```
 
-Components encapsulate all of our code to be reusable, declarative, and
-shareable. Though if we're just poking around at runtime, we can use our
-browser's Developer Tools Console to run JavaScript on our scene.
+コンポーネントは、すべてのコードをカプセル化し、再利用可能、宣言的、かつ共有可能なものにします。
+ただし、実行時にちょっと調べるだけなら、ブラウザのDeveloper Tools Consoleを使って、シーン上でJavaScriptを実行することができます。
 
 [contentscripts]: ../core/scene.md#running-content-scripts-on-the-scene
 
-Do **not** try to put A-Frame-related JavaScript in a raw `<script>` tag after
-`<a-scene>` as we would with traditional 2D scripting. If we do, we'd have to
-take special measures to make sure code runs at the right time (see [Running
-Content Scripts on the Scene][contentscripts]).
+従来の 2D スクリプトのように、A-Frame 関連の JavaScript を `<a-scene>` の後に生の `<script>` タグで記述しようとは**しないで**ください。
+もしそうすると、コードが適切なタイミングで実行されるように特別な対策を講じなければならなくなります (詳しくは [コンテンツスクリプトをシーンで実行する][contentscripts] を参照してください)。
 
-## Getting Entities by Querying and Traversing
+
+## クエリやトラバースによるエンティティの取得
 
 [queryselector]: https://developer.mozilla.org/docs/Web/API/Document/querySelector
 [jqueryselector]: https://api.jquery.com/category/selectors/
 
-The wonderful thing about the DOM as a scene graph is that the standard DOM
-provides utilities for traversal, querying, finding, and selecting through
-`.querySelector()` and `.querySelectorAll()`. Originally inspired by [jQuery
-selectors][jqueryselector], we can [learn about query selectors on
-MDN][queryselector].
+シーングラフとしてのDOMの素晴らしいところは、標準のDOMが `.querySelector()` と `.querySelectorAll()` を通じて探索、問い合わせ、検索、選択のためのユーティリティを提供することです。
+元々は [jQuery selectors][jqueryselector] に触発されたもので、[MDNでクエリセレクタについて学ぶことができます][queryselector].
 
-Let's run a few example query selectors. Take the scene below for example.
+クエリセレクタの例をいくつか実行してみましょう。たとえば、以下のようなシーンを見てみましょう。
 
 ```html
 <html>
@@ -103,32 +95,32 @@ Let's run a few example query selectors. Take the scene below for example.
 </html>
 ```
 
-### With `.querySelector()`
+### `.querySelector()` の使い方
 
-If we want to grab just one element, we use `.querySelector()` which returns
-one element. Let's grab the scene element:
+もし、1つの要素だけを取得したい場合は、1つの要素を返す `.querySelector()` を使用します。
+それでは、sceneの要素を取得してみましょう。
 
 ```js
 var sceneEl = document.querySelector('a-scene');
 ```
 
-Note if we were working within a component, we'd already have a reference to
-the scene element without needing to query. All entities have reference to
-their scene element:
+コンポーネント内で作業している場合は、クエリを実行しなくても、すでにシーンエレメントへの参照を持っていることに注意してください。
+すべてのエンティティは、そのシーンエレメントへの参照を持っています。
 
 ```js
 AFRAME.registerComponent('foo', {
   init: function () {
-    console.log(this.el.sceneEl);  // Reference to the scene element.
+    console.log(this.el.sceneEl);  // シーンエレメントへの参照
   }
 });
 ```
 
-If an element has an ID, we can use an ID selector (i.e., `#<ID>`). Let's grab
-the red box which has an ID. Before we did a query selector on the entire
-document. Here, we'll do a query selector just within the scope of the scene.
-With query selectors, we're able to limit the scope of the query to within any
-element:
+要素にIDがある場合は、IDセレクタ（例：`#<ID>`）を使用することができます。
+IDを持つ赤のボックスを取得してみましょう。
+以前はドキュメント全体に対してクエリセレクタを実行しました。
+ここでは、シーンの範囲内だけのクエリセレクタを実行します。
+クエリセレクタを使うと、クエリの範囲を任意の要素内に限定することができます。
+
 
 ```js
 var sceneEl = document.querySelector('a-scene');
@@ -136,10 +128,10 @@ console.log(sceneEl.querySelector('#redBox'));
 // <a-box id="redBox" class="clickable" color="red"></a-box>
 ```
 
-### With `.querySelectorAll()`
+### `.querySelectorAll()` の使い方
 
-If we want to grab a group of elements, we use `.querySelectorAll()` which returns
-an array of elements. We can query across element names:
+要素のグループを取得したい場合は、要素の配列を返す `.querySelectorAll()` を使用します。
+要素名をまたいで問い合わせることができます。
 
 ```js
 console.log(sceneEl.querySelectorAll('a-box'));
@@ -149,8 +141,8 @@ console.log(sceneEl.querySelectorAll('a-box'));
 // ]
 ```
 
-We can query for elements that have a class with a class selector (i.e.,
-`.<CLASS_NAME>`). Let's grab every entity that has the `clickable` class:
+クラスを持つ要素はクラスセレクタ（`.<CLASS_NAME>`）で問い合わせることができます。
+`clickable`クラスを持つすべてのエンティティを取得してみましょう。
 
 ```js
 console.log(sceneEl.querySelectorAll('.clickable'));
@@ -160,9 +152,8 @@ console.log(sceneEl.querySelectorAll('.clickable'));
 // ]
 ```
 
-We can query for elements containing an attribute (or in this case, a
-component) with an attribute selector (i.e., `[<ATTRIBUTE_NAME>]`). Let's grab
-every entity that has a light:
+属性（この場合はコンポーネント）を含む要素は、属性セレクタ（すなわち `[<ATTRIBUTE_NAME>]`）で問い合わせることができます。
+lightを持っているエンティティをすべて取得してみましょう。
 
 ```js
 console.log(sceneEl.querySelectorAll('[light]'));
@@ -172,10 +163,10 @@ console.log(sceneEl.querySelectorAll('[light]'));
 // ]
 ```
 
-### Looping Over Entities from `.querySelectorAll()`
+### `.querySelectorAll()` で全てのエンティティをループ処理
 
-If we grabbed a group of entities using `.querySelectorAll()`, we can loop over
-them with a `for` loop. Let's loop over every element in the scene with `*`.
+`.querySelectorAll()` を使ってエンティティーのグループを取得したら、 `for` ループでループさせることができます。
+シーン内のすべての要素に対して `*` でループしてみましょう。
 
 ```js
 var els = sceneEl.querySelectorAll('*');
@@ -184,12 +175,11 @@ for (var i = 0; i < els.length; i++) {
 }
 ```
 
-#### A Note About Performance
+#### パフォーマンスに関する注意点
 
-Avoid using `.querySelector` and `.querySelectorAll` in `tick` and `tock` functions
-that get called every frame as it does take some time to loop over the DOM to retrieve
-entities. Instead, keep a cached list of entities, calling the query selectors beforehand,
-and then just loop over that.
+フレームごとに呼び出される `tick` や `tock` 関数で `.querySelector` や `.querySelectorAll` を使用しないようにしましょう。エンティティを取得するためにDOMをループするのに時間がかかります。
+代わりに、あらかじめクエリセレクタを呼び出したエンティティのリストをキャッシュしておき、その上でループしましょう。
+
 
 ```js
 AFRAME.registerComponent('query-selector-example', {
@@ -198,22 +188,19 @@ AFRAME.registerComponent('query-selector-example', {
   },
   
   tick: function () {
-    // Don't call query selector in here, query beforehand.
+    // ここでクエリセレクタを呼ばず、あらかじめクエリする
     for (let i = 0; i < this.entities.length; i++) {
-      // Do something with entities.
+      // 各エンティティについて何か処理する
     }
   }
 });
 ```
 
-## Retrieving Component Data with `.getAttribute()`
+## `.getAttribute()` によるコンポーネントデータの取得
 
-We can get the data of components of an entity via `.getAttribute`. A-Frame
-augments `.getAttribute` to return values rather than strings (e.g., returning
-objects in most cases since components usually consist of multiple properties,
-or returning an actual boolean for like `.getAttribute('visible')`.  Often,
-`.getAttribute` will return the internal data object of the component so do not
-modify the object directly:
+エンティティのコンポーネントのデータは `.getAttribute` で取得することができます。
+A-Frameでは、文字列ではなく値を返すように `.getAttribute` を拡張しています（例えば、コンポーネントは通常複数のプロパティで構成されているので、ほとんどの場合オブジェクトを返します、または `.getAttribute('visible')` のような場合は実際のブール値を返します）。
+多くの場合、 `.getAttribute` はコンポーネントの内部データオブジェクトを返すので、オブジェクトを直接変更しないでください。
 
 ```js
 // <a-entity geometry="primitive: sphere; radius: 2"></a-entity>
@@ -221,69 +208,62 @@ el.getAttribute('geometry');
 // >> {"primitive": "sphere", "radius": 2, ...}
 ```
 
-### Retrieving `position` and `scale`
+### `position` と `scale` を取得
 
 [vector3]: https://threejs.org/docs/#api/math/Vector3
 [updatepos]: #updating-position-rotation-scale-visible
 
-Doing `el.getAttribute('position')` or `el.getAttribute('scale')` will return
-the three.js [Object3D][object3d] position and scale properties which are
-[Vector3][vector3]s. Keep in mind that modifying these objects will modify the
-actual entity data.
+`el.getAttribute('position')` や `el.getAttribute('scale')` を実行すると three.js の [Object3D][object3d] の position と scale のプロパティが [Vector3][vector3]で返されます。
+これらのオブジェクトを変更すると、実際のエンティティデータが変更されることに留意してください。
 
-This is because A-Frame allows us to [modify position, rotation, scale,
-visible][updatepos] at the three.js level, and in order for `.getAttribute` to
-return the correct data, A-Frame returns the actual three.js Object3D objects.
+これは、A-Frameでは、three.jsレベルで [position, rotation, scale, visible][updatepos] を変更することができるようにしてあり、 `.getAttribute` が正しいデータを返すために、A-Frameが実際の three.js の Object3D オブジェクトを返すからです。
 
-This is not true for the `.getAttribute('rotation')` because A-Frame, for
-better or worse, uses degrees instead of radians. In such case, a normal
-JavaScript object with x/y/z properties is returned. The Object3D Euler can be
-retrieved via `el.object3D.rotation` if we need to work at a lower level with
-radians.
+これは `.getAttribute('rotation')` には当てはまりません。
+なぜならA-Frame は良くも悪くもラジアンの代わりに度数を使用するからです。
+このような場合、x/y/zのプロパティを持つ通常のJavaScriptオブジェクトが返されます。
+ラジアンよりも低いレベルで作業する必要がある場合は、Object3Dのオイラーを `el.object3D.rotation` によって取得することができます。
 
-## Modifying the A-Frame Scene Graph
 
-With JavaScript and DOM APIs, we can dynamically add and remove entities as we
-would with normal HTML elements.
+## A-Frameシーングラフの変更
 
-### Creating an Entity with `.createElement()`
+JavaScriptとDOM APIを使えば、通常のHTML要素と同じように動的にエンティティを追加したり削除したりすることができます。
 
-To create an entity, we can use `document.createElement`. This will give us a
-blank entity:
+### `.createElement()` によるエンティティの作成
+
+エンティティを作成するには、`document.createElement` を使用することができます。これによって、空のエンティティが得られます。
 
 ```js
 var el = document.createElement('a-entity');
 ```
 
-However, this entity will not be initialized or be a part of the scene until we
-attach it to our scene.
+ただし、このエンティティは、シーンにアタッチするまでは初期化されず、シーンの一部にもなりません。
 
-### Adding an Entity with `.appendChild()`
+### `.appendChild()` によるエンティティの追加
 
-To add an entity to the DOM, we can use `.appendChild(element)`. Specifically,
-we want to add it to our scene. We grab the scene, create the entity, and
-append the entity to our scene.
+To add an entity to the DOM, we can use `.appendChild(element)`. Specifically, we want to add it to our scene. We grab the scene, create the entity, and append the entity to our scene.
+
+DOMにエンティティを追加するには、`.appendChild(element)`を使用します。
+具体的には、シーンに追加します。
+シーンを取得し、エンティティを作成し、エンティティをシーンに追加します。
 
 ```js
 var sceneEl = document.querySelector('a-scene');
 var entityEl = document.createElement('a-entity');
-// Do `.setAttribute()`s to initialize the entity.
+// エンティティを初期化するために`.setAttribute()`します
 sceneEl.appendChild(entityEl);
 ```
 
-Note that `.appendChild()` is an *asynchronous* operation in the browser. Until
-the entity has finished appending to the DOM, we can't do many operations on
-the entity (such as calling `.getAttribute()`). If we need to query an
-attribute on an entity that has just been appended, we can listen to the
-`loaded` event on the entity, or place logic in an A-Frame component so that
-it is executed once it is ready:
+ブラウザでは `.appendChild()` は *非同期な*操作であることに注意してください。
+エンティティが DOM に追加されるまで、エンティティに対して多くの操作 (`.getAttribute()` の呼び出しなど) を行うことができません。
+もし、追加されたばかりのエンティティの属性を問い合わせる必要がある場合は、エンティティの `loaded` イベントをリッスンするか、A-Frameコンポーネントにロジックを配置し、準備ができた時点で実行されるようにすることが可能です。
+
 
 ```js
 var sceneEl = document.querySelector('a-scene');
 
 AFRAME.registerComponent('do-something-once-loaded', {
   init: function () {
-    // This will be called after the entity has properly attached and loaded.
+    // これは、エンティティが適切にアタッチされ、ロードされた後に呼び出されます
     console.log('I am ready!');
   }
 });
@@ -293,25 +273,22 @@ entityEl.setAttribute('do-something-once-loaded', '');
 sceneEl.appendChild(entityEl);
 ```
 
-### Removing an Entity with `.removeChild()`
+### `.removeChild()` によるエンティティの削除
 
-To remove an entity from the DOM and thus from the scene, we call
-`.removeChild(element)` from the parent element. If we have an entity, we have to
-ask its parent (`parentNode`) to remove the entity.
+DOMから、つまりシーンからエンティティを削除するには、親要素から `.removeChild(element)` を呼び出します。
+エンティティがある場合、その親（`parentNode`）にエンティティを削除するように依頼する必要があります。
 
 ```js
 entityEl.parentNode.removeChild(entityEl);
 ```
 
-## Modifying an Entity
+## エンティティの変更
 
-A blank entity doesn't do anything. We can modify the entity by adding
-components, configuring component properties, and removing components.
+空白のエンティティは何もしません。コンポーネントを追加したり、コンポーネントのプロパティを設定したり、コンポーネントを削除することで、エンティティを変更することができます。
 
-### Adding a Component with `.setAttribute()`
+### `.setAttribute()` によるコンポーネントの追加
 
-To add a component, we can use `.setAttribute(componentName, data)`. Let's add
-a geometry component to the entity.
+コンポーネントを追加するには、 `.setAttribute(componentName, data)` を使用します。エンティティにジオメトリコンポーネントを追加してみましょう。
 
 ```js
 entityEl.setAttribute('geometry', {
@@ -323,7 +300,7 @@ entityEl.setAttribute('geometry', {
 
 [physics]: https://github.com/donmccurdy/aframe-physics-system
 
-Or adding [the community physics component][physics]:
+また、[コミュニティの物理演算コンポーネント][physics]を追加してみましょう。
 
 ```js
 entityEl.setAttribute('dynamic-body', {
@@ -335,50 +312,44 @@ entityEl.setAttribute('dynamic-body', {
 
 [setattr]:  ../core/entity.md#setattribute-attr-value-componentattrvalue
 
-Unlike a normal HTML `.setAttribute()`, an entity's `.setAttribute()` is
-improved to take a variety of types of arguments such as objects, or to be able
-to update a single property of a component. [Read more about
-`Entity.setAttribute()`][setattr].
+通常のHTMLの `.setAttribute()` とは異なり、エンティティの `.setAttribute()` は、オブジェクトなどのさまざまな種類の引数を取ったり、コンポーネントの単一のプロパティを更新できるように改良されています。
+[`Entity.setAttribute()` についてもっと読む][setattr]。
 
-### Updating a Component with `.setAttribute()`
 
-To update a component, we also use `.setAttribute()`. Updating a component
-takes several forms.
+### `.setAttribute()` によるコンポーネントの更新
 
-#### Updating Property of Single-Property Component
+コンポーネントを更新するためにも、`.setAttribute()`を使用します。コンポーネントの更新にはいくつかの形式があります。
+
+#### 単一プロパティのコンポーネントのプロパティを更新する
 
 [position]: ../components/position.md
 
-Let's update the property of the [position component][position], a
-single-property component. We can pass either an object or a string. It is
-slightly preferred to pass an object so A-Frame doesn't have to parse the
-string.
+シングルプロパティコンポーネントである[position component][position]のプロパティを更新してみましょう。
+オブジェクトか文字列を渡すことができます。オブジェクトを渡すと、A-Frameが文字列をパースする必要がないので、少し好ましいです。
 
 ```js
 entityEl.setAttribute('position', {x: 1, y: 2, z: -3});
-// Read on to see why `entityEl.object3D.position.set(1, 2, -3)` is preferred though.
+// しかし、`entityEl.object3D.position.set(1, 2, -3)`の方が好ましく、それがなぜかは続きを読んでください
 ```
 
-#### Updating Single Property of Multi-Property Component
+#### マルチプロパティのコンポーネントの単一プロパティを更新する
 
 [material]: ../components/material.md
 
-Let's update a single property of the [material component][material], a
-multi-property component. We do this by providing the component name, property
-name, and then property value to `.setAttribute()`:
+マルチプロパティコンポーネントである[material component][material]の1つのプロパティを更新してみましょう。
+これは、コンポーネント名、プロパティ名、そしてプロパティ値を `.setAttribute()` に指定することで行います。
 
 ```js
 entityEl.setAttribute('material', 'color', 'red');
 ```
 
-#### Updating Multiple Properties of a Multi-Property Component
+#### マルチプロパティコンポーネントの複数のプロパティを更新する
 
 [light]: ../components/light.md
 
-Let's update multiple properties at once of the [light component][material], a
-multi-property component. We do this by providing the component name and an
-object of properties to `.setAttribute()`. We'll change the light's color and
-intensity but leave the type the same:
+マルチプロパティコンポーネントである[light component][light]の複数のプロパティを一度に更新してみましょう。
+これは、コンポーネント名とプロパティのオブジェクトを `.setAttribute()` に指定することで行います。
+ここでは、ライトの色と強さを変更しますが、タイプはそのままにしておきます。
 
 ```js
 // <a-entity light="type: directional; color: #CAC; intensity: 0.5"></a-entity>
@@ -386,43 +357,39 @@ entityEl.setAttribute('light', {color: '#ACC', intensity: 0.75});
 // <a-entity light="type: directional; color: #ACC; intensity: 0.75"></a-entity>
 ```
 
-#### Updating `position`, `rotation`, `scale`, and `visible`.
+#### `position`、`rotation`、`scale`、`visible` を更新する
 
-As a special case, for better performance, memory, and access to utilities, we
-recommend modifying `position`, `rotation`, `scale`, and `visible` directly at
-the three.js level via the entity's [Object3D][object3d] rather than via
-`.setAttribute`:
+特殊なケースとして、パフォーマンス、メモリ、ユーティリティへのアクセスを改善するために、 `.setAttribute` ではなく、エンティティの [Object3D][object3d] を通じて three.js レベルで直接 `position`, `rotation`, `scale`, `visible` を変更することを推奨します。
+
 
 ```js
-// Examples for position.
+// positionの例
 entityEl.object3D.position.set(1, 2, 3);
 entityEl.object3D.position.x += 5;
 entityEl.object3D.position.multiplyScalar(5);
 
-// Examples for rotation.
+// rotationの例
 entityEl.object3D.rotation.y = THREE.Math.degToRad(45);
 entityEl.object3D.rotation.divideScalar(2);
 
-// Examples for scale.
+// scaleの例
 entityEl.object3D.scale.set(2, 2, 2);
 entityEl.object3D.scale.z += 1.5;
 
-// Examples for visible.
+// visibleの例
 entityEl.object3D.visible = false;
 entityEl.object3D.visible = true;
 ```
 
-This lets us skip over the `.setAttribute` overhead and instead do simple
-setting of properties for components that are most commonly updated. Updates at
-the three.js level will still be reflected when doing for example
-`entityEl.getAttribute('position');`.
+これにより、`.setAttribute` のオーバーヘッドをスキップして、代わりに最も頻繁に更新されるコンポーネントのプロパティを簡単に設定することができます。
+three.jsレベルでの更新は、例えば `entityEl.getAttribute('position');` のように実行しても、反映されます。
 
-#### Replacing Properties of a Multi-Property Component
+#### マルチプロパティコンポーネントのプロパティを置き換える
 
-Let's replace all the properties of the [geometry component][geometry], a
-multi-property component. We do this by providing the component name, an object
-of properties to `.setAttribute()`, and a flag that specifies to clobber the
-existing properties. We'll replace all of the geometry's existing properties with new properties:
+マルチプロパティコンポーネントである[geometry component][geometry]のプロパティをすべて置き換えてみましょう。
+そのためには、コンポーネント名、`.setAttribute()`にプロパティのオブジェクト、そして既存のプロパティを破棄することを指定するフラグを指定します。
+geometryの既存のプロパティをすべて新しいプロパティに置き換えることになります。
+
 
 ```js
 // <a-entity geometry="primitive: cylinder; height: 4; radius: 2"></a-entity>
@@ -430,50 +397,44 @@ entityEl.setAttribute('geometry', {primitive: 'torusKnot', p: 1, q: 3, radiusTub
 // <a-entity geometry="primitive: torusKnot; p: 1; q: 3; radiusTubular: 4"></a-entity>
 ```
 
-### Removing a Component with `.removeAttribute()`
+### `.removeAttribute()` によるコンポーネントの削除
 
-To remove or detach a component from an entity, we can use
-`.removeAttribute(componentName)`. Let's remove the default `wasd-controls`
-from the camera entity:
+エンティティからコンポーネントを削除したり、切り離したりするには、 `.removeAttribute(componentName)` を使用することができます。カメラエンティティからデフォルトの `wasd-controls` を削除してみましょう。
 
 ```js
 var cameraEl = document.querySelector('[camera]');
 cameraEl.removeAttribute('wasd-controls');
 ```
 
-## Events and Event Listeners
+## イベントとイベントリスナー
 
 [eventlistener]: http://javascript.info/tutorial/introduction-browser-events
 
-With JavaScript and the DOM, there is an easy way for entities and components
-to communicate with one another: events and event listeners.  Events are a way
-to send out a signal that other code can pick up and respond to. [Read more
-about browser events][eventlistener].
+JavaScript と DOM では、エンティティやコンポーネントが互いにやりとりするための簡単な方法があります。
+イベントとイベントリスナーです。
+イベントとは、他のコードが拾って応答できるようなシグナルを送る方法です。[ブラウザのイベントについてはこちら][eventlistener].
 
-### Emitting an Event with `.emit()`
 
-A-Frame elements provide an easy way to emit custom events with
-`.emit(eventName, eventDetail, bubbles)`. For example, let's say we are
-building a physics component and we want the entity to send out a signal when
-it has collided with another entity:
+### `.emit()`でイベントを発信する
+
+A-Frame要素では、`.emit(eventName, eventDetail, bubbles)`で簡単にカスタムイベントを発信することができます。
+例えば、物理コンポーネントを作っていて、エンティティが他のエンティティと衝突したときにシグナルを送りたい場合を考えてみましょう。
 
 ```js
 entityEl.emit('physicscollided', {collidingEntity: anotherEntityEl}, false);
 ```
 
-Then other parts of the code can wait and listen on this event and run code in
-response. We can pass information and data through the event detail as the
-second argument. And we can specify whether the event *bubbles*, meaning that
-the parent entities will also emit the event. So other parts of the code can
-register an event listener.
+そして、コードの他の部分は、このイベントを待ち、リッスンし、それに応答してコードを実行することができます。
+第2引数として、イベントの詳細を通して情報やデータを渡すこともできます。
+また、イベントが*bubbles*かどうか、つまり親エンティティもイベントを発するかどうかを指定することができます。
+つまり、コードの他の部分がイベントリスナーを登録することができます。
 
-### Adding an Event Listener with `.addEventListener()`
 
-Like with normal HTML elements, we can register an event listener with
-`.addEventListener(eventName, function)`. When the event the listener is
-registered to is emitted, then the function will be called and handle the
-event. For example, continuing from the previous example with the physics
-collision event:
+### `.addEventListener()`でイベントリスナーを追加する
+
+通常のHTML要素と同様に、イベントリスナーを `.addEventListener(eventName, function)` で登録することができます。
+リスナーが登録されたイベントが発生すると、その関数が呼び出され、イベントを処理します。
+例えば、先程の物理衝突のイベントの続きです。
 
 ```js
 entityEl.addEventListener('physicscollided', function (event) {
@@ -481,19 +442,15 @@ entityEl.addEventListener('physicscollided', function (event) {
 });
 ```
 
-When the entity emits the `physicscollided` event, the function will be called
-with the event object. Notably in the event object, we have the event detail
-which contains data and information passed through the event.
+エンティティが `physicscollided` イベントを発信すると、イベントオブジェクトを持つ関数が呼び出されます。
+イベントオブジェクトには、イベントを通じて渡されたデータや情報を含むイベント詳細があります。
 
-### Removing an Event Listener with `.removeEventListener()`
+### `.removeEventListener()` でイベントリスナーを削除する。
 
-Like with normal HTML elements, when we want to remove the event listener, we
-can use `.removeEventListener(eventName, function)`. We have to pass the same
-event name and function that the listener was registered with. For example,
-continuing from the previous example with the physics collision event:
+通常のHTML要素と同様に、イベントリスナーを削除したい場合は、 `.removeEventListener(eventName, function)` を使用することができます。リスナーが登録されていたのと同じイベント名と関数を渡さなければなりません。例えば、先ほどの物理衝突イベントの例から続けると、以下のようになります。
 
 ```js
-// We have to define this function with a name if we later remove it.
+// この関数を後で削除する場合は、名前を付けて定義する必要があります
 function collisionHandler (event) {
   console.log('Entity collided with', event.detail.collidingEntity);
 }
@@ -502,15 +459,16 @@ entityEl.addEventListener('physicscollided', collisionHandler);
 entityEl.removeEventListener('physicscollided', collisionHandler);
 ```
 
-### Binding Event Listeners
+### イベントリスナーをバインドする
 
-By default, [Javascript execution context rules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this) binds `this` to the global context (`window`) for any independent function, meaning that these functions won't have access to the component's `this` by default.
+デフォルトでは、[Javascript実行コンテキストルール](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this) は、独立した関数に対して `this` をグローバルコンテキスト (`window`) にバインドします。
+これは、これらの関数がデフォルトではコンポーネントの `this` にアクセスできないことを意味します。
 
-In order for the component's `this` to be accessible inside an event listener, [it must be bound](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this).
+イベントリスナー内部でコンポーネントの `this` にアクセスできるようにするには、[バインドされている必要があります](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this).
 
-There are several ways you can do this:
+いくつかの方法があります。
 
-1. By using an arrow function to define the event listener.  Arrow functions automatically bind `this`
+1. アロー関数を使用して、イベントリスナーを定義することができます。アロー関数は自動的に `this` をバインドします。
 
 ```
 this.el.addEventListener('physicscollided', (event) => {
@@ -519,12 +477,12 @@ this.el.addEventListener('physicscollided', (event) => {
 ```
 
 
-2. By defining your event listener within the events object of the component (this will also handling adding and removing the listener automatically)
+2. イベントリスナーをコンポーネントのイベントオブジェクトの中で定義します（これにより、リスナーの追加と削除も自動的に行われます）。
 
-   See the explanation [here](../core/component.html#events).
+   解説は[こちら](../core/component.html#events)をご覧ください。
 
 
-3. By creating another function, which is the bound version of the function.
+3. その関数のバインド版である別の関数を作成します。
 
 ```
 this.listeners = {
@@ -533,14 +491,11 @@ this.listeners = {
 entityEl.addEventListener('click', this.listeners.clickListener);
 ```
 
-## Caveats
+## 注意事項
 
 [faq]: ./faq.md#why-is-the-html-not-updating-when-i-check-the-browser-inspector
 [mutation-observer]: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
 [attr-selectors]: https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors
 
-A-Frame entities and primitives are implemented in a way that
-[favours performance][faq] such that some HTML APIs may not work as expected.
-For instance, [attribute selectors involving values][attr-selectors] won't work
-and a [mutation observer][mutation-observer] won't trigger changes when a entity's
-component is altered.
+A-Frameのエンティティやプリミティブは、[パフォーマンス重視][faq]で実装されているため、一部のHTML APIが期待通りに動作しない場合があります。
+例えば、[値を含む属性セレクタ][attr-selectors]は動作しませんし、[変異オブザーバ][mutation-observer]は、エンティティのコンポーネントが変更されたときに変更をトリガしません。
