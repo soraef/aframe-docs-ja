@@ -60,8 +60,6 @@ ECSの基本的な定義は以下の通りです。
 
 ### 例
 
-Some abstract examples of different types of entities built from composing together different components:
-
 異なるコンポーネントを組み合わせて作られた、さまざまなタイプのエンティティの抽象的な例をいくつか紹介します。
 
 - `ボックス = ポジション + ジオメトリ + マテリアル`
@@ -152,12 +150,6 @@ VRの超能力やオーグメントを装着するように、手のエンティ
 ```
 
 ### 宣言型DOMベースのECS
-
-A-Frame takes ECS to another level by making it declarative and based on the
-DOM. Traditionally, ECS-based engines would create entities, attach components,
-update components, remove components all through code. But A-Frame has HTML and
-the DOM which makes ECS ergonomic and resolves many of its weaknesses. Below
-are abilities that the DOM provides for ECS:
 
 A-Frameは、ECSを宣言型にし、DOMをベースにすることで、新たな次元に到達させました。
 従来、ECSベースのエンジンは、エンティティの作成、コンポーネントのアタッチ、コンポーネントの更新、コンポーネントの削除をすべてコードで行っていました。
@@ -253,8 +245,6 @@ components/
 [tracked-controls]: ../components/tracked-controls.md
 [vive-controls]: ../components/vive-controls.md
 
-Components can set other components on the entity, making them a higher-order or higher-level component in abstraction.
-
 コンポーネントは、エンティティに他のコンポーネントを設定することができ、抽象化された高階または上位のコンポーネントを作ります。
 
 例えば、[cursorコンポーネント][cursor]は[raycaster コンポーネント][raycaster]の上に設定・構築されます。
@@ -269,11 +259,9 @@ A-FrameのECSの素晴らしいところは、拡張性です。
 経験豊富な開発者が物理システムやグラフィックシェーダーコンポーネントを開発し、初心者の開発者は、`<script>`タグを設置するだけで、HTMLからそれらのコンポーネントを取り出し、シーンで使用することができるのです。
 JavaScriptに触れることなく、強力な公開コンポーネントを利用することができるのです。
 
-### Where to Find Components
+### コンポーネントを見つける
 
-There are hundreds of components out in the wild. We try our best to make them
-discoverable. If you develop a component, please submit it through these
-channels to share!
+世の中には何百という部品が存在します。私たちは、それらを発見できるように最善を尽くしています。もしあなたがコンポーネントを開発したら、ぜひこのチャンネルから投稿して、共有してください。
 
 #### npm
 
@@ -404,8 +392,6 @@ https://unpkg.com/aframe-particle-system-component@1.0.9/dist/aframe-particle-sy
 [glitch]: http://glitch.com/~aframe-registry
 
 ![Registry Example](https://cloud.githubusercontent.com/assets/674727/25502318/0f76ceec-2b4b-11e7-9829-cb3784b20dc1.gif)
-
-Below is a complete example of using various community components from the Registry and using the unpkg CDN. We can [remix or check out this example on Glitch][glitch].
 
 以下は、レジストリにあるさまざまなコミュニティコンポーネントを使用し、unpkg CDNを使用した完全な例です。
 私たちは、この例を[リミックスしたり、Glitchでチェックアウトする][glitch]ことができます。
