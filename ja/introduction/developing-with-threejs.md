@@ -125,7 +125,7 @@ entityEl.getObject3D('light');  // THREE.Light
 
 ### エンティティに `Object3D` を設定する
 
-オブジェクト3Dを設定すると、そのオブジェクト3Dがエンティティのグループに追加され、新しく設定されたオブジェクト3Dがthree.jsのシーンの一部となります。オブジェクト3Dを設定するには、エンティティの `.setObject3D(name)` メソッドを使用します。
+エンティティに`Object3D`を設定すると、その`Object3D`がエンティティの`Group`に追加され、新しく設定された`Object3D`がthree.jsのシーンの一部となります。`Object3D`を設定するには、エンティティの `.setObject3D(name)` メソッドを使用します。
 
 
 例えば、コンポーネント内部から点光源を設定する場合。
@@ -155,7 +155,7 @@ entityEl.getObject3D('light').el;  // entityEl
 
 ### Removing an `Object3D` From an Entity
 
-`Object3D`をエンティティから削除するには、エンティティの `.removeObject3D(name)` メソッドを使用します。ポイントライトの例に戻ると、コンポーネントがデタッチされたときに、ライトを削除します。
+`Object3D`をエンティティから削除するには、エンティティの `.removeObject3D(name)` メソッドを使用します。点光源の例に戻ると、コンポーネントがデタッチされたときに、ライトを削除します。
 
 
 ```js
@@ -173,7 +173,7 @@ AFRAME.registerComponent('pointlight', {
 
 ## Transforming Between Coordinate Spaces
 
-すべてのオブジェクトとシーン（世界）一般は、それぞれ独自の座標空間を持っています。親オブジェクトの位置、回転、スケール変換は、その子オブジェクトの位置、回転、スケール変換に適用される。このシーンを考えてみましょう。
+すべてのオブジェクトとシーン（世界）一般は、それぞれ独自の座標空間を持っています。親オブジェクトの位置、回転、スケール変換は、その子オブジェクトの位置、回転、スケール変換に適用さます。このシーンを考えてみましょう。
 
 ```html
 <a-entity id="foo" position="1 2 3">
@@ -181,7 +181,7 @@ AFRAME.registerComponent('pointlight', {
 </a-entity>
 ```
 
-fooの変換はbarの変換の上に適用されるので、世界の基準点からfooの位置は(1,2,3)、barの位置は(3, 5, 7)となる。fooの基準点から見ると、fooの位置は(0, 0, 0)、barの位置は(2, 3, 4)である。これらの参照点と座標空間との間で変換を行いたいことがよくある。上記は簡単な例ですが、barの位置のワールド空間座標を求めたり、任意の座標をfooの座標空間に変換するような操作を行いたい場合があります。3Dプログラミングでは、これらの操作は行列で実現されますが、three.jsはそれらを簡単にするヘルパーを提供します。
+fooの変換はbarの変換の上に適用されるので、世界の基準点からfooの位置は(1,2,3)、barの位置は(3, 5, 7)となります。fooの基準点から見ると、fooの位置は(0, 0, 0)、barの位置は(2, 3, 4)です。これらの参照点と座標空間との間で変換を行いたいことがよくあります。上記は簡単な例ですが、barの位置のワールド空間座標を求めたり、任意の座標をfooの座標空間に変換するような操作を行いたい場合があります。3Dプログラミングでは、これらの操作は行列で実現されますが、three.jsはそれらを簡単にするヘルパーを提供します。
 
 
 ### Local to World Transforms
@@ -203,7 +203,7 @@ var worldQuaternion = new THREE.Quaternion();
 entityEl.object3D.getWorldQuaternion(worldQuaternion);
 ```
 
-three.js `Object3D` に [ローカルからワールドへの変換で利用できる関数が増えました][object3d] が追加されました。
+three.js `Object3D` には[ローカルからワールドへの変換で利用できる関数がまだあります][object3d]。
 
 - `.localToWorld (vector)`
 - `.getWorldDirection (vector)`
