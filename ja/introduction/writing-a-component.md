@@ -28,7 +28,7 @@ A-Frameの[entity-component framework][ecs]のコンポーネントは、外観�
   </head>
   <body>
     <script>
-      // Or inline before the <a-scene>.
+      // または<a-scene>の前にインラインで
       AFRAME.registerComponent('bar', {
         // ...
       });
@@ -51,12 +51,12 @@ A-Frameの[entity-component framework][ecs]のコンポーネントは、外観�
 
 [init]: ../core/component.md#init
 
-まずは、一般的な考え方を知るために、最も基本的なコンポーネントから見ていきましょう。このコンポーネントは、コンポーネントの実体が[`.init()`ハンドラ][init]を使ってアタッチされると、簡単なメッセージを一度だけログに記録します。
+まずは、一般的な考え方を知るために、最も基本的なコンポーネントから見ていきましょう。このコンポーネントは、コンポーネントのエンティティがアタッチされると、[`.init()`ハンドラ][init]を使って簡単なメッセージを一度だけログに出力します。
 
 
 ### Registering the Component with `AFRAME.registerComponent`
 
-コンポーネントは `AFRAME.registerComponent()` で登録します。コンポーネントの名前を渡しますが、これはDOMでコンポーネントを表現する際のHTML属性名として使われます。次に、メソッドとプロパティを持つJavaScriptオブジェクトである**コンポーネント定義**を渡します。定義内では、**ライフサイクルハンドラーメソッド**を定義することができます。そのうちのひとつが [`.init()`][init] で、これはコンポーネントがその実体に最初に差し込まれたときに一度だけ呼び出されます。
+コンポーネントは `AFRAME.registerComponent()` で登録します。コンポーネントの名前を渡しますが、これはDOMでコンポーネントを表現する際のHTML属性名として使われます。次に、メソッドとプロパティを持つJavaScriptオブジェクトである**コンポーネント定義**を渡します。定義内では、**ライフサイクルハンドラーメソッド**を定義することができます。そのうちのひとつが [`.init()`][init] で、これはコンポーネントがそのエンティティに最初に差し込まれたときに一度だけ呼び出されます。
 
 
 以下の例では、`.init()`ハンドラに簡単なメッセージを記録させているだけです。
@@ -79,7 +79,7 @@ AFRAME.registerComponent('hello-world', {
 </a-scene>
 ```
 
-さて、エンティティがアタッチされて初期化されると、`hello-world` コンポーネントが初期化されます。コンポーネントの素晴らしいところは、エンティティの準備が整った後に呼び出されることです。**シーンやエンティティがセットアップされるのを待つ心配はありません**。コンソールを確認すると、シーンが実行され始め、エンティティがアタッチされた後に `Hello, World!` が一度だけログに記録されます。
+さて、エンティティがアタッチされて初期化されると、`hello-world` コンポーネントが初期化されます。コンポーネントの素晴らしいところは、エンティティの準備が整った後に呼び出されることです。**シーンやエンティティがセットアップされるのを待つ心配はありません**。コンソールを確認すると、シーンが実行され始め、エンティティがアタッチされた後に `Hello, World!` が一度だけログに出力されます。
 
 
 ### Using the Component from JS
@@ -101,7 +101,7 @@ document.querySelector('a-scene').setAttribute('hello-world', '');
 **スキーマ**は、そのコンポーネントの**プロパティ**を定義します。例えるなら、コンポーネントを関数と考えると、コンポーネントのプロパティはその関数の引数のようなものです。プロパティには、名前（コンポーネントに複数のプロパティがある場合）、デフォルト値、および **プロパティタイプ** があります。プロパティタイプは、データが文字列として渡された場合（つまり、DOMから）、どのようにパースされるかを定義します。
 
 
-`log` コンポーネントでは、`schema` を使って `message` プロパティタイプを定義しましょう。message` プロパティタイプは `string` プロパティタイプを持ち、デフォルトの値は `Hello, World!` となります。
+`log` コンポーネントでは、`schema` を使って `message` プロパティタイプを定義しましょう。`message` プロパティタイプは `string` プロパティタイプを持ち、デフォルトの値は `Hello, World!` となります。
 
 
 ```js
@@ -115,7 +115,7 @@ AFRAME.registerComponent('log', {
 
 ### Using Property Data from a Lifecycle Handler
 
-`string` プロパティタイプは、入力されたデータの解析を行わず、そのままライフサイクルのメソッドハンドラに渡します。では、その `message` プロパティタイプを `console.log` してみましょう。hello-world` コンポーネントと同様に、 `.init()` ハンドラを書きます。しかし、今回はハードコードされた文字列をログに記録するわけではありません。このコンポーネントのプロパティタイプの値は `this.data` から取得することができます。そこで、`this.data.message`を記録することにしましょう。
+`string` プロパティタイプは、入力されたデータの解析を行わず、そのままライフサイクルのメソッドハンドラに渡します。では、その `message` プロパティタイプを `console.log` してみましょう。`hello-world` コンポーネントと同様に、 `.init()` ハンドラを書きます。しかし、今回はハードコードされた文字列をログに記録するわけではありません。このコンポーネントのプロパティタイプの値は `this.data` から取得することができます。そこで、`this.data.message`を記録することにしましょう。
 
 ```js
 AFRAME.registerComponent('log', {
@@ -142,7 +142,7 @@ AFRAME.registerComponent('log', {
 
 ### Handling Property Updates
 
-これまでのところ、`.init()`ハンドラだけを使用してきました。このハンドラは、コンポーネントのライフサイクルの最初に一度だけ、その初期プロパティだけを使用して呼び出されます。しかし、コンポーネントはしばしば動的にそのプロパティを更新することがあります。そこで、プロパティの更新を処理するために `.update()` ハンドラを使用することができます。
+ここまでは、`.init()`ハンドラだけを使用してきました。このハンドラは、コンポーネントのライフサイクルの最初に一度だけ、その初期プロパティだけを使用して呼び出されます。しかし、コンポーネントはしばしば動的にそのプロパティを更新することがあります。そこで、プロパティの更新を処理するために `.update()` ハンドラを使用することができます。
 
 [methodsimage]: https://cloud.githubusercontent.com/assets/674727/21803913/2966ba7e-d6e1-11e6-9179-8acafc87540c.jpg
 ![methodsimage]
@@ -165,7 +165,7 @@ schema: {
 次に、すべてを `.init()` ハンドラから `.update()` ハンドラに移動させます。この `.update()` ハンドラも、コンポーネントがアタッチされたときに `.init()` の直後に呼び出されます。時には、`.update()` ハンドラにロジックのほとんどを記述して、コードを繰り返すことなく初期化と更新処理を一度に行えるようにすることもあります。
 
 
-私たちがしたいことは、メッセージをログに記録する前にイベントを聞く[イベントリスナーを追加][addeventlistener]することです。もし `event` プロパティタイプが指定されていない場合は、単にメッセージをログに記録します。
+私たちがしたいことは、メッセージをログに記録する前にイベントをリッスンする[イベントリスナーを追加][addeventlistener]することです。もし `event` プロパティタイプが指定されていない場合は、単にメッセージをログに記録します。
 
 
 ```js
@@ -176,16 +176,16 @@ AFRAME.registerComponent('log', {
   },
 
   update: function () {
-    var data = this.data;  // Component property values.
-    var el = this.el;  // Reference to the component's entity.
+    var data = this.data;  // コンポーネントのプロパティ値
+    var el = this.el;  // コンポーネントのエンティティへの参照
 
     if (data.event) {
-      // This will log the `message` when the entity emits the `event`.
+      // エンティティが `event` を発行したときに `message` をログに記録します。
       el.addEventListener(data.event, function () {
         console.log(data.message);
       });
     } else {
-      // `event` not specified, just log the message.
+      // `event`が指定されていない場合は、メッセージだけをログに記録します。
       console.log(data.message);
     }
   }
@@ -197,7 +197,7 @@ AFRAME.registerComponent('log', {
 イベントリスナープロパティを追加したので、実際のプロパティの更新を処理してみましょう。イベントプロパティの種類が変更されたとき（例えば、 `.setAttribute()` の結果）、以前のイベントリスナーを削除して、新しいイベントリスナーを追加する必要があります。
 
 
-しかし、[イベントリスナーを削除する]ためには、関数への参照が必要です。そこで、まずイベントリスナーをアタッチするたびに `this.eventHandlerFn` に関数を保存するようにしましょう。`this` を介してコンポーネントにプロパティをアタッチすると、他のすべてのライフサイクルハンドラで利用できるようになります。
+しかし、[イベントリスナーを削除する][remove an event listener]ためには、関数への参照が必要です。そこで、まずイベントリスナーをアタッチするたびに `this.eventHandlerFn` に関数を保存するようにしましょう。`this` を介してコンポーネントにプロパティをアタッチすると、他のすべてのライフサイクルハンドラで利用できるようになります。
 
 
 ```js
@@ -208,11 +208,11 @@ AFRAME.registerComponent('log', {
   },
 
   init: function () {
-    // Closure to access fresh `this.data` from event handler context.
+    // イベントハンドラのコンテキストから、新しい `this.data` にアクセスするためのクロージャです。
     var self = this;
 
-    // .init() is a good place to set up initial state and variables.
-    // Store a reference to the handler so we can later remove it.
+    // .init()は、初期状態や変数を設定するのに適した場所です。
+    // ハンドラへの参照を保存して、後で削除できるようにします。
     this.eventHandlerFn = function () { console.log(self.data.message); };
   },
 
@@ -248,7 +248,7 @@ AFRAME.registerComponent('log', {
     var data = this.data;
     var el = this.el;
 
-    // `event` updated. Remove the previous event listener if it exists.
+    // `event`が更新されました。前のイベントリスナーが存在する場合は、それを削除します。
     if (oldData.event && data.event !== oldData.event) {
       el.removeEventListener(oldData.event, this.eventHandlerFn);
     }
@@ -262,7 +262,7 @@ AFRAME.registerComponent('log', {
 });
 ```
 
-それでは、このコンポーネントを更新イベントリスナーでテストしてみましょう。以下は、このシーンです。
+それでは、このコンポーネントを更新されるイベントリスナーでテストしてみましょう。以下は、このシーンです。
 
 ```html
 <a-scene>
@@ -291,10 +291,7 @@ el.emit('anotherEvent');
 
 [remove]: ./javascript-events-dom-apis.md#removing-a-component-with-removeattribute
 
-[エンティティからコンポーネントを取り外す][remove]というケースを扱ってみましょう。
-(つまり、`.removeAttribute('log')`)です。この場合、`.remove()` ハンドラを実装すればよいでしょう。
-コンポーネントを削除する際に呼び出されます。`log` コンポーネントの場合、以下のようになります。
-は、エンティティに接続されたコンポーネントのイベントリスナーをすべて削除します。
+[エンティティからコンポーネントを外す][remove]場合（つまり`.removeAttribute('log')`）に対処してみましょう。コンポーネントが削除されたときに呼び出される`.remove()`ハンドラを実装すればよいでしょう。`log`コンポーネントの場合、コンポーネントがエンティティにアタッチしたすべてのイベントリスナーを削除します。
 
 ```js
 AFRAME.registerComponent('log', {
@@ -324,13 +321,13 @@ AFRAME.registerComponent('log', {
   },
 
   /**
-   * Handle component removal.
+   * コンポーネントの削除ハンドラ
    */
   remove: function () {
     var data = this.data;
     var el = this.el;
 
-    // Remove event listener.
+    // イベントリスナーを削除
     if (data.event) {
       el.removeEventListener(data.event, this.eventHandlerFn);
     }
@@ -384,7 +381,7 @@ AFRAME.registerComponent('log', {
 </a-scene>
 ```
 
-Or from JS:
+JSでは
 
 ```js
 var el = document.querySelector('a-entity');
@@ -392,7 +389,7 @@ el.setAttribute('log__helloworld', {message: 'Hello, World!'});
 el.setAttribute('log__metaverse', {message: 'Hello, Metaverse!'});
 ```
 
-コンポーネント内では、必要であれば `this.id` と `this.attrName` を使用して異なるインスタンスを区別することができます。例えば、 `log__helloworld` があれば、 `this.id` は `helloworld` で、 `this.attrName` は完全な `log__helloworld` となります。
+コンポーネント内では、必要であれば `this.id` と `this.attrName` を使用して異なるインスタンスを区別することができます。例えば、 `log__helloworld` があれば、`this.id` は `helloworld` で、 `this.attrName` はフルネームの `log__helloworld` となります。
 
 
 これで、基本的な `log` コンポーネントができました。
